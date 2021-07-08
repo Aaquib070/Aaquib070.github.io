@@ -1,0 +1,2 @@
+(this["webpackJsonpvuexy-react-admin-dashboard"]=this["webpackJsonpvuexy-react-admin-dashboard"]||[]).push([[39],{693:function(e,a,t){},806:function(e,a,t){"use strict";t.r(a);var n=t(0),o=t.n(n),r=t(62);t(693);a.default=function(){return localStorage.getItem("logInUserData")?o.a.createElement(r.a,{to:"/dashboard"}):localStorage.getItem("loginscreen")?o.a.createElement(r.a,{to:"/home"}):o.a.createElement("div",null,"Landing Page")}}}]);
+//# sourceMappingURL=39.b65a826f.chunk.js.map
