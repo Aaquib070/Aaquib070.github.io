@@ -1,0 +1,1 @@
+(this["webpackJsonpvuexy-react-admin-dashboard"]=this["webpackJsonpvuexy-react-admin-dashboard"]||[]).push([[27],{634:function(a,e,t){"use strict";t.r(e);var n=t(0),r=t.n(n),c=t(448);e.default=function(){return r.a.createElement(c.a,{md:"12",style:{marginTop:"70px",textAlign:"center"}},"Privacy")}}}]);
