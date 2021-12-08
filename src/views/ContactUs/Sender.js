@@ -1,13 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {Row, Col, Card, CardHeader, CardTitle, CardBody} from 'reactstrap'
 
+import Radio from 'components/@vuexy/radio/RadioVuexy'
 import Ccube from 'utility/Ccube'
 import MsgHistory from './MessageHistory'
 import {ToastContainer} from 'react-toastify'
 import {connect} from 'react-redux'
 import Select from 'react-select'
+import { ReactMediaRecorder } from "react-media-recorder";
 import VideoRecorder from 'react-video-recorder'
+import {Mic, MicOff} from 'react-feather'
 import {Recorder} from 'react-voice-recorder'
 import 'react-voice-recorder/dist/index.css'
 import classnames from 'classnames'
@@ -60,6 +63,7 @@ const disablePastDate = () => {
 
 const ContactUs = props => {
 	const selectNomineeRef = React.createRef()
+	const [recVideo, setRecVideo] = useState(); 
 	const selecttype = React.createRef()
 	const [date, setdate] = useState(currdt.toISOString().substr(0, 10) + 1)
 	const [sameAsAbove, setsameAsAbove] = useState(false)
@@ -328,14 +332,17 @@ const ContactUs = props => {
 										</FormGroup>
 									)}
 									{type === 'Video' && (
-										<div className='video-recorder'>
-											<VideoRecorder
-												onRecordingComplete={videoBlob => {
-													console.log('videoBlob', videoBlob)
-												}}
-											/>
-										</div>
+										// <div className='video-recorder'>
+										// 	<VideoRecorder
+										// 		onRecordingComplete={videoBlob => {
+										// 			console.log('videoBlob', videoBlob)
+										// 		}}
+										// 	/>
+											
+										// </div>
+										<RecordView  recording={setRecVideo}/>
 									)}
+	
 									{type === 'Voice' && (
 										<div className='voice-recorder'>
 											<Recorder
@@ -453,7 +460,8 @@ const ContactUs = props => {
 															title,
 															date,
 															signature,
-															nominees
+															nominees,
+															msg: recVideo
 													  })
 
 												settitle('')
@@ -498,6 +506,107 @@ const ContactUs = props => {
 			</Card>
 		</div>
 	)
+}
+
+const VideoPreview = ({ stream }) => {
+	const videoRef = useRef(null);
+  
+	useEffect(() => {
+	  if (videoRef.current && stream) {
+		videoRef.current.srcObject = stream;
+	  }
+	}, [stream]);
+	if (!stream) {
+	  return null;
+	}
+	return <video ref={videoRef} width={300} height={300} autoPlay controls />;
+  };
+
+  const blobToBase64 = blob => {
+	const reader = new FileReader();
+	reader.readAsDataURL(blob);
+	return new Promise(resolve => {
+	  reader.onloadend = () => {
+		resolve(reader.result);
+	  };
+	});
+  };
+
+const RecordView = (props) => {
+	const [rec, setrec] = useState(false);
+	const [mic, setmic] = useState(true);
+	const [screenshare, setscreenshare] = useState(false);
+	
+	return (<div>
+	  <ReactMediaRecorder
+		screen={screenshare}
+		video={!screenshare}
+		audio={mic}
+		onStop={(blobUrl, blob) => {
+			console.log(blob)
+			blobToBase64(blob).then(bas => {
+				//console.log(bas);
+			props.recording(bas);
+			
+			});
+			//console.log('blob',blob);
+			//console.log('bloburl',blobUrl);
+		  }}
+		render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
+		  <div>
+			<p>Status : {status}</p>
+			
+			<div style={{display: 'flex', flexDirection: 'row'}}>
+
+			<div className='d-inline-block mr-1'>
+										<Radio
+											label='Camera Video'
+											color='primary'
+											defaultChecked
+											name='recoption'
+											onChange={(e)=>{setscreenshare(false)}}
+											value='rec'
+										/>
+									</div>
+									<div className='d-inline-block mr-1'>
+										<Radio
+											label='Screen Share'
+											color='primary'
+											name='recoption'
+											onChange={(e)=>{setscreenshare(true)}}
+											value='screen'
+										/>
+									</div>
+									
+									{mic ? <Mic className='danger' size='30' onClick={()=>setmic(!mic)}/> :
+									<MicOff className='danger' size='30' onClick={()=>setmic(!mic)}/> }
+										<Button.Ripple
+											className='button-label'
+											style={{width: '100%',marginTop: '-2px'}}
+											color='warning'
+											icon="play-circle"
+											onClick={() => {
+												rec ? stopRecording() : startRecording()
+												setrec(!rec);
+
+											}}
+											
+										>
+											{rec ? 'Stop Recording' : 'Start Recording'}	
+										</Button.Ripple>
+										</div>
+			<div>
+			{rec ? <VideoPreview stream={previewStream} /> :
+			   <video src={mediaBlobUrl} controls autoplay width={300} height={300} />}
+			  
+			  {/* <video src={mediaBlobUrl} controls autoplay loop width={600} /> */}
+			</div>
+			<div></div>
+		  </div>
+		)}
+	  />
+	</div>
+  );
 }
 
 const mapStateToProps = state => {

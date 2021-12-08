@@ -57,6 +57,19 @@ const MsgHistory = props => {
 		return title
 	}
 	const getContent = e => {
+		if (e.type === 'Video') {
+			console.log(e.msg);
+			const byteCharacters = atob(e.msg?.split('base64,')[1]);
+			const byteNumbers = new Array(byteCharacters.length);
+			for (let i = 0; i < byteCharacters.length; i++) {
+				byteNumbers[i] = byteCharacters.charCodeAt(i);
+			}
+			const byteArray = new Uint8Array(byteNumbers);
+			const blob = new Blob([byteArray], { type: 'video/mp4' });
+			var blobUrl = URL.createObjectURL(blob)
+
+		}
+
 		let nomin = ''
 		e?.nominees?.length &&
 			e.nominees.forEach((n, idx) => {
@@ -77,7 +90,9 @@ const MsgHistory = props => {
 							<br />
 							<b> Date : </b> {e?.date?.split('T')[0]}
 							<b> Time : </b> {e?.time}
+							
 						</FormText>
+						<video src={blobUrl} controls autoplay width={500} height={300} />
 					</Col>
 					<Col md='5' sm='12'>
 						<FormText>
