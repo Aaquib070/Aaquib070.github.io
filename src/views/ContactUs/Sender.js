@@ -596,8 +596,8 @@ const RecordView = (props) => {
 										</Button.Ripple>
 										</div>
 			<div>
-			{rec ? <VideoPreview stream={previewStream} /> :
-			   <video src={mediaBlobUrl} controls autoplay width={300} height={300} />}
+			{rec && previewStream && <VideoPreview stream={previewStream} /> }
+			 {!rec &&  mediaBlobUrl &&  <video src={mediaBlobUrl} controls autoplay width={300} height={300} />}
 			  
 			  {/* <video src={mediaBlobUrl} controls autoplay loop width={600} /> */}
 			</div>
