@@ -49,6 +49,8 @@ export const scheduleNewMessage = msg => {
 	return dispatch => {
 		const user = JSON.parse(sessionStorage.getItem('logInUserData'))._id
 		msg.user = user
+	 //axios.defaults.baseURL = 'http://localhost:5000'
+	
 		axios
 			.post('/backendapi/sender/schedulenew', msg, {
 				headers: {

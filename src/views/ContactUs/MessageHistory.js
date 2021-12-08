@@ -9,7 +9,12 @@ import {
 	CardTitle,
 	TabContent,
 	TabPane,
-	FormText
+	FormText,
+	Button,
+	Modal,
+	ModalBody,
+	Spinner,
+	ModalHeader
 } from 'reactstrap'
 import axios from 'axios'
 import PopUp from 'utility/Popup'
@@ -20,10 +25,38 @@ import {ToastContainer} from 'react-toastify'
 import {Edit, Trash, ChevronDown} from 'react-feather'
 
 const MsgHistory = props => {
+	const [modal, setmodal] = useState(false)
 	const [collapseID, setcollapseID] = useState('')
 	const [status, setstatus] = useState('Closed')
 	const [open, setopen] = useState('')
+	const [loading, setloading] = useState(false);
+	const [bloburl,setbloburl]= useState();
+	
 	const [deleteID, setdeleteID] = useState('')
+	const toggleModal = () => {setmodal(!modal)};
+
+	const playVideo = (id) => {
+		setloading(true);
+		toggleModal();
+		const token = sessionStorage.getItem('authtoken')
+		axios.get('/backendapi/sender/msg/'+id, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		}).then(res => {
+		console.log(res.data[0]?.media);
+			const byteCharacters = atob(res.data[0]?.media?.split('base64,')[1]);
+			const byteNumbers = new Array(byteCharacters.length);
+			for (let i = 0; i < byteCharacters.length; i++) {
+				byteNumbers[i] = byteCharacters.charCodeAt(i);
+			}
+			const byteArray = new Uint8Array(byteNumbers);
+			const blob = new Blob([byteArray], { type: 'video/mp4' });
+			const blobUrl = URL.createObjectURL(blob);
+			setbloburl(blobUrl);
+			setloading(false);
+		})
+	}
 
 	const deletesender = id => {
 		axios
@@ -57,18 +90,18 @@ const MsgHistory = props => {
 		return title
 	}
 	const getContent = e => {
-		if (e.type === 'Video') {
-			console.log(e.msg);
-			const byteCharacters = atob(e.msg?.split('base64,')[1]);
-			const byteNumbers = new Array(byteCharacters.length);
-			for (let i = 0; i < byteCharacters.length; i++) {
-				byteNumbers[i] = byteCharacters.charCodeAt(i);
-			}
-			const byteArray = new Uint8Array(byteNumbers);
-			const blob = new Blob([byteArray], { type: 'video/mp4' });
-			var blobUrl = URL.createObjectURL(blob)
+		// if (e.type === 'Video') {
+		// 	console.log(e.msg);
+		// 	const byteCharacters = atob(e.msg?.split('base64,')[1]);
+		// 	const byteNumbers = new Array(byteCharacters.length);
+		// 	for (let i = 0; i < byteCharacters.length; i++) {
+		// 		byteNumbers[i] = byteCharacters.charCodeAt(i);
+		// 	}
+		// 	const byteArray = new Uint8Array(byteNumbers);
+		// 	const blob = new Blob([byteArray], { type: 'video/mp4' });
+		// 	var blobUrl = URL.createObjectURL(blob)
 
-		}
+		// }
 
 		let nomin = ''
 		e?.nominees?.length &&
@@ -92,7 +125,18 @@ const MsgHistory = props => {
 							<b> Time : </b> {e?.time}
 							
 						</FormText>
-						<video src={blobUrl} controls autoplay width={500} height={300} />
+						{e.type === 'Video' && <Button.Ripple
+											className='button-label'
+											style={{width: '100%',marginTop: '-2px'}}
+											color='warning'
+											icon="play-circle"
+											onClick={() => {
+												playVideo(e.msg)
+											}}											
+										>
+											Play Video	
+										</Button.Ripple>}
+						
 					</Col>
 					<Col md='5' sm='12'>
 						<FormText>
@@ -191,6 +235,27 @@ const MsgHistory = props => {
 	return (
 		<React.Fragment>
 			<ToastContainer />
+			<Modal  isOpen={modal} toggle={toggleModal} centered={true}>
+									<ModalHeader
+										toggle={toggleModal}
+										tag='div'
+										style={{
+											color: 'var(--warning)',
+											fontSize: '1.45rem',
+											fontWeight: 'bold',
+											letterSpacing: '1px',
+											justifyContent: 'center'
+										}}
+									>
+										Video Message
+									</ModalHeader>
+									<ModalBody >
+										
+										{loading && <Spinner color='warning' size='sm' />}
+									{!loading && <video src={bloburl} controls autoplay width={500} height={300} />}			
+									
+									</ModalBody>
+								</Modal>
 			<Card
 				style={{
 					paddingBottom: '1.5rem',
