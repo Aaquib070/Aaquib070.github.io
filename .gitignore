@@ -27,3 +27,6 @@ yarn-error.log*
 .prettierrc
 
 /react-shell-scripts
+.env
+.env.development
+.env.development

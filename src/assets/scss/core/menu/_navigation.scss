@@ -389,7 +389,7 @@
       > a {
         display: block;
         float: left;
-        width: (100% / 3);
+        width: calc(100% / 3);
         padding: 1rem 0;
         color: lighten($gray-600, 50%);
         text-align: center;
