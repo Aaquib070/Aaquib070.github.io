@@ -2,6 +2,9 @@
 import React, {useEffect, useState, useRef} from 'react'
 import {Row, Col, Card, CardHeader, CardTitle, CardBody} from 'reactstrap'
 
+import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+import ReactAudioPlayer from "react-audio-player";
+
 import Radio from 'components/@vuexy/radio/RadioVuexy'
 import Ccube from 'utility/Ccube'
 import MsgHistory from './MessageHistory'
@@ -344,17 +347,8 @@ const ContactUs = props => {
 									)}
 	
 									{type === 'Voice' && (
-										<div className='voice-recorder'>
-											<Recorder
-												record={true}
-												title={'New recording'}
-												audioURL={audioDetails.url}
-												showUIAudio
-												handleAudioStop={data => handleAudioStop(data)}
-												handleAudioUpload={data => handleAudioUpload(data)}
-												handleReset={() => handleRest()}
-											/>
-										</div>
+											<AudioRec recording={setRecVideo}/>
+										
 									)}
 									{type && (
 										<>
@@ -606,6 +600,59 @@ const RecordView = (props) => {
 		)}
 	  />
 	</div>
+  );
+}
+
+const AudioRec = (props) => {
+	const [rec, setrec] = useState(false);
+	const [recordstate, setrecordstate] = useState(RecordState.NONE);
+  const [blobURL, setblobURL] = useState();
+
+  const start = () => {
+    console.log(recordstate);
+	setrec(!rec);
+    console.log("start");
+    setrecordstate(RecordState.START);
+  };
+
+  const stop = () => {
+	setrec(!rec);
+    console.log("stop");
+    setrecordstate(RecordState.STOP); 
+  };
+
+  const onStop = (audioData) => {
+    console.log("audio data: " + audioData.url, audioData.blob);
+    setblobURL(audioData.url);
+	blobToBase64(audioData.blob).then(bas => {
+		//console.log(bas);
+	props.recording(bas);
+	
+	});
+    console.log(blobURL);
+  };
+
+  return (
+    <div>
+				<Button.Ripple
+											className='button-label'
+											style={{width: '100%',marginTop: '-2px'}}
+											color='warning'
+											icon="play-circle"
+											onClick={() => {
+												rec ? stop() : start()
+												setrec(!rec);
+
+											}}
+											
+										>
+											{rec ? 'Stop Recording' : 'Start Recording'}	
+										</Button.Ripple>
+
+      <AudioReactRecorder state={recordstate} onStop={onStop} />
+      {blobURL && <ReactAudioPlayer src={blobURL} controls />}
+      
+    </div>
   );
 }
 

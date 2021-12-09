@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import ReactAudioPlayer from "react-audio-player";
 import {
 	Row,
 	Col,
@@ -31,12 +32,14 @@ const MsgHistory = props => {
 	const [open, setopen] = useState('')
 	const [loading, setloading] = useState(false);
 	const [bloburl,setbloburl]= useState();
+	const [video, setvideo] = useState(false);
 	
 	const [deleteID, setdeleteID] = useState('')
 	const toggleModal = () => {setmodal(!modal)};
 
-	const playVideo = (id) => {
+	const playVideo = (id, type) => {
 		setloading(true);
+		 setvideo(type === 'Video' ? true: false)
 		toggleModal();
 		const token = sessionStorage.getItem('authtoken')
 		axios.get('/backendapi/sender/msg/'+id, {
@@ -51,7 +54,7 @@ const MsgHistory = props => {
 				byteNumbers[i] = byteCharacters.charCodeAt(i);
 			}
 			const byteArray = new Uint8Array(byteNumbers);
-			const blob = new Blob([byteArray], { type: 'video/mp4' });
+			const blob = new Blob([byteArray], { type: type === 'Video' ? 'audio/wav' : ''});
 			const blobUrl = URL.createObjectURL(blob);
 			setbloburl(blobUrl);
 			setloading(false);
@@ -125,16 +128,16 @@ const MsgHistory = props => {
 							<b> Time : </b> {e?.time}
 							
 						</FormText>
-						{e.type === 'Video' && <Button.Ripple
+						{(e.type === 'Video' || e.type === 'Voice') && <Button.Ripple
 											className='button-label'
 											style={{width: '100%',marginTop: '-2px'}}
 											color='warning'
 											icon="play-circle"
 											onClick={() => {
-												playVideo(e.msg)
+												playVideo(e.msg, e.type)
 											}}											
 										>
-											Play Video	
+											{e.type === 'Video' ? 'Play Video' : 'Play Audio'}	
 										</Button.Ripple>}
 						
 					</Col>
@@ -247,12 +250,13 @@ const MsgHistory = props => {
 											justifyContent: 'center'
 										}}
 									>
-										Video Message
+										Message
 									</ModalHeader>
 									<ModalBody >
 										
 										{loading && <Spinner color='warning' size='sm' />}
-									{!loading && <video src={bloburl} controls autoplay width={500} height={300} />}			
+									{!loading && video && <video src={bloburl} controls autoplay width={500} height={300} />}
+									{!loading && !video && <ReactAudioPlayer src={bloburl} controls />}			
 									
 									</ModalBody>
 								</Modal>
