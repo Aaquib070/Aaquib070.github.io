@@ -7,23 +7,9 @@ import Select from 'react-select'
 import themeConfig from 'configs/themeConfig'
 import { toast } from 'react-toastify'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
-const colourOptions1 = [
-  { value: 'Husband', label: 'Husband' },
-  { value: 'Wife', label: 'Wife' },
-  { value: 'Son', label: 'Son' },
-  { value: 'Daughter', label: 'Daughter' },
-  { value: 'Father', label: 'Father' },
-  { value: 'Mother', label: 'Mother' },
-  { value: 'Brother', label: 'Brother' },
-  { value: 'Sister', label: 'Sister' },
-  { value: 'Cousin', label: 'Cousin' },
-  { value: 'Nephew', label: 'Nephew' },
-  { value: 'Niece', label: 'Niece' },
-  { value: 'In-law', label: 'In-law' },
-  { value: 'Friend', label: 'Friend' },
-  { value: 'Colleague', label: 'Colleague' },
-  { value: 'Others', label: 'Others' }
-]
+
+const relationDropDown = JSON.parse(sessionStorage.getItem('dropdowns')).nomineeRelation;
+
 const NomineeSidebar = (props) => {
   const [relation, setrelation] = useState()
   const [relation1, setrelation1] = useState('')
@@ -313,8 +299,8 @@ const NomineeSidebar = (props) => {
           <Select
             id="data-category"
             name="relation"
-            options={colourOptions1}
-            value={colourOptions1.filter((option) => option.value === relation)}
+            options={relationDropDown}
+            value={relationDropDown?.filter((option) => option.value === relation)}
             isClearable={true}
             placeholder={'Relation'}
             onChange={(e) => relationValue(e)}

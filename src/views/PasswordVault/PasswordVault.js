@@ -131,77 +131,7 @@ const selectedStyle = {
     }
   }
 }
-const colourOptions1 = [
-  {
-    value: 'App',
-    label: 'App',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Bank',
-    label: 'Bank',
-    color: '#00B8D9',
-    isFixed: true
-  },
-
-  {
-    value: 'Card',
-    label: 'Card',
-    color: '#00B8D9',
-    isFixed: true
-  },
-
-  {
-    value: 'Educational Portal',
-    label: 'Educational Portal',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Email',
-    label: 'Email',
-    color: '#0052CC',
-    isFixed: true
-  },
-  {
-    value: 'E-commerce',
-    label: 'E-commerce',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Finance',
-    label: 'Finance',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Goverment Portal',
-    label: 'Goverment Portal',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'HealthCare',
-    label: 'HealthCare',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Office Portal',
-    label: 'Office Portal',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Social Media',
-    label: 'Social Media',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  { value: 'Custom', label: 'Custom', color: '#0052CC', isFixed: true }
-]
+const passwordTypeDropDown = JSON.parse(sessionStorage.getItem('dropdowns')).passwordTypes
 const PasswordVault = (props) => {
   const selectAssetRef = React.createRef()
   const [isLoading, setisLoading] = useState(false)
@@ -572,12 +502,12 @@ const PasswordVault = (props) => {
                                     <Select
                                       className="React"
                                       classNamePrefix="select"
-                                      value={colourOptions1.filter(
+                                      value={passwordTypeDropDown?.filter(
                                         (option) => option.value === ptype
                                       )}
                                       ref={selectAssetRef}
                                       name="color"
-                                      options={colourOptions1}
+                                      options={passwordTypeDropDown}
                                       isClearable={true}
                                       placeholder="Password Type *"
                                       onChange={(e) => {

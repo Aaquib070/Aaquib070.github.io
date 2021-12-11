@@ -24,38 +24,7 @@ import {
   updateLabel,
   addNewTask
 } from 'redux/actions/diary/index'
-const colourOptions1 = [
-  {
-    value: 'Attachment',
-    label: 'Attachment',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Scribble',
-    label: 'Scribble',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Text',
-    label: 'Text',
-    color: '#00B8D9',
-    isFixed: true
-  },
-  {
-    value: 'Video',
-    label: 'Video',
-    color: '#0052CC',
-    isFixed: true
-  },
-  {
-    value: 'Voice',
-    label: 'Voice',
-    color: '#0052CC',
-    isFixed: true
-  }
-]
+const diaryDropDown = JSON.parse(sessionStorage.getItem('dropdowns')).diaryOptions
 const TaskSidebar = (props) => {
   const [audioDetails, setaudioDetails] = useState({
     url: null,
@@ -339,11 +308,11 @@ const TaskSidebar = (props) => {
             <Select
               className="React"
               classNamePrefix="select"
-              // defaultValue={colourOptions1[0]}
+              // defaultValue={diaryDropDown[0]}
 
               ref={selectAssetRef}
               name="color"
-              options={colourOptions1}
+              options={diaryDropDown}
               isClearable={true}
               placeholder="Message Type..."
               onChange={(e) => {
