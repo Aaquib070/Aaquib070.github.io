@@ -77,8 +77,17 @@ const Register = (props) => {
 
               sessionStorage.setItem('logInGreeting', true)
               sessionStorage.setItem('theme', resp.theme ? resp.theme : 'light')
+              axios
+              .get('/backendapi/dropdowns').then(drop => {
+                console.log(drop);
+                if(drop.data?.length > 0) {
+                  sessionStorage.setItem('dropdowns',JSON.stringify(drop.data[0]))
+                }
+                
+                setloggedIn(true)
+              })
               // subscribe(resp.email)
-              setloggedIn(true)
+              
             } else if (res?.data[0]?.status === 'emailNotConfirmed') {
               const userkey =
                 props.routerProps && props.routerProps.match.params.userkey
