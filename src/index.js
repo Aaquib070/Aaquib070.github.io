@@ -5,7 +5,7 @@ import { IntlProviderWrapper } from 'utility/context/Internationalization'
 import { Layout } from 'utility/context/Layout'
 import * as serviceWorker from 'serviceWorker'
 import { store } from 'redux/storeConfig/store'
-import Spinner from 'components/@vuexy/spinner/Fallback-spinner'
+import Spinner from 'common/Fallback-spinner'
 import 'index.scss'
 // import configureAxios from 'config/AxiosConfig.js'
 

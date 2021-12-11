@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Router from 'routes/Router'
-import 'components/@vuexy/rippleButton/RippleButton'
+import 'common/RippleButton'
 import 'App.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import axios from 'axios'

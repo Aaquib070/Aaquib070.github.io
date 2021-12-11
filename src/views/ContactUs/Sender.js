@@ -5,7 +5,7 @@ import { Row, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import ReactAudioPlayer from 'react-audio-player'
 
-import Radio from 'components/@vuexy/radio/RadioVuexy'
+import Radio from 'common/RadioVuexy'
 import Ccube from 'utility/Ccube'
 import MsgHistory from './MessageHistory'
 import { ToastContainer } from 'react-toastify'
