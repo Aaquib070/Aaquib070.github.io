@@ -21,7 +21,6 @@ import {
 } from 'reactstrap'
 import PopUp from 'utility/Popup'
 import Ccube from 'utility/Ccube'
-import options from './AssetOption'
 import AssetAccordion from '../Portfolio/AssetAccordion'
 import axios from 'axios'
 import classnames from 'classnames'
@@ -53,99 +52,23 @@ const AddAssets = (props) => {
   const selectAssetRef = React.createRef()
   const selectNomineeRef = React.createRef()
   const selectCustomRef = React.createRef()
+
+  const assOpts = JSON.parse(sessionStorage.getItem('dropdowns')).assetOption;
   const template = props.messages?.assetOption
     ? props.messages?.assetOption
-    : JSON.parse(JSON.stringify(options))
-  const colourOptions1 = [
-    {
-      value: 'Bank Holdings',
-      label: props.messages?.colorOption?.['Bank Holdings']
-        ? props.messages?.colorOption?.['Bank Holdings']
-        : 'Bank Holdings',
+    : assOpts
+
+  const colourOptions1 = Object.keys(assOpts).map(ass => {
+    return {
+      value: ass,
+      label: props.messages?.colorOption?.[ass]
+        ? props.messages?.colorOption?.[ass]
+        : ass,
       color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Bills & Credits',
-      label: props.messages?.colorOption?.['Bills & Credits']
-        ? props.messages?.colorOption?.['Bills & Credits']
-        : 'Bills & Credits',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Cash Holdings',
-      label: props.messages?.colorOption?.['Cash Holdings']
-        ? props.messages?.colorOption?.['Cash Holdings']
-        : 'Cash Holdings',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Cryptocurrency',
-      label: props.messages?.colorOption?.['Cryptocurrency']
-        ? props.messages?.colorOption?.['Cryptocurrency']
-        : 'Cryptocurrency',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Funds & Deposit',
-      label: props.messages?.colorOption?.['Funds & Deposit']
-        ? props.messages?.colorOption?.['Funds & Deposit']
-        : 'Funds & Deposit',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Investments',
-      label: props.messages?.colorOption?.['Investments']
-        ? props.messages?.colorOption?.['Investments']
-        : 'Investments',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Metals & Jewellery',
-      label: props.messages?.colorOption?.['Metals & Jewellery']
-        ? props.messages?.colorOption?.['Metals & Jewellery']
-        : 'Metals & Jewellery',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Policies',
-      label: props.messages?.colorOption1?.Policies
-        ? props.messages?.colorOption1?.Policies
-        : 'Policies',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Property',
-      label: props.messages?.colorOption?.['Property']
-        ? props.messages?.colorOption?.['Property']
-        : 'Property',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Retirals',
-      label: props.messages?.colorOption?.['Retirals']
-        ? props.messages?.colorOption?.['Retirals']
-        : 'Retirals',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Others',
-      label: props.messages?.colorOption?.['Others']
-        ? props.messages?.colorOption?.['Others']
-        : 'Others',
-      color: '#0052CC',
       isFixed: true
     }
-  ]
+  })
+  
   const [editId, seteditId] = useState('')
   const [editObject, seteditObject] = useState(null)
   const [setT, setTt] = useState(false)

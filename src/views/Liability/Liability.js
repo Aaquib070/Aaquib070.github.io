@@ -25,7 +25,6 @@ import classnames from 'classnames'
 import Ccube from 'utility/Ccube'
 import PopUp from 'utility/Popup'
 import AssetAccordion from '../Portfolio/AssetAccordion'
-import options from './LiabilitiesOption'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -52,67 +51,20 @@ const colourOptions2 = [
 ]
 
 const AddLiability = (props) => {
-  const colourOptions1 = [
-    {
-      value: 'Advances',
-      label: props.messages?.colorOption?.['Advances']
-        ? props.messages?.colorOption?.['Advances']
-        : 'Advances',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Credit Card',
-      label: props.messages?.colorOption?.['Credit Card']
-        ? props.messages?.colorOption?.['Credit Card']
-        : 'Credit Card',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'EMI',
-      label: props.messages?.colorOption?.['EMI']
-        ? props.messages?.colorOption?.['EMI']
-        : 'EMI',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Loan & Mortgages',
-      label: props.messages?.colorOption?.['Loan & Mortgages']
-        ? props.messages?.colorOption?.['Loan & Mortgages']
-        : 'Loan & Mortgages',
-      color: '#00B8D9',
-      isFixed: true
-    },
-    {
-      value: 'Ponzi Schemes',
-      label: props.messages?.colorOption?.['Ponzi Schemes']
-        ? props.messages?.colorOption?.['Ponzi Schemes']
-        : 'Ponzi Schemes',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Recurring Payments',
-      label: props.messages?.colorOption?.['Recurring Payments']
-        ? props.messages?.colorOption?.['Recurring Payments']
-        : 'Recurring Payments',
-      color: '#0052CC',
-      isFixed: true
-    },
-    {
-      value: 'Others',
-      label: props.messages?.colorOption?.['Others']
-        ? props.messages?.colorOption?.['Others']
-        : 'Others',
-      color: '#0052CC',
-      isFixed: true
-    }
-  ]
+  const liabOpts = JSON.parse(sessionStorage.getItem('dropdowns')).liabilityOption;
   const template = props.messages?.liabilityOption
     ? props.messages?.liabilityOption
-    : JSON.parse(JSON.stringify(options))
+    : liabOpts
+    const colourOptions1 = Object.keys(liabOpts).map(liab => {
+      return {
+        value: liab,
+        label: props.messages?.colorOption?.[liab]
+          ? props.messages?.colorOption?.[liab]
+          : liab,
+        color: '#00B8D9',
+        isFixed: true
+      }
+    })
   const selectAssetRef = React.createRef()
   const selectNomineeRef = React.createRef()
   const selectCustomRef = React.createRef()
