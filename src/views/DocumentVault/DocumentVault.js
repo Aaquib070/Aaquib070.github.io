@@ -14,12 +14,23 @@ import {
 import { toast } from 'react-toastify'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
 import { Download } from 'react-feather'
+import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
 import img5 from 'assets/img/slider/banner-25.jpg'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import themeConfig from 'configs/themeConfig'
 import axios from 'axios'
-
+const colourOptions2 = [
+  { value: 'All', label: 'All' },
+  { value: 'Asset', label: 'Asset' },
+  { value: 'Vault', label: 'Vault' },
+  { value: 'Liability', label: 'Liability' },
+  {
+    value: 'Daily Spends',
+    label: 'Daily Spends'
+  },
+  { value: 'Postman', label: 'Postman' }
+]
 const token = sessionStorage.getItem('authtoken')
 const ProgrammaticallyDropzone = (props) => {
   const [files, setFiles] = useState([])
@@ -82,6 +93,8 @@ const ProgrammaticallyDropzone = (props) => {
 const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 const DocumentVault = () => {
   const [files, setfiles] = useState([])
+  const [filter, setFilter] = useState([])
+
   const [reset, setreset] = useState(false)
   const [alias, setalias] = useState()
   const [expiry, setexpiry] = useState()
@@ -125,6 +138,14 @@ const DocumentVault = () => {
         })
       )
     )
+  }
+  const handleFilter = (event) => {
+    const Filter = []
+    event?.length &&
+      event.forEach((e) => {
+        Filter.push({ id: e.value, name: e.label })
+      })
+    setFilter(Filter)
   }
   const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -297,11 +318,39 @@ const DocumentVault = () => {
                   />
                 </Col>
               </Row>
-
+              <hr />
               <Row>
                 <Col sm="12">
                   <Card>
-                    <CardTitle>Download Documents</CardTitle>
+                    <div style={{ display: 'flex' }}>
+                      <Col>
+                        <CardTitle>Download Documents</CardTitle>
+                      </Col>
+                      <Col className="form-label-group">
+                        <Select
+                          isMulti
+                          id="optionSelect"
+                          className="React"
+                          classNamePrefix="select"
+                          isClearable={true}
+                          value={filter.map((n) => {
+                            const as = colourOptions2.filter((e) => {
+                              return e.value === n.id
+                            })
+                            return {
+                              value: as[0].value,
+                              label: as[0].label
+                            }
+                          })}
+                          options={colourOptions2}
+                          placeholder="Field Type..."
+                          onChange={(e) => {
+                            handleFilter(e)
+                          }}
+                        />
+                        <Label for="nameMulti">Field Type</Label>
+                      </Col>
+                    </div>
                     <CardBody>
                       <div className="vx-collapse">
                         {documentList.map((collapseItem) => {
