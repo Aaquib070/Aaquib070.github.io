@@ -105,7 +105,7 @@ const MobileEntry = (props) => {
               options={countryCodes}
               name="countryCodes"
               value={selectedItem}
-              placeholder="Select Country"
+              placeholder="Country"
               formatOptionLabel={customOptions}
               onChange={(e) => {
                 setSelectedItem(e)

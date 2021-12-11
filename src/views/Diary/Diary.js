@@ -4,7 +4,7 @@ import { ContextLayout } from 'utility/context/Layout'
 import DiarySidebar from './DiarySidebar'
 import DiaryList from './DiaryList'
 import TaskSidebar from './TaskSidebar'
-import { ToastContainer } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
 import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/pages/app-todo.scss'
@@ -42,7 +42,6 @@ const Diary = (props) => {
 
   return (
     <div>
-      <ToastContainer />
       <h2 className="warning spacing nodisplay">Secret Diary</h2>
       <div className="todo-application position-relative">
         <div

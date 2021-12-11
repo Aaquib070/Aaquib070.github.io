@@ -19,7 +19,6 @@ import 'assets/scss/plugins/extensions/toastr.scss'
 import Sidebar from './NomineeSidebar'
 import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'
-import { ToastContainer } from 'react-toastify'
 
 const selectedStyle = {
   rows: {
@@ -361,7 +360,6 @@ const Nominee = (props) => {
     <React.Fragment>
       <h2 className="warning spacing nodisplay">Nominees</h2>
       <Row>
-        <ToastContainer />
         <Col sm="12">
           <div
             className={`data-list ${

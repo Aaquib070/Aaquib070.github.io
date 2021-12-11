@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Redirect, HashRouter } from 'react-router-dom'
+import Toaster from 'common/Toaster'
 import PrivateRoute from 'routes/RouterConfig'
 import {
   Dashboard,
@@ -24,6 +25,7 @@ const AppRouter = (props) => {
   return (
     // Set the directory path if you are deploying in sub-folder
     <HashRouter basename="/#">
+      <Toaster />
       <Switch>
         <PrivateRoute path="/terms_conditions" component={Terms_C} />
         <PrivateRoute path="/license" component={License} />

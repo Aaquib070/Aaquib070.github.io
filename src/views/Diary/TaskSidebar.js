@@ -345,7 +345,7 @@ const TaskSidebar = (props) => {
               name="color"
               options={colourOptions1}
               isClearable={true}
-              placeholder="Select Message Type..."
+              placeholder="Message Type..."
               onChange={(e) => {
                 setptype(e ? e.value : '')
               }}

@@ -28,7 +28,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
+
 import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
@@ -605,7 +605,6 @@ const AddAssets = (props) => {
                       <TabContent activeTab={'1'}>
                         <TabPane tabId="1">
                           <Row>
-                            <ToastContainer />
                             <Col lg="8" md="6" sm="12">
                               <Card>
                                 <CardHeader>
@@ -850,7 +849,6 @@ const AddAssets = (props) => {
                           </Row>
 
                           <Row>
-                            <ToastContainer />
                             <Col md="8">
                               <AssetAccordion
                                 heading={
@@ -917,7 +915,7 @@ const AddAssets = (props) => {
                         classNamePrefix="select"
                         isClearable={true}
                         options={colourOptions2}
-                        placeholder="Select Field Type..."
+                        placeholder="Field Type..."
                         onChange={(e) => setftype(e ? e.value : '')}
                       />
                       <Label for="nameMulti">Field Type</Label>

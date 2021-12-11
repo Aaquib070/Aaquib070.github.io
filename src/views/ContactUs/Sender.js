@@ -8,7 +8,7 @@ import ReactAudioPlayer from 'react-audio-player'
 import Radio from 'common/RadioVuexy'
 import Ccube from 'utility/Ccube'
 import MsgHistory from './MessageHistory'
-import { ToastContainer } from 'react-toastify'
+
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import { ReactMediaRecorder } from 'react-media-recorder'
@@ -446,7 +446,6 @@ const ContactUs = (props) => {
                 </Col>
               </Row>
               <Row>
-                <ToastContainer />
                 <Col>
                   {props.loadingmsg && props.messages === null ? (
                     <Spinner color="warning" size="lg" />

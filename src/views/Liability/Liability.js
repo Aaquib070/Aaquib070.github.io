@@ -30,7 +30,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
+
 import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
@@ -561,7 +561,6 @@ const AddLiability = (props) => {
                       <TabContent activeTab="1">
                         <TabPane tabId="1">
                           <Row>
-                            <ToastContainer />
                             <Col lg="8" md="6" sm="12">
                               <Card>
                                 <CardHeader>
@@ -789,7 +788,6 @@ const AddLiability = (props) => {
                           </Row>
 
                           <Row>
-                            <ToastContainer />
                             <Col md="8">
                               <AssetAccordion
                                 heading={
@@ -860,7 +858,7 @@ const AddLiability = (props) => {
                         isClearable={true}
                         name="color"
                         options={colourOptions2}
-                        placeholder="Select Field Type..."
+                        placeholder="Field Type..."
                         onChange={(e) => setftype(e ? e.value : ' ')}
                       />
                       <Label for="nameMulti">Field Type</Label>

@@ -1,22 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Button } from 'reactstrap'
-import Ripples from 'react-ripples'
+import { ToastContainer } from 'react-toastify'
 
-const RippleButton = ({ rippleColor, during, block, ...rest }) => (
-  <Ripples
-    color={rippleColor ? rippleColor : 'rgba(255, 255, 255, .5)'}
-    during={during}
-    className={`${block ? 'd-block' : ''}`}
-  >
-    <Button {...rest} />
-  </Ripples>
-)
-
-RippleButton.propTypes = {
-  ...Button.propTypes,
-  rippleColor: PropTypes.string,
-  during: PropTypes.number
+const Toaster = () => {
+  return <ToastContainer />
 }
-
-Button.Ripple = RippleButton
+export default Toaster
