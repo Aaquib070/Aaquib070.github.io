@@ -636,7 +636,7 @@ const AddAssets = (props) => {
                                             placeholder={
                                               messages?.assetOptionText
                                                 ? messages.assetOptionText
-                                                : 'Select Asset Type'
+                                                : 'Asset Type'
                                             }
                                             onChange={(e) => {
                                               setisAddDisabled(true)
@@ -653,7 +653,7 @@ const AddAssets = (props) => {
                                           <Label for="nameMulti">
                                             {messages?.assetOptionText
                                               ? messages.assetOptionText
-                                              : 'Select Asset Type'}
+                                              : 'Asset Type'}
                                           </Label>
                                         </FormGroup>
                                       </Col>
@@ -680,7 +680,7 @@ const AddAssets = (props) => {
                                             placeholder={
                                               messages?.nomineeOption
                                                 ? messages.nomineeOption
-                                                : 'Select Nominees'
+                                                : 'Nominees'
                                             }
                                             id="nominee"
                                             onChange={(e) => {
@@ -690,7 +690,7 @@ const AddAssets = (props) => {
                                           <Label>
                                             {messages?.nomineeOption
                                               ? messages.nomineeOption
-                                              : 'Select Nominees'}
+                                              : 'Nominees'}
                                           </Label>
                                         </FormGroup>
                                       </Col>

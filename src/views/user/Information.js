@@ -120,7 +120,7 @@ const UserInfoTab = () => {
   }
   const updateuser = (e) => {
     e.preventDefault()
-    setsaveButton('Saving ...')
+    setsaveButton('Saving ')
     user.dob = dob
     user.pwdtime = pwdtime
     user.theme = theme

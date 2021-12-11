@@ -128,7 +128,7 @@ const LADashboard = (props) => {
       path: '/liability/add'
     },
     {
-      label: messages?.vault ? messages?.vault : 'Vault',
+      label: messages?.vault ? messages?.vault : 'Password Vault',
       description: messages?.vaultText
         ? messages?.vaultText
         : 'Save your passwords like cards, credentials in vault.',

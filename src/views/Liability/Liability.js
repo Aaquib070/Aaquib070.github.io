@@ -592,7 +592,7 @@ const AddLiability = (props) => {
                                             placeholder={
                                               messages?.liabilityOptionText
                                                 ? messages?.liabilityOptionText
-                                                : 'Select Liability Type...'
+                                                : 'Liability Type'
                                             }
                                             onChange={(e) => {
                                               handleChange(e)
@@ -626,7 +626,7 @@ const AddLiability = (props) => {
                                             placeholder={
                                               messages?.nomineeOption
                                                 ? messages?.nomineeOption
-                                                : 'Select Nominees...'
+                                                : 'Nominees'
                                             }
                                             id="nominee"
                                             onChange={(e) => {

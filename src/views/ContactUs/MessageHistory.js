@@ -86,13 +86,13 @@ const MsgHistory = (props) => {
     id === collapseID && setstatus('Opened')
   }
   const onEntering = (id) => {
-    id === collapseID && setstatus('Opening...')
+    id === collapseID && setstatus('Opening')
   }
   const onExited = (id) => {
     id === collapseID && setstatus('Closed')
   }
   const onExiting = (id) => {
-    id === collapseID && setstatus('Closing...')
+    id === collapseID && setstatus('Closing')
   }
   const formatme = (val) => {
     const title = props.colorOption?.[val] ? props.colorOption[val] : val
@@ -210,9 +210,8 @@ const MsgHistory = (props) => {
                 'collapse-shown':
                   status === 'Opened' && collapseID === collapseItem._id,
                 closing:
-                  status === 'Closing...' && collapseID === collapseItem._id,
-                opening:
-                  status === 'Opening...' && collapseID === collapseItem._id
+                  status === 'Closing' && collapseID === collapseItem._id,
+                opening: status === 'Opening' && collapseID === collapseItem._id
               })}
             >
               <CardHeader>

@@ -244,7 +244,7 @@ const ContactUs = (props) => {
                           ref={selecttype}
                           isClearable={true}
                           isDisabled={edititem}
-                          placeholder={edititem ? type : 'Message Type...'}
+                          placeholder={edititem ? type : 'Message Type'}
                           onChange={(e) => {
                             const val = e ? e.value : ''
                             settype(val)
