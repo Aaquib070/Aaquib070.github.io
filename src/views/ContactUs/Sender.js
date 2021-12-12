@@ -455,6 +455,9 @@ const ContactUs = (props) => {
                       collapseItems={props?.messages}
                       colorOption={props?.messages?.colorOption}
                       editItem={editItem}
+                      handleFilter={() => {
+                        console.log('Call filter function')
+                      }}
                     />
                   )}
                 </Col>

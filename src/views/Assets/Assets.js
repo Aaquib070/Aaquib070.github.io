@@ -53,12 +53,12 @@ const AddAssets = (props) => {
   const selectNomineeRef = React.createRef()
   const selectCustomRef = React.createRef()
 
-  const assOpts = JSON.parse(sessionStorage.getItem('dropdowns')).assetOption;
+  const assOpts = JSON.parse(sessionStorage.getItem('dropdowns')).assetOption
   const template = props.messages?.assetOption
     ? props.messages?.assetOption
     : assOpts
 
-  const colourOptions1 = Object.keys(assOpts).map(ass => {
+  const colourOptions1 = Object.keys(assOpts).map((ass) => {
     return {
       value: ass,
       label: props.messages?.colorOption?.[ass]
@@ -68,7 +68,7 @@ const AddAssets = (props) => {
       isFixed: true
     }
   })
-  
+
   const [editId, seteditId] = useState('')
   const [editObject, seteditObject] = useState(null)
   const [setT, setTt] = useState(false)
@@ -115,7 +115,7 @@ const AddAssets = (props) => {
       props.dataList.data.forEach((e) => {
         const temp = {
           value: e._id,
-          label: e.name + ' - ' + e.relation,
+          label: `${e.name} - ${e.relation}`,
           color: '#00B8D9',
           isFixed: false
         }
@@ -158,7 +158,7 @@ const AddAssets = (props) => {
                     if (idx === e.nominees.length - 1) {
                       nomin = nomin + sel[0].name
                     } else {
-                      nomin = nomin + sel[0].name + ', '
+                      nomin = `${nomin + sel[0].name}, `
                     }
                   }
                 })
@@ -280,12 +280,12 @@ const AddAssets = (props) => {
         {
           _id: user._id,
           assets: encryptdata(JSON.stringify(user.assets)),
-          nominees: nominees,
+          nominees,
           deletednominee
         },
         {
           headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('authtoken')
+            Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
           }
         }
       )
@@ -304,9 +304,9 @@ const AddAssets = (props) => {
     e.preventDefault()
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
     const as = {
-      assetType: assetType,
+      assetType,
       assetDetails: selectedTemplate,
-      nominees: nominees,
+      nominees,
       id: uuidv4()
     }
 
@@ -321,11 +321,11 @@ const AddAssets = (props) => {
         {
           _id: user._id,
           assets: encryptdata(JSON.stringify(user.assets)),
-          nominees: nominees
+          nominees
         },
         {
           headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('authtoken')
+            Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
           }
         }
       )
@@ -362,7 +362,7 @@ const AddAssets = (props) => {
         },
         {
           headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('authtoken')
+            Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
           }
         }
       )
@@ -782,6 +782,9 @@ const AddAssets = (props) => {
                                 isLoading={props.listLoading}
                                 collapseItems={assetList}
                                 colorOption={messages?.colorOption}
+                                handleFilter={() => {
+                                  console.log('Call filter function')
+                                }}
                               />
                             </Col>
                           </Row>

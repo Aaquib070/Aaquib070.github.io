@@ -51,20 +51,22 @@ const colourOptions2 = [
 ]
 
 const AddLiability = (props) => {
-  const liabOpts = JSON.parse(sessionStorage.getItem('dropdowns')).liabilityOption;
+  const liabOpts = JSON.parse(
+    sessionStorage.getItem('dropdowns')
+  ).liabilityOption
   const template = props.messages?.liabilityOption
     ? props.messages?.liabilityOption
     : liabOpts
-    const colourOptions1 = Object.keys(liabOpts).map(liab => {
-      return {
-        value: liab,
-        label: props.messages?.colorOption?.[liab]
-          ? props.messages?.colorOption?.[liab]
-          : liab,
-        color: '#00B8D9',
-        isFixed: true
-      }
-    })
+  const colourOptions1 = Object.keys(liabOpts).map((liab) => {
+    return {
+      value: liab,
+      label: props.messages?.colorOption?.[liab]
+        ? props.messages?.colorOption?.[liab]
+        : liab,
+      color: '#00B8D9',
+      isFixed: true
+    }
+  })
   const selectAssetRef = React.createRef()
   const selectNomineeRef = React.createRef()
   const selectCustomRef = React.createRef()
@@ -754,6 +756,9 @@ const AddLiability = (props) => {
                                   getAssets()
                                 }}
                                 assetShow={liabilityShow}
+                                handleFilter={() => {
+                                  console.log('Call filter function')
+                                }}
                               />
                             </Col>
                           </Row>

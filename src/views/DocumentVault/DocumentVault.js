@@ -210,7 +210,7 @@ const DocumentVault = () => {
       .then((attachment) => {
         const data = {}
         data.user = user._id
-        data.type = 'Password Vault'
+        data.type = 'Document Vault'
         data.alias = encryptdata(alias)
         data.filename = encryptdata(files[0].name)
         data.attachment = encryptdata(attachment)

@@ -102,17 +102,6 @@ const CustomHeader = (props) => {
           />
         </div>
       </div>
-      {/* <div className="d-none">
-        <div className="data-list-rows-dropdown mr-1 d-none">
-          <Button.Ripple
-            color=""
-            className="sort-dropdown"
-            style={{ height: '75%' }}
-          >
-            <span className="align-middle mx-50">Count : {props.total}</span>
-          </Button.Ripple>
-        </div>
-      </div> */}
     </div>
   )
 }

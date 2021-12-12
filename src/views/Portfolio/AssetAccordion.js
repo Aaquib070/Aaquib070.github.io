@@ -6,6 +6,7 @@ import {
   CardBody,
   CardTitle,
   TabContent,
+  Input,
   TabPane,
   Spinner
 } from 'reactstrap'
@@ -92,8 +93,21 @@ const AssetAccordion = (props) => {
           marginBottom: props.page === 'portfolio' ? '2.2rem' : '1rem'
         }}
       >
-        <CardHeader>
-          <CardTitle>{props.heading}</CardTitle>
+        <CardHeader className="d-flex ">
+          <CardTitle className="actions-left d-flex">{props.heading}</CardTitle>
+          <CardTitle className="actions-right d-flex filter-section">
+            <Input
+              type="text"
+              style={{
+                height: '75%',
+                borderRadius: '5rem',
+                fontSize: '1rem'
+              }}
+              onChange={(e) => props.handleFilter(e)}
+              placeholder="Find"
+              className="placeholder"
+            />
+          </CardTitle>
         </CardHeader>
         <CardBody
           className="card_body"

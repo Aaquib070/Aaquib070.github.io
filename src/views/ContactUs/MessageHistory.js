@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  Input,
   TabContent,
   TabPane,
   FormText,
@@ -45,7 +46,7 @@ const MsgHistory = (props) => {
     toggleModal()
     const token = sessionStorage.getItem('authtoken')
     axios
-      .get('/backendapi/sender/msg/' + id, {
+      .get(`/backendapi/sender/msg/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -99,19 +100,6 @@ const MsgHistory = (props) => {
     return title
   }
   const getContent = (e) => {
-    // if (e.type === 'Video') {
-    // 	console.log(e.msg);
-    // 	const byteCharacters = atob(e.msg?.split('base64,')[1]);
-    // 	const byteNumbers = new Array(byteCharacters.length);
-    // 	for (let i = 0; i < byteCharacters.length; i++) {
-    // 		byteNumbers[i] = byteCharacters.charCodeAt(i);
-    // 	}
-    // 	const byteArray = new Uint8Array(byteNumbers);
-    // 	const blob = new Blob([byteArray], { type: 'video/mp4' });
-    // 	var blobUrl = URL.createObjectURL(blob)
-
-    // }
-
     let nomin = ''
     e?.nominees?.length &&
       e.nominees.forEach((n, idx) => {
@@ -216,7 +204,6 @@ const MsgHistory = (props) => {
             >
               <CardHeader>
                 <CardTitle className="lead collapse-title collapsed">
-                  {/* Message:{formatme(collapseItem.type)} Subject: */}
                   {formatme(collapseItem.title)}
                 </CardTitle>
                 <ChevronDown size={15} className="collapse-icon" />
@@ -259,7 +246,7 @@ const MsgHistory = (props) => {
         <ModalBody>
           {loading && <Spinner color="warning" size="sm" />}
           {!loading && video && (
-            <video src={bloburl} controls autoplay width={500} height={300} />
+            <video src={bloburl} controls autoPlay width={500} height={300} />
           )}
           {!loading && !video && <ReactAudioPlayer src={bloburl} controls />}
         </ModalBody>
@@ -271,10 +258,22 @@ const MsgHistory = (props) => {
           marginBottom: props.page === 'portfolio' ? '2.2rem' : '1rem'
         }}
       >
-        <CardHeader>
-          <CardTitle>{props.heading}</CardTitle>
+        <CardHeader className="d-flex ">
+          <CardTitle className="actions-left d-flex">{props.heading}</CardTitle>
+          <CardTitle className="actions-right d-flex filter-section">
+            <Input
+              type="text"
+              style={{
+                height: '75%',
+                borderRadius: '5rem',
+                fontSize: '1rem'
+              }}
+              onChange={(e) => props.handleFilter(e)}
+              placeholder="Find"
+              className="placeholder"
+            />
+          </CardTitle>
         </CardHeader>
-
         <CardBody
           className="card_body"
           style={{
