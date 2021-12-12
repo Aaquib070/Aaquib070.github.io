@@ -16,13 +16,13 @@ import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
 import { Download, XSquare } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
-import txtFile from 'assets/img/icons/txt-file.png';
-import pptFile from 'assets/img/icons/ppt-file.png';
-import pdfFile from 'assets/img/icons/pdf-file.png';
-import xlsFile from 'assets/img/icons/xls-file.png';
-import docFile from 'assets/img/icons/doc-file.png';
-import zipFile from 'assets/img/icons/zip-file.png';
-import defFile from 'assets/img/icons/file.png';
+import txtFile from 'assets/img/icons/txt-file.png'
+import pptFile from 'assets/img/icons/ppt-file.png'
+import pdfFile from 'assets/img/icons/pdf-file.png'
+import xlsFile from 'assets/img/icons/xls-file.png'
+import docFile from 'assets/img/icons/doc-file.png'
+import zipFile from 'assets/img/icons/zip-file.png'
+import defFile from 'assets/img/icons/file.png'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import themeConfig from 'configs/themeConfig'
 import axios from 'axios'
@@ -59,44 +59,49 @@ const ProgrammaticallyDropzone = (props) => {
 
   const thumbs = files.map((file) => (
     <div className="dz-thumb" key={file.name}>
-      <div className="dz-thumb-inner" >
+      <div className="dz-thumb-inner">
         <XSquare
           size={25}
-          style={{float: 'right'}}
-          onClick={()=>{setFiles([])}}
+          style={{ float: 'right' }}
+          onClick={() => {
+            setFiles([])
+          }}
           //className="collapse-icon"
         />
         <img
           src={file.preview}
           className="dz-img"
           onError={(e) => {
-            console.log(file);
-            //https://www.flaticon.com/free-icons/text-file
-            if(file.type === "text/plain") {
+            console.log(file)
+            if (file.type === 'text/plain') {
               e.target.src = txtFile
-            } else if(file.type === "application/pdf") {
+            } else if (file.type === 'application/pdf') {
               e.target.src = pdfFile
-            } else if(file.type === "application/x-zip-compressed") {
+            } else if (file.type === 'application/x-zip-compressed') {
               e.target.src = zipFile
-              
-            } else if(file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            } else if (
+              file.type ===
+              'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ) {
               e.target.src = docFile
-              
-            } else if(file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            } else if (
+              file.type ===
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ) {
               e.target.src = xlsFile
-            } else if(file.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation") {
+            } else if (
+              file.type ===
+              'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            ) {
               e.target.src = pptFile
-                
-              
             } else {
               e.target.src = defFile
             }
-            
           }}
           alt={file.name}
         />
         {/* <br /> */}
-        <span > {file.name}</span>
+        <span> {file.name}</span>
       </div>
     </div>
   ))
@@ -116,8 +121,9 @@ const ProgrammaticallyDropzone = (props) => {
           Drag `n` drop some files here, or <b>Click to Select files</b>
         </p>
       </div>
-      {thumbs.length > 0 &&
-        <aside className="thumb-container-documents">{thumbs}</aside>}
+      {thumbs.length > 0 && (
+        <aside className="thumb-container-documents">{thumbs}</aside>
+      )}
     </section>
   )
 }
@@ -190,6 +196,9 @@ const DocumentVault = () => {
 
   const resetDropzone = (e) => {
     e.preventDefault()
+    setalias('')
+    setdesc('')
+    setexpiry('')
     setreset(true)
   }
   const submitDropzone = (e) => {
@@ -215,10 +224,13 @@ const DocumentVault = () => {
             }
           })
           .then((res) => {
+            resetDropzone()
+            toast.success('File uploaded successfully')
             getDocuments()
           })
           .catch((err) => {
             console.log('err docs', err)
+            toast.error('Something went wrong please try again')
           })
       })
       .catch()
@@ -257,8 +269,6 @@ const DocumentVault = () => {
                       Attachment Name / Alias
                     </Label>
                   </FormGroup>
-
-              
 
                   <FormGroup className="form-label-group">
                     <Input
@@ -331,8 +341,10 @@ const DocumentVault = () => {
                   />
                 </Col>
               </Row>
-              <div style={{marginTop: '70px'}}><hr /></div>
-              
+              <div style={{ marginTop: '70px' }}>
+                <hr />
+              </div>
+
               <Row>
                 <Col sm="12">
                   <Card>
@@ -367,43 +379,46 @@ const DocumentVault = () => {
                     </div>
                     <CardBody>
                       <div className="vx-collapse">
-                      <CardHeader >
-                              <Col><b>Attachment Name / Alias</b></Col>
-                              <Col><b>File Name</b></Col>
-                              <Col>
-                              <b>Created At</b> 
-                              </Col>
-                              <Col><b>Document Type</b></Col>
-                              
-
-                              
-                            </CardHeader>
-                            <hr />
+                        <CardHeader>
+                          <Col>
+                            <b>Attachment Name / Alias</b>
+                          </Col>
+                          <Col>
+                            <b>File Name</b>
+                          </Col>
+                          <Col>
+                            <b>Created At</b>
+                          </Col>
+                          <Col>
+                            <b>Document Type</b>
+                          </Col>
+                        </CardHeader>
+                        <hr />
                         {documentList.map((collapseItem) => {
                           return (
                             <>
-                            <CardHeader key={collapseItem.id}>
-                              <Col>{collapseItem?.alias}</Col>
-                              <Col>{collapseItem?.filename}</Col>
-                              <Col>
-                                {collapseItem?.createdAt?.split('T')?.[0]}
-                              </Col>
-                              <Col>{collapseItem?.type}</Col>
+                              <CardHeader key={collapseItem.id}>
+                                <Col>{collapseItem?.alias}</Col>
+                                <Col>{collapseItem?.filename}</Col>
+                                <Col>
+                                  {collapseItem?.createdAt?.split('T')?.[0]}
+                                </Col>
+                                <Col>{collapseItem?.type}</Col>
 
-                              <CardTitle>
-                                <a
-                                  href={collapseItem.attachment}
-                                  download={collapseItem?.filename}
-                                  tabIndex="_balnk"
-                                >
-                                  <Download
-                                    size={15}
-                                    className="collapse-icon"
-                                  />
-                                </a>
-                              </CardTitle>
-                            </CardHeader>
-                            <hr />
+                                <CardTitle>
+                                  <a
+                                    href={collapseItem.attachment}
+                                    download={collapseItem?.filename}
+                                    tabIndex="_balnk"
+                                  >
+                                    <Download
+                                      size={15}
+                                      className="collapse-icon"
+                                    />
+                                  </a>
+                                </CardTitle>
+                              </CardHeader>
+                              <hr />
                             </>
                           )
                         })}
