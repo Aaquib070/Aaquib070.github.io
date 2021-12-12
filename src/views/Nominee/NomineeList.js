@@ -15,7 +15,7 @@ import {
   filterData
 } from 'redux/actions/data-list/'
 import 'react-toastify/dist/ReactToastify.css'
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import Sidebar from './NomineeSidebar'
 import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'

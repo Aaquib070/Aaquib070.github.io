@@ -38,7 +38,7 @@ import 'assets/scss/plugins/charts/apex-charts.scss'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import themeConfig from 'configs/themeConfig'
 import DashboardCards from './DashboardCards'
 

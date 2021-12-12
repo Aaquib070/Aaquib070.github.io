@@ -6,7 +6,7 @@ import DiaryList from './DiaryList'
 import TaskSidebar from './TaskSidebar'
 
 import 'react-toastify/dist/ReactToastify.css'
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/pages/app-todo.scss'
 const mql = window.matchMedia(`(min-width: 992px)`)
 

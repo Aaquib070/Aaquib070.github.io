@@ -28,7 +28,7 @@ import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'

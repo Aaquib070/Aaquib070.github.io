@@ -18,7 +18,6 @@ import {
   filterSpendData
 } from 'redux/actions/data-list'
 import 'react-toastify/dist/ReactToastify.css'
-import 'assets/scss/plugins/extensions/toastr.scss'
 import Sidebar from './SpendSidebar'
 import axios from 'axios'
 

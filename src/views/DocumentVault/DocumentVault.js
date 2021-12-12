@@ -14,7 +14,7 @@ import {
 } from 'reactstrap'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
 import { Download, XSquare, Trash2 } from 'react-feather'
 import Select from 'react-select'
@@ -219,15 +219,18 @@ const DocumentVault = () => {
         data.attachment = encryptdata(attachment)
         data.desc = encryptdata(desc)
         data.expiry = encryptdata(expiry)
+        const resolveAfter3Sec = 
+    
         axios
           .post('/backendapi/documents/add', data, {
             headers: {
               Authorization: `Bearer ${token}`
             }
-          })
+          });
+          resolveAfter3Sec
           .then((res) => {
              resetDropzone()
-            toast.success('File uploaded successfully')
+            //toast.success('File uploaded successfully')
             getDocuments()
           })
           .catch((err) => {
@@ -238,6 +241,14 @@ const DocumentVault = () => {
             console.log('err docs', err)
             toast.error('Something went wrong please try again')
           })
+          toast.promise(
+            resolveAfter3Sec,
+            {
+              pending: 'Uploading ...',
+              success: 'File uploaded successfully',
+              error: 'Something went wrong'
+            })
+        
       })
       .catch()
   }

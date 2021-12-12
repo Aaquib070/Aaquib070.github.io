@@ -30,7 +30,7 @@ import { toast } from 'react-toastify'
 import { Edit, Eye, Trash, ChevronDown } from 'react-feather'
 import 'react-toastify/dist/ReactToastify.css'
 
-import 'assets/scss/plugins/extensions/toastr.scss'
+//import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/react-paginate.scss'
 import 'assets/scss/pages/data-list.scss'
 import crypto from 'crypto'
