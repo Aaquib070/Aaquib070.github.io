@@ -4,6 +4,7 @@ import {
   Col,
   Card,
   FormGroup,
+  Form,
   Input,
   Button,
   CardHeader,
@@ -12,8 +13,10 @@ import {
   Label
 } from 'reactstrap'
 import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import 'assets/scss/plugins/extensions/toastr.scss'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
-import { Download, XSquare } from 'react-feather'
+import { Download, XSquare, Trash2 } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
 import txtFile from 'assets/img/icons/txt-file.png'
@@ -193,8 +196,8 @@ const DocumentVault = () => {
   }
   const isDisabled = () => !files?.length || !expiry
 
-  const resetDropzone = (e) => {
-    e.preventDefault()
+  const resetDropzone = () => {
+    //e?.preventDefault()
     setalias()
     setdesc()
     setexpiry()
@@ -223,7 +226,7 @@ const DocumentVault = () => {
             }
           })
           .then((res) => {
-            // resetDropzone()
+             resetDropzone()
             toast.success('File uploaded successfully')
             getDocuments()
           })
@@ -237,6 +240,17 @@ const DocumentVault = () => {
           })
       })
       .catch()
+  }
+
+  const deletedoc = (id) => {
+    axios.delete('/backendapi/document/deletebyid/'+id, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res=> {
+      getDocuments();
+      toast.success("Document Deleted Successfully")
+    })
   }
 
   return (
@@ -253,6 +267,7 @@ const DocumentVault = () => {
             <CardBody>
               <Row>
                 <Col md="6" sm="12">
+                <Form>
                   <FormGroup className="form-label-group">
                     <Input
                       type="text"
@@ -298,10 +313,10 @@ const DocumentVault = () => {
                   <FormGroup className="form-label-group">
                     <Input
                       className="input-label"
-                      type="textarea"
-                      name="name"
+                      type="text"
+                      name="name1"
                       value={desc}
-                      id="nameMultiDescription"
+                      id="nameMultiDescription1"
                       placeholder="Description"
                       onChange={(e) => setdesc(e?.target?.value)}
                     />
@@ -311,7 +326,7 @@ const DocumentVault = () => {
                           ? 'dark-label'
                           : 'light-label'
                       }
-                      for="nameMultiDescription"
+                      for="nameMultiDescription1"
                     >
                       Description
                     </Label>
@@ -325,13 +340,13 @@ const DocumentVault = () => {
                       color="secondary"
                       type="reset"
                       className="button-label"
-                      onClick={resetDropzone}
+                      onClick={()=>{resetDropzone()}}
                     >
                       Reset
                     </Button.Ripple>{' '}
                     <Button.Ripple
                       color="warning"
-                      type="reset"
+                      type="submit"
                       className="button-label"
                       onClick={submitDropzone}
                       disable={isDisabled ? 'true' : 'false'}
@@ -339,6 +354,7 @@ const DocumentVault = () => {
                       Add
                     </Button.Ripple>
                   </FormGroup>
+                  </Form>
                 </Col>
                 <Col md="6" sm="12">
                   <ProgrammaticallyDropzone
@@ -412,16 +428,24 @@ const DocumentVault = () => {
                                 <Col>{collapseItem?.type}</Col>
 
                                 <CardTitle>
+
                                   <a
                                     href={collapseItem.attachment}
                                     download={collapseItem?.filename}
                                     tabIndex="_balnk"
                                   >
                                     <Download
-                                      size={15}
+                                      size={20}
                                       className="collapse-icon"
                                     />
                                   </a>
+                                  
+                                  <Trash2
+                                      style={{margin: '10px'}}
+                                      size={20}
+                                      className="collapse-icon"
+                                      onClick={()=> {deletedoc(collapseItem._id)}}
+                                    />
                                 </CardTitle>
                               </CardHeader>
                               <hr />
