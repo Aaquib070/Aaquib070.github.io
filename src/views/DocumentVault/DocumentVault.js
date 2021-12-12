@@ -66,7 +66,6 @@ const ProgrammaticallyDropzone = (props) => {
           onClick={() => {
             setFiles([])
           }}
-          //className="collapse-icon"
         />
         <img
           src={file.preview}
@@ -196,9 +195,9 @@ const DocumentVault = () => {
 
   const resetDropzone = (e) => {
     e.preventDefault()
-    setalias('')
-    setdesc('')
-    setexpiry('')
+    setalias()
+    setdesc()
+    setexpiry()
     setreset(true)
   }
   const submitDropzone = (e) => {
@@ -224,11 +223,15 @@ const DocumentVault = () => {
             }
           })
           .then((res) => {
-            resetDropzone()
+            // resetDropzone()
             toast.success('File uploaded successfully')
             getDocuments()
           })
           .catch((err) => {
+            setalias()
+            setdesc()
+            setexpiry()
+            setreset(true)
             console.log('err docs', err)
             toast.error('Something went wrong please try again')
           })
@@ -255,6 +258,7 @@ const DocumentVault = () => {
                       type="text"
                       name="name"
                       id="nameMultiname"
+                      value={alias}
                       placeholder="Attachment Name / Alias"
                       onChange={(e) => setalias(e.target.value)}
                     />
@@ -275,9 +279,10 @@ const DocumentVault = () => {
                       className="input-label"
                       type="Date"
                       name="name"
+                      value={expiry}
                       id="nameMultiExpiry"
                       placeholder="Expiry Date"
-                      onChange={(date) => setexpiry(date)}
+                      onChange={(e) => setexpiry(e.target.value)}
                     />
                     <Label
                       className={
@@ -295,6 +300,7 @@ const DocumentVault = () => {
                       className="input-label"
                       type="textarea"
                       name="name"
+                      value={desc}
                       id="nameMultiDescription"
                       placeholder="Description"
                       onChange={(e) => setdesc(e?.target?.value)}

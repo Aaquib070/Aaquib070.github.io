@@ -614,7 +614,6 @@ const UserInfoTab = () => {
                   type="Date"
                   name="dob"
                   placeholder="Date of birth"
-                  // value=
                   onChange={(e) => handledob(e.target.value)}
                 />
               </FormGroup>
