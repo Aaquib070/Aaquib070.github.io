@@ -17,10 +17,17 @@ import {
   ModalHeader
 } from 'reactstrap'
 import { toast } from 'react-toastify'
+import PopUp from 'utility/Popup'
 import 'react-toastify/dist/ReactToastify.css'
-//import 'assets/scss/plugins/extensions/toastr.scss'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
-import { Download, XSquare, Trash2, Eye, ChevronLeft, ChevronRight } from 'react-feather'
+import {
+  Download,
+  XSquare,
+  Trash2,
+  Eye,
+  ChevronLeft,
+  ChevronRight
+} from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
 import txtFile from 'assets/img/icons/txt-file.png'
@@ -78,7 +85,6 @@ const ProgrammaticallyDropzone = (props) => {
           src={file.preview}
           className="dz-img"
           onError={(e) => {
-           
             if (file.type === 'text/plain') {
               e.target.src = txtFile
             } else if (file.type === 'application/pdf') {
@@ -135,13 +141,13 @@ const ProgrammaticallyDropzone = (props) => {
 }
 const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 const DocumentVault = () => {
-  const [modal, setmodal] = useState(false);
-  const [selectedforpreview,setselectedforpreview] = useState();
-  const [selecteddoc,setselecteddoc] = useState();
-  const [selectedatt, setselectedatt] = useState([]);
+  const [modal, setmodal] = useState(false)
+  const [selectedforpreview, setselectedforpreview] = useState()
+  const [selecteddoc, setselecteddoc] = useState()
+  const [selectedatt, setselectedatt] = useState([])
   //const [previous, setprevious] = useState();
   //const [next, setnext] = useState();
-  const [previdx, setprevidx] = useState(0);
+  const [previdx, setprevidx] = useState(0)
   const [files, setfiles] = useState([])
   const [filter, setFilter] = useState([])
   const [loading, setloading] = useState(false)
@@ -151,16 +157,16 @@ const DocumentVault = () => {
   const [desc, setdesc] = useState()
   const [documentList, setdocumentList] = useState([])
   const [bloburl, setbloburl] = useState()
+  const [open, setopen] = useState(false)
+  const [deleteId, setDeleteId] = useState(false)
 
   const toggleModal = () => {
     setmodal(!modal)
   }
 
-
   const preview = (id) => {
     setloading(true)
-    //setvideo(type === 'Video' ? true : false)
-    
+
     const token = sessionStorage.getItem('authtoken')
     axios
       .get(`/backendapi/sender/msg/${id}`, {
@@ -169,9 +175,9 @@ const DocumentVault = () => {
         }
       })
       .then((res) => {
-        setselectedforpreview(res.data[0]);
-        
-        const attm = decryptdata(res.data[0]?.media);
+        setselectedforpreview(res.data[0])
+
+        const attm = decryptdata(res.data[0]?.media)
         const byteCharacters = atob(attm.split('base64,')[1])
         const byteNumbers = new Array(byteCharacters.length)
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -239,7 +245,7 @@ const DocumentVault = () => {
       reader.onload = () => resolve(reader.result)
       reader.onerror = (error) => reject(error)
     })
-    return prom;
+    return prom
   }
   const isDisabled = () => !files?.length || !expiry
 
@@ -261,9 +267,8 @@ const DocumentVault = () => {
         }
       })
       .then((res) => {
-        
-        preview(selectedatt[previdx-1]);
-        previdx !== 0 ? setprevidx(previdx-1) : toggleModal()
+        preview(selectedatt[previdx - 1])
+        previdx !== 0 ? setprevidx(previdx - 1) : toggleModal()
         toast.success('Message deleted successfully!')
       })
       .catch()
@@ -275,7 +280,7 @@ const DocumentVault = () => {
       toast.error('No File Selected')
       return
     }
-    const attList = [];
+    const attList = []
     const data = {}
     data.user = user._id
     data.type = 'Document Vault'
@@ -284,30 +289,26 @@ const DocumentVault = () => {
     data.desc = encryptdata(desc)
     data.expiry = encryptdata(expiry)
 
-  
-
     for (let i = 0; i < files.length; i++) {
-      const encf = await getBase64(files[i]);
-      
+      const encf = await getBase64(files[i])
+
       attList.push({
         media: encryptdata(encf),
         name: files[i].name,
-        type: files[i].type,
+        type: files[i].type
       })
     }
-    data.attachment = attList;
+    data.attachment = attList
     //const attachment =  await getBase64(files[0])
     //console.log('attachment123',attachment);
     //.then((attachment) => {
-      //axios.defaults.baseURL = 'http://localhost:5000'
-    
+    //axios.defaults.baseURL = 'http://localhost:5000'
 
-      const resolveAfter3Sec = axios
-        .post('/backendapi/documents/add', data, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+    const resolveAfter3Sec = axios.post('/backendapi/documents/add', data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     resolveAfter3Sec
       .then((res) => {
         resetDropzone()
@@ -322,91 +323,135 @@ const DocumentVault = () => {
         console.log('err docs', err)
         toast.error('Something went wrong please try again')
       })
-    toast.promise(
-      resolveAfter3Sec,
-      {
-        pending: 'Uploading ...',
-        success: 'File uploaded successfully',
-        error: 'Something went wrong'
-      })
+    toast.promise(resolveAfter3Sec, {
+      pending: 'Uploading ...',
+      success: 'File uploaded successfully',
+      error: 'Something went wrong'
+    })
 
     // })
     // .catch()
   }
 
-  const deletedoc = (id) => {
+  const deletedoc = () => {
     //axios.defaults.baseURL = 'http://localhost:5000'
-    axios.delete('/backendapi/document/deletebyid/' + id, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(res => {
-      getDocuments();
-      toast.success("Document Deleted Successfully")
-    })
+    axios
+      .delete(`/backendapi/document/deletebyid/${deleteId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        getDocuments()
+        toast.success('Document Deleted Successfully')
+      })
   }
   return (
-    
     <React.Fragment>
-      <Modal isOpen={modal} toggle={()=>{toggleModal();setprevidx()}} centered={true} size="lg">
+      <PopUp
+        handleConfirm={() => {
+          deletedoc()
+          setopen(false)
+        }}
+        isOpen={open}
+        closeModal={() => setopen(false)}
+      />
+      <Modal
+        isOpen={modal}
+        toggle={() => {
+          toggleModal()
+          setprevidx()
+        }}
+        centered={true}
+        size="lg"
+      >
         <ModalHeader
           toggle={toggleModal}
-          tag="div"
-          style={{
-            color: 'var(--warning)',
-            fontSize: '1.45rem',
-            fontWeight: 'bold',
-            letterSpacing: '1px',
-            justifyContent: 'center'
-          }}
+          cssModule={{ 'modal-title': 'w-100 text-center' }}
         >
-          Preview {previdx + 1} of {selectedatt?.length}
-        </ModalHeader>
-        <ModalBody>
-          {loading && <Spinner color="warning" size="sm" />}
-          {!loading && <div >
-            
-            <a
-             href={bloburl}
-             //download
-             download={selectedforpreview?.name}
-             tabIndex="_balnk"
-              style={{ margin: '10px' }}
+          <Row>
+            <Col>
+              {!loading && (
+                <a
+                  href={bloburl}
+                  download={selectedforpreview?.name}
+                  tabIndex="_balnk"
+                  style={{ margin: '10px', cursor: 'pointer' }}
+                >
+                  <Download size={25} className="collapse-icon" />
+                </a>
+              )}
+              {!loading && selectedatt.length > 1 && previdx !== 0 && (
+                <Trash2
+                  style={{ margin: '5px', cursor: 'pointer' }}
+                  size={25}
+                  className="collapse-icon"
+                  onClick={() => {
+                    setDeleteId(selectedforpreview._id)
+                    setopen(true)
+                  }}
+                />
+              )}
+            </Col>
+            <Col
+              style={{
+                color: 'var(--warning)',
+                fontSize: '1.45rem',
+                fontWeight: 'bold',
+                letterSpacing: '1px'
+              }}
             >
-              <Download
-                size={20}
-                className="collapse-icon"
-              />
-            </a>
-            {selectedatt.length > 1 && previdx !==0 && 
-            <Trash2
-              style={{ margin: '5px' }}
-              size={20}
-              className="collapse-icon"
-              onClick={() => { deletemedia(selectedforpreview._id) }}
-            />}
-            
-            {(selectedatt.length > previdx+1) &&
-            <ChevronRight
-              style={{ margin: '5px' , float: 'right'}}
-              size={20}
-              className="collapse-icon"
-              //onClick={() => { preview(next); setprevious(selectedatt[previdx]); (selectedatt.length > previdx+1) ? (setnext(selectedatt[previdx+2])) : setnext();setprevidx(previdx+1); }}
-              onClick={() => { preview(selectedatt[previdx+1]); setprevidx(previdx+1); }}
-            />}
+              Preview {previdx + 1} of {selectedatt?.length}
+            </Col>
 
-            { ( previdx > 0) && <ChevronLeft
-              style={{ margin: '5px', float: 'right' }}
-              size={20}
-              className="collapse-icon"
-              onClick={() => { preview(selectedatt[previdx-1]); setprevidx(previdx-1); }}
-              //onClick={() => { preview(previous); setprevious((previdx-2) < 0 ? setprevious() : selectedatt[previdx-2]);setnext(selectedatt[previdx+2]);setprevidx(previdx-1); }}
-            /> }
-            <iframe
-              style={{ height: '400px', width: '100%' }}
-              title='Aaq'
-              src={`${bloburl}#toolbar=0`}
-            /></div>}
+            <Col
+              style={{
+                justifyContent: 'center'
+              }}
+            >
+              {previdx > 0 && !loading && (
+                <ChevronLeft
+                  style={{ cursor: 'pointer' }}
+                  size={25}
+                  onClick={() => {
+                    preview(selectedatt[previdx - 1])
+                    setprevidx(previdx - 1)
+                  }}
+                />
+              )}
+              {selectedatt.length > previdx + 1 && !loading && (
+                <ChevronRight
+                  size={25}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    preview(selectedatt[previdx + 1])
+                    setprevidx(previdx + 1)
+                  }}
+                />
+              )}
+            </Col>
+          </Row>
+        </ModalHeader>
+
+        <ModalBody className="justify-content-center">
+          <PopUp
+            handleConfirm={() => {
+              deletedoc()
+              setopen(false)
+            }}
+            isOpen={open}
+            closeModal={() => setopen(false)}
+          />
+          {loading && <Spinner color="warning" size="lg" />}
+          {!loading && (
+            <div>
+              <iframe
+                style={{ height: '400px', width: '100%' }}
+                title="Aaq"
+                src={`${bloburl}#toolbar=0`}
+              />
+            </div>
+          )}
         </ModalBody>
       </Modal>
       <h2 className="warning spacing nodisplay">My Documents</h2>
@@ -494,7 +539,9 @@ const DocumentVault = () => {
                         color="secondary"
                         type="reset"
                         className="button-label"
-                        onClick={() => { resetDropzone() }}
+                        onClick={() => {
+                          resetDropzone()
+                        }}
                       >
                         Reset
                       </Button.Ripple>{' '}
@@ -556,7 +603,7 @@ const DocumentVault = () => {
                     <CardBody>
                       <div className="vx-collapse">
                         <CardHeader>
-                        <Col>
+                          <Col lg="1">
                             <b>View</b>
                           </Col>
                           <Col>
@@ -572,7 +619,10 @@ const DocumentVault = () => {
                             <b>Document Type</b>
                           </Col>
                           <Col>
-                            <b>Actions</b>
+                            <b>Download</b>
+                          </Col>
+                          <Col lg="1">
+                            <b>Delete</b>
                           </Col>
                         </CardHeader>
                         <hr />
@@ -580,12 +630,18 @@ const DocumentVault = () => {
                           return (
                             <>
                               <CardHeader key={collapseItem.id}>
-                                <Col width={10}><Eye
-                                    style={{ margin: '5px' }}
+                                <Col lg="1">
+                                  <Eye
+                                    style={{ margin: '5px', cursor: 'pointer' }}
                                     size={20}
-                                   // className="collapse-icon"
-                                    onClick={() =>{ setselecteddoc(collapseItem._id); setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]);}}
-                                  /></Col>
+                                    onClick={() => {
+                                      setselecteddoc(collapseItem._id)
+                                      setselectedatt(collapseItem.attachment)
+                                      toggleModal()
+                                      preview(collapseItem.attachment[0])
+                                    }}
+                                  />
+                                </Col>
                                 <Col>{collapseItem?.alias} </Col>
                                 <Col>{collapseItem?.expiry}</Col>
                                 <Col>
@@ -593,47 +649,32 @@ const DocumentVault = () => {
                                 </Col>
                                 <Col>{collapseItem?.type}</Col>
                                 <Col>
-                                {/* <Eye
-                                    style={{ margin: '5px' }}
-                                    size={20}
-                                    className="collapse-icon"
-                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]); if(collapseItem.attachment.length > 1) setnext(collapseItem.attachment[1]) }}
-                                  /> */}
-
                                   <a
                                     href={collapseItem.attachment}
                                     download={collapseItem?.filename}
                                     tabIndex="_balnk"
-                                    style={{ margin: '10px' }}
+                                    style={{
+                                      margin: '10px',
+                                      cursor: 'pointer'
+                                    }}
                                   >
                                     <Download
                                       size={20}
                                       className="collapse-icon"
                                     />
                                   </a>
-
+                                </Col>
+                                <Col lg="1">
                                   <Trash2
-                                    style={{ margin: '5px' }}
+                                    style={{ margin: '5px', cursor: 'pointer' }}
                                     size={20}
                                     className="collapse-icon"
-                                    onClick={() => { deletedoc(collapseItem._id) }}
+                                    onClick={() => {
+                                      setDeleteId(collapseItem._id)
+                                      setopen(true)
+                                    }}
                                   />
-                                  
-                                  {/* <CardTitle>
-                                     
-                      <Button.Ripple
-                      color="warning"
-                      type="submit"
-                      className="button-label"
-                      //onClick={submitDropzone}
-                      //disable={isDisabled ? 'true' : 'false'}
-                    >
-                      View 
-                    </Button.Ripple>
-                    
-                                </CardTitle> */}
                                 </Col>
-
                               </CardHeader>
                               <hr />
                             </>
