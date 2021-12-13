@@ -138,8 +138,8 @@ const DocumentVault = () => {
   const [modal, setmodal] = useState(false);
   const [selectedforpreview,setselectedforpreview] = useState();
   const [selectedatt, setselectedatt] = useState([]);
-  const [previous, setprevious] = useState();
-  const [next, setnext] = useState();
+  //const [previous, setprevious] = useState();
+  //const [next, setnext] = useState();
   const [previdx, setprevidx] = useState(0);
   const [files, setfiles] = useState([])
   const [filter, setFilter] = useState([])
@@ -155,11 +155,6 @@ const DocumentVault = () => {
     setmodal(!modal)
   }
 
-  const clearModal =() => {
-    setprevious()
-    setnext()
-    setprevidx()
-  }
 
   const preview = (id) => {
     setloading(true)
@@ -192,6 +187,7 @@ const DocumentVault = () => {
   }
 
   const getDocuments = () => {
+    axios.defaults.baseURL = 'http://localhost:5000'
     axios
       .get(`/backendapi/documents/${user._id}`, {
         headers: {
@@ -344,11 +340,10 @@ const DocumentVault = () => {
       toast.success("Document Deleted Successfully")
     })
   }
-  console.log(previdx, previous,next);
   return (
     
     <React.Fragment>
-      <Modal isOpen={modal} toggle={()=>{toggleModal();clearModal()}} centered={true} size="lg">
+      <Modal isOpen={modal} toggle={()=>{toggleModal();setprevidx()}} centered={true} size="lg">
         <ModalHeader
           toggle={toggleModal}
           tag="div"
@@ -360,7 +355,7 @@ const DocumentVault = () => {
             justifyContent: 'center'
           }}
         >
-          Message
+          Preview {previdx + 1} of {selectedatt?.length}
         </ModalHeader>
         <ModalBody>
           {loading && <Spinner color="warning" size="sm" />}
@@ -386,19 +381,21 @@ const DocumentVault = () => {
               onClick={() => { deletesender(selectedforpreview._id) }}
             />
             
-            {next &&
+            {(selectedatt.length > previdx+1) &&
             <ChevronRight
               style={{ margin: '5px' , float: 'right'}}
               size={20}
               className="collapse-icon"
-              onClick={() => { preview(next); setprevious(selectedatt[previdx]); (selectedatt.length > previdx+1) ? (setnext(selectedatt[previdx+2])) : setnext();setprevidx(previdx+1); }}
+              //onClick={() => { preview(next); setprevious(selectedatt[previdx]); (selectedatt.length > previdx+1) ? (setnext(selectedatt[previdx+2])) : setnext();setprevidx(previdx+1); }}
+              onClick={() => { preview(selectedatt[previdx+1]); setprevidx(previdx+1); }}
             />}
 
-            { previous && <ChevronLeft
+            { ( previdx > 0) && <ChevronLeft
               style={{ margin: '5px', float: 'right' }}
               size={20}
               className="collapse-icon"
-              onClick={() => { preview(previous); setprevious((previdx-2) < 0 ? setprevious() : selectedatt[previdx-2]);setnext(selectedatt[previdx+2]);setprevidx(previdx-1); }}
+              onClick={() => { preview(selectedatt[previdx-1]); setprevidx(previdx-1); }}
+              //onClick={() => { preview(previous); setprevious((previdx-2) < 0 ? setprevious() : selectedatt[previdx-2]);setnext(selectedatt[previdx+2]);setprevidx(previdx-1); }}
             /> }
             <iframe
               style={{ height: '400px', width: '100%' }}
@@ -554,6 +551,9 @@ const DocumentVault = () => {
                     <CardBody>
                       <div className="vx-collapse">
                         <CardHeader>
+                        <Col>
+                            <b>View</b>
+                          </Col>
                           <Col>
                             <b>Name / Alias</b>
                           </Col>
@@ -575,14 +575,25 @@ const DocumentVault = () => {
                           return (
                             <>
                               <CardHeader key={collapseItem.id}>
-                                <Col>{collapseItem?.alias}</Col>
+                                <Col width={10}><Eye
+                                    style={{ margin: '5px' }}
+                                    size={20}
+                                   // className="collapse-icon"
+                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]);}}
+                                  /></Col>
+                                <Col>{collapseItem?.alias} </Col>
                                 <Col>{collapseItem?.expiry}</Col>
                                 <Col>
                                   {collapseItem?.createdAt?.split('T')?.[0]}
                                 </Col>
                                 <Col>{collapseItem?.type}</Col>
                                 <Col>
-
+                                {/* <Eye
+                                    style={{ margin: '5px' }}
+                                    size={20}
+                                    className="collapse-icon"
+                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]); if(collapseItem.attachment.length > 1) setnext(collapseItem.attachment[1]) }}
+                                  /> */}
 
                                   <a
                                     href={collapseItem.attachment}
@@ -602,12 +613,7 @@ const DocumentVault = () => {
                                     className="collapse-icon"
                                     onClick={() => { deletedoc(collapseItem._id) }}
                                   />
-                                  <Eye
-                                    style={{ margin: '5px' }}
-                                    size={20}
-                                    className="collapse-icon"
-                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]); if(collapseItem.attachment.length > 1) setnext(collapseItem.attachment[1]) }}
-                                  />
+                                  
                                   {/* <CardTitle>
                                      
                       <Button.Ripple
