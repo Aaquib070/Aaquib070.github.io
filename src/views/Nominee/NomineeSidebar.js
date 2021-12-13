@@ -8,7 +8,9 @@ import themeConfig from 'configs/themeConfig'
 import { toast } from 'react-toastify'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
 
-const relationDropDown = JSON.parse(sessionStorage.getItem('dropdowns')).nomineeRelation;
+const relationDropDown = JSON.parse(
+  sessionStorage.getItem('dropdowns')
+).nomineeRelation
 
 const NomineeSidebar = (props) => {
   const [relation, setrelation] = useState()
@@ -56,7 +58,7 @@ const NomineeSidebar = (props) => {
         relation !== 'Son-in-law' &&
         relation !== 'Wife'
       ) {
-        setrelation('others')
+        setrelation('Others')
         setrelation1(relation)
       }
       setaddress(address)
@@ -80,7 +82,7 @@ const NomineeSidebar = (props) => {
   const relationValue = (e) => {
     const value = e?.value
     setrelation(value)
-    value !== 'others' && seterrorrelation1('')
+    value !== 'Others' && seterrorrelation1('')
     !(!value?.length || !value.trim()) && seterrorrelation('')
   }
   const handleValue = (e) => {
@@ -172,15 +174,15 @@ const NomineeSidebar = (props) => {
     !contact1?.length && setcontact1Func()
     !contact2?.length && setcontact1Func()
     !relation?.length && setrelationFunc()
-    relation === 'others' && !relation1?.length && setrelation1Func()
-    relation !== 'others' && seterrorrelation1('')
+    relation === 'Others' && !relation1?.length && setrelation1Func()
+    relation !== 'Others' && seterrorrelation1('')
     return (
       errorname ||
       !name?.length ||
       errorrelation ||
       !relation?.length ||
       errorrelation1 ||
-      (relation === 'others' && !relation1?.length) ||
+      (relation === 'Others' && !relation1?.length) ||
       erroremail ||
       !email?.length ||
       erroraddress ||
@@ -300,7 +302,9 @@ const NomineeSidebar = (props) => {
             id="data-category"
             name="relation"
             options={relationDropDown}
-            value={relationDropDown?.filter((option) => option.value === relation)}
+            value={relationDropDown?.filter(
+              (option) => option.value === relation
+            )}
             isClearable={true}
             placeholder={'Relation'}
             onChange={(e) => relationValue(e)}
@@ -317,7 +321,7 @@ const NomineeSidebar = (props) => {
             Relation*
           </Label>
         </FormGroup>
-        {relation === 'others' && (
+        {relation === 'Others' && (
           <FormGroup className="form-label-group mt-2 mb-0">
             <Input
               type="text"

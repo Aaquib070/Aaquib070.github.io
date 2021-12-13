@@ -1,6 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import { Row, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
+import {
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  ModalBody,
+  ModalHeader,
+  Modal
+} from 'reactstrap'
 
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import ReactAudioPlayer from 'react-audio-player'
@@ -80,7 +90,10 @@ const ContactUs = (props) => {
   const [currentData, setcurrentData] = useState(null)
   const [isLoading, setisLoading] = useState(false)
   const [nominees, setnominees] = useState([])
-
+  const [modal, setmodal] = useState(false)
+  const [fname, setfname] = useState('')
+  const [fmail, setfmail] = useState('')
+  const [fphone, setfphone] = useState('')
   const [nomineeOption, setnomineeOption] = useState([
     {
       value: 'Add Nominee',
@@ -92,6 +105,34 @@ const ContactUs = (props) => {
   const handleCheck = () => {
     !sameAsAbove && setdate()
     setsameAsAbove(!sameAsAbove)
+  }
+  const handleAddNew = () => {
+    const arr = {
+      fname,
+      fmail,
+      fphone
+    }
+    console.log('arr', arr)
+  }
+  const clearCustomField = () => {
+    setfname('')
+    setfmail('')
+    setfphone('')
+  }
+  const toggleModal = () => {
+    if (modal) {
+      clearCustomField()
+    }
+    setmodal(!modal)
+  }
+  const animateLabel = (value) => {
+    if (value) {
+      document.getElementById('buttonLabel').classList.remove('no-display')
+      document.getElementById('buttonLabel').classList.add('button-text')
+    } else {
+      document.getElementById('buttonLabel').classList.add('no-display')
+      document.getElementById('buttonLabel').classList.remove('button-text')
+    }
   }
   useEffect(() => {
     props.getScheduledMessages()
@@ -182,6 +223,88 @@ const ContactUs = (props) => {
           <CardTitle>Schedule a Message</CardTitle>
         </CardHeader>
         <CardBody>
+          <Row>
+            <Col sm="12">
+              <Modal isOpen={modal} toggle={toggleModal} centered={true}>
+                <ModalHeader
+                  toggle={toggleModal}
+                  tag="div"
+                  style={{
+                    color: 'var(--warning)',
+                    fontSize: '1.45rem',
+                    fontWeight: 'bold',
+                    letterSpacing: '1px',
+                    justifyContent: 'center'
+                  }}
+                >
+                  Add New Receiver
+                </ModalHeader>
+                <ModalBody>
+                  <FormGroup className="form-label-group">
+                    <Input
+                      name="fname"
+                      id="fname"
+                      value={fname}
+                      placeholder="Name"
+                      onChange={(e) => {
+                        setfname(e.target.value)
+                      }}
+                    />
+                    <Label for="EmailMulti">Name</Label>
+                  </FormGroup>
+                  <FormGroup className="form-label-group">
+                    <Input
+                      type="email"
+                      name="fmail"
+                      id="fmail"
+                      value={fmail}
+                      placeholder="Email"
+                      onChange={(e) => {
+                        setfmail(e.target.value)
+                      }}
+                    />
+                    <Label for="EmailMulti">Email</Label>
+                  </FormGroup>
+                  <FormGroup className="form-label-group">
+                    <Input
+                      type="tel"
+                      name="Contact"
+                      id="Contact"
+                      value={fphone}
+                      placeholder="Contact"
+                      onChange={(e) => {
+                        setfphone(e.target.value)
+                      }}
+                    />
+                    <Label for="EmailMulti">Contact</Label>
+                  </FormGroup>
+
+                  <FormGroup
+                    className="form-label-group mb-0"
+                    style={{ textAlign: 'right' }}
+                  >
+                    <Button.Ripple
+                      outline
+                      color="secondary"
+                      type="reset"
+                      className="mb-1 button-label"
+                      onClick={clearCustomField}
+                    >
+                      Cancel
+                    </Button.Ripple>
+                    <Button.Ripple
+                      color="warning"
+                      type="submit"
+                      className="button-label"
+                      onClick={handleAddNew}
+                    >
+                      Add
+                    </Button.Ripple>
+                  </FormGroup>
+                </ModalBody>
+              </Modal>
+            </Col>
+          </Row>
           <Row>
             <Col lg="8" md="6" sm="12">
               <Row className="match-height">
@@ -368,15 +491,39 @@ const ContactUs = (props) => {
                             </Label>
                           </FormGroup>
                         </Col>{' '}
-                        <Col sm="">
-                          <FormGroup className="mt-75" check>
-                            <Label check> Afterlife delivery</Label>
-                            <Input
-                              type="checkbox"
-                              checked={sameAsAbove}
-                              onChange={() => handleCheck()}
-                            />
-                          </FormGroup>
+                        <Col sm="" className="d-flex">
+                          <Col md="6" sm="12">
+                            <FormGroup className="mt-75" check>
+                              <Input
+                                type="checkbox"
+                                checked={sameAsAbove}
+                                onChange={() => handleCheck()}
+                              />
+                              <Label check> Afterlife delivery</Label>
+                            </FormGroup>
+                          </Col>
+
+                          <Col md="6" sm="12" style={{ display: 'flex' }}>
+                            <Button
+                              color="white"
+                              outline
+                              onClick={toggleModal}
+                              className="add-button"
+                              id="addButton"
+                              onMouseEnter={() => animateLabel(true)}
+                              onMouseLeave={() => animateLabel(false)}
+                              style={{
+                                backgroundColor: 'var(--warning)'
+                              }}
+                            >
+                              +
+                            </Button>
+                            <div className="label-div">
+                              <span id="buttonLabel" className="no-display">
+                                Message Receiver
+                              </span>
+                            </div>
+                          </Col>
                         </Col>
                       </Row>
                     </>
