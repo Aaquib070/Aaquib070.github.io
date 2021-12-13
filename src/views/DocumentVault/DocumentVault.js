@@ -137,6 +137,7 @@ const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 const DocumentVault = () => {
   const [modal, setmodal] = useState(false);
   const [selectedforpreview,setselectedforpreview] = useState();
+  const [selecteddoc,setselecteddoc] = useState();
   const [selectedatt, setselectedatt] = useState([]);
   //const [previous, setprevious] = useState();
   //const [next, setnext] = useState();
@@ -169,7 +170,7 @@ const DocumentVault = () => {
       })
       .then((res) => {
         setselectedforpreview(res.data[0]);
-     
+        
         const attm = decryptdata(res.data[0]?.media);
         const byteCharacters = atob(attm.split('base64,')[1])
         const byteNumbers = new Array(byteCharacters.length)
@@ -187,7 +188,6 @@ const DocumentVault = () => {
   }
 
   const getDocuments = () => {
-    axios.defaults.baseURL = 'http://localhost:5000'
     axios
       .get(`/backendapi/documents/${user._id}`, {
         headers: {
@@ -252,14 +252,18 @@ const DocumentVault = () => {
     setreset(true)
   }
 
-  const deletesender = (id) => {
+  const deletemedia = (id) => {
+    //axios.defaults.baseURL = 'http://localhost:5000'
     axios
-      .delete(`/backendapi/sender/deletebyid/${id}`, {
+      .delete(`/backendapi/document/media/deletebyid/${id}/${selecteddoc}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }
       })
       .then((res) => {
+        
+        preview(selectedatt[previdx-1]);
+        previdx !== 0 ? setprevidx(previdx-1) : toggleModal()
         toast.success('Message deleted successfully!')
       })
       .catch()
@@ -331,6 +335,7 @@ const DocumentVault = () => {
   }
 
   const deletedoc = (id) => {
+    //axios.defaults.baseURL = 'http://localhost:5000'
     axios.delete('/backendapi/document/deletebyid/' + id, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -373,13 +378,13 @@ const DocumentVault = () => {
                 className="collapse-icon"
               />
             </a>
-
+            {selectedatt.length > 1 && previdx !==0 && 
             <Trash2
               style={{ margin: '5px' }}
               size={20}
               className="collapse-icon"
-              onClick={() => { deletesender(selectedforpreview._id) }}
-            />
+              onClick={() => { deletemedia(selectedforpreview._id) }}
+            />}
             
             {(selectedatt.length > previdx+1) &&
             <ChevronRight
@@ -579,7 +584,7 @@ const DocumentVault = () => {
                                     style={{ margin: '5px' }}
                                     size={20}
                                    // className="collapse-icon"
-                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]);}}
+                                    onClick={() =>{ setselecteddoc(collapseItem._id); setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]);}}
                                   /></Col>
                                 <Col>{collapseItem?.alias} </Col>
                                 <Col>{collapseItem?.expiry}</Col>
