@@ -10,13 +10,17 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  Label
+  Label,
+  Modal,
+  ModalBody,
+  Spinner,
+  ModalHeader
 } from 'reactstrap'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 //import 'assets/scss/plugins/extensions/toastr.scss'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
-import { Download, XSquare, Trash2 } from 'react-feather'
+import { Download, XSquare, Trash2, Eye, ChevronLeft, ChevronRight } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
 import txtFile from 'assets/img/icons/txt-file.png'
@@ -46,7 +50,7 @@ const ProgrammaticallyDropzone = (props) => {
   const { getRootProps, getInputProps, open } = useDropzone({
     //accept: "image/*",
     //noClick: true,
-    multiple: false,
+    multiple: true,
     //noKeyboard: true,
     onDrop: (acceptedFiles) => {
       props.setfilesOndrop(acceptedFiles)
@@ -74,7 +78,7 @@ const ProgrammaticallyDropzone = (props) => {
           src={file.preview}
           className="dz-img"
           onError={(e) => {
-            console.log(file)
+           
             if (file.type === 'text/plain') {
               e.target.src = txtFile
             } else if (file.type === 'application/pdf') {
@@ -131,14 +135,61 @@ const ProgrammaticallyDropzone = (props) => {
 }
 const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 const DocumentVault = () => {
+  const [modal, setmodal] = useState(false);
+  const [selectedforpreview,setselectedforpreview] = useState();
+  const [selectedatt, setselectedatt] = useState([]);
+  const [previous, setprevious] = useState();
+  const [next, setnext] = useState();
+  const [previdx, setprevidx] = useState(0);
   const [files, setfiles] = useState([])
   const [filter, setFilter] = useState([])
-
+  const [loading, setloading] = useState(false)
   const [reset, setreset] = useState(false)
   const [alias, setalias] = useState()
   const [expiry, setexpiry] = useState()
   const [desc, setdesc] = useState()
   const [documentList, setdocumentList] = useState([])
+  const [bloburl, setbloburl] = useState()
+
+  const toggleModal = () => {
+    setmodal(!modal)
+  }
+
+  const clearModal =() => {
+    setprevious()
+    setnext()
+    setprevidx()
+  }
+
+  const preview = (id) => {
+    setloading(true)
+    //setvideo(type === 'Video' ? true : false)
+    
+    const token = sessionStorage.getItem('authtoken')
+    axios
+      .get(`/backendapi/sender/msg/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        setselectedforpreview(res.data[0]);
+     
+        const attm = decryptdata(res.data[0]?.media);
+        const byteCharacters = atob(attm.split('base64,')[1])
+        const byteNumbers = new Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i)
+        }
+        const byteArray = new Uint8Array(byteNumbers)
+        const blob = new Blob([byteArray], {
+          type: res.data[0]?.type
+        })
+        const blobUrl = URL.createObjectURL(blob)
+        setbloburl(blobUrl)
+        setloading(false)
+      })
+  }
 
   const getDocuments = () => {
     axios
@@ -154,8 +205,7 @@ const DocumentVault = () => {
           resp[l].id = l + 1
           resp[l].expiry = decryptdata(resp[l].expiry)
           resp[l].alias = decryptdata(resp[l].alias)
-          resp[l].attachment = decryptdata(resp[l].attachment)
-          resp[l].filename = decryptdata(resp[l].filename)
+          //resp[l].filename = decryptdata(resp[l].filename)
         }
         setdocumentList(resp)
       })
@@ -187,12 +237,13 @@ const DocumentVault = () => {
     setFilter(Filter)
   }
   const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
+    const prom = new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = () => resolve(reader.result)
       reader.onerror = (error) => reject(error)
     })
+    return prom;
   }
   const isDisabled = () => !files?.length || !expiry
 
@@ -201,71 +252,161 @@ const DocumentVault = () => {
     setalias()
     setdesc()
     setexpiry()
+    setfiles()
     setreset(true)
   }
-  const submitDropzone = (e) => {
+
+  const deletesender = (id) => {
+    axios
+      .delete(`/backendapi/sender/deletebyid/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
+        }
+      })
+      .then((res) => {
+        toast.success('Message deleted successfully!')
+      })
+      .catch()
+  }
+
+  const submitDropzone = async (e) => {
     e.preventDefault()
     if (!files.length) {
       toast.error('No File Selected')
       return
     }
-    getBase64(files[0])
-      .then((attachment) => {
-        const data = {}
-        data.user = user._id
-        data.type = 'Document Vault'
-        data.alias = encryptdata(alias)
-        data.filename = encryptdata(files[0].name)
-        data.attachment = encryptdata(attachment)
-        data.desc = encryptdata(desc)
-        data.expiry = encryptdata(expiry)
-        const resolveAfter3Sec = 
-    
-        axios
-          .post('/backendapi/documents/add', data, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          resolveAfter3Sec
-          .then((res) => {
-             resetDropzone()
-            //toast.success('File uploaded successfully')
-            getDocuments()
-          })
-          .catch((err) => {
-            setalias()
-            setdesc()
-            setexpiry()
-            setreset(true)
-            console.log('err docs', err)
-            toast.error('Something went wrong please try again')
-          })
-          toast.promise(
-            resolveAfter3Sec,
-            {
-              pending: 'Uploading ...',
-              success: 'File uploaded successfully',
-              error: 'Something went wrong'
-            })
-        
+    const attList = [];
+    const data = {}
+    data.user = user._id
+    data.type = 'Document Vault'
+    data.alias = encryptdata(alias)
+    //data.attachment = encryptdata(attachment)
+    data.desc = encryptdata(desc)
+    data.expiry = encryptdata(expiry)
+
+  
+
+    for (let i = 0; i < files.length; i++) {
+      const encf = await getBase64(files[i]);
+      
+      attList.push({
+        media: encryptdata(encf),
+        name: files[i].name,
+        type: files[i].type,
       })
-      .catch()
+    }
+    data.attachment = attList;
+    //const attachment =  await getBase64(files[0])
+    //console.log('attachment123',attachment);
+    //.then((attachment) => {
+      //axios.defaults.baseURL = 'http://localhost:5000'
+    
+
+      const resolveAfter3Sec = axios
+        .post('/backendapi/documents/add', data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+    resolveAfter3Sec
+      .then((res) => {
+        resetDropzone()
+        //toast.success('File uploaded successfully')
+        getDocuments()
+      })
+      .catch((err) => {
+        setalias()
+        setdesc()
+        setexpiry()
+        setreset(true)
+        console.log('err docs', err)
+        toast.error('Something went wrong please try again')
+      })
+    toast.promise(
+      resolveAfter3Sec,
+      {
+        pending: 'Uploading ...',
+        success: 'File uploaded successfully',
+        error: 'Something went wrong'
+      })
+
+    // })
+    // .catch()
   }
 
   const deletedoc = (id) => {
-    axios.delete('/backendapi/document/deletebyid/'+id, {
+    axios.delete('/backendapi/document/deletebyid/' + id, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(res=> {
+    }).then(res => {
       getDocuments();
       toast.success("Document Deleted Successfully")
     })
   }
-
+  console.log(previdx, previous,next);
   return (
+    
     <React.Fragment>
+      <Modal isOpen={modal} toggle={()=>{toggleModal();clearModal()}} centered={true} size="lg">
+        <ModalHeader
+          toggle={toggleModal}
+          tag="div"
+          style={{
+            color: 'var(--warning)',
+            fontSize: '1.45rem',
+            fontWeight: 'bold',
+            letterSpacing: '1px',
+            justifyContent: 'center'
+          }}
+        >
+          Message
+        </ModalHeader>
+        <ModalBody>
+          {loading && <Spinner color="warning" size="sm" />}
+          {!loading && <div >
+            
+            <a
+             href={bloburl}
+             //download
+             download={selectedforpreview?.name}
+             tabIndex="_balnk"
+              style={{ margin: '10px' }}
+            >
+              <Download
+                size={20}
+                className="collapse-icon"
+              />
+            </a>
+
+            <Trash2
+              style={{ margin: '5px' }}
+              size={20}
+              className="collapse-icon"
+              onClick={() => { deletesender(selectedforpreview._id) }}
+            />
+            
+            {next &&
+            <ChevronRight
+              style={{ margin: '5px' , float: 'right'}}
+              size={20}
+              className="collapse-icon"
+              onClick={() => { preview(next); setprevious(selectedatt[previdx]); (selectedatt.length > previdx+1) ? (setnext(selectedatt[previdx+2])) : setnext();setprevidx(previdx+1); }}
+            />}
+
+            { previous && <ChevronLeft
+              style={{ margin: '5px', float: 'right' }}
+              size={20}
+              className="collapse-icon"
+              onClick={() => { preview(previous); setprevious((previdx-2) < 0 ? setprevious() : selectedatt[previdx-2]);setnext(selectedatt[previdx+2]);setprevidx(previdx-1); }}
+            /> }
+            <iframe
+              style={{ height: '400px', width: '100%' }}
+              title='Aaq'
+              src={`${bloburl}#toolbar=0`}
+            /></div>}
+        </ModalBody>
+      </Modal>
       <h2 className="warning spacing nodisplay">My Documents</h2>
       <div key={Math.random()}></div>
       <Row>
@@ -278,93 +419,93 @@ const DocumentVault = () => {
             <CardBody>
               <Row>
                 <Col md="6" sm="12">
-                <Form>
-                  <FormGroup className="form-label-group">
-                    <Input
-                      type="text"
-                      name="name"
-                      id="nameMultiname"
-                      value={alias}
-                      placeholder="Attachment Name / Alias"
-                      onChange={(e) => setalias(e.target.value)}
-                    />
-                    <Label
-                      className={
-                        themeConfig.theme === 'dark'
-                          ? 'dark-label'
-                          : 'light-label'
-                      }
-                      for="nameMultiname"
-                    >
-                      Attachment Name / Alias
-                    </Label>
-                  </FormGroup>
+                  <Form>
+                    <FormGroup className="form-label-group">
+                      <Input
+                        type="text"
+                        name="name"
+                        id="nameMultiname"
+                        value={alias}
+                        placeholder="Attachment Name / Alias"
+                        onChange={(e) => setalias(e.target.value)}
+                      />
+                      <Label
+                        className={
+                          themeConfig.theme === 'dark'
+                            ? 'dark-label'
+                            : 'light-label'
+                        }
+                        for="nameMultiname"
+                      >
+                        Attachment Name / Alias
+                      </Label>
+                    </FormGroup>
 
-                  <FormGroup className="form-label-group">
-                    <Input
-                      className="input-label"
-                      type="Date"
-                      name="name"
-                      value={expiry}
-                      id="nameMultiExpiry"
-                      placeholder="Expiry Date"
-                      onChange={(e) => setexpiry(e.target.value)}
-                    />
-                    <Label
-                      className={
-                        themeConfig.theme === 'dark'
-                          ? 'dark-label'
-                          : 'light-label'
-                      }
-                      for="nameMultiExpiry"
+                    <FormGroup className="form-label-group">
+                      <Input
+                        className="input-label"
+                        type="Date"
+                        name="name"
+                        value={expiry}
+                        id="nameMultiExpiry"
+                        placeholder="Expiry Date"
+                        onChange={(e) => setexpiry(e.target.value)}
+                      />
+                      <Label
+                        className={
+                          themeConfig.theme === 'dark'
+                            ? 'dark-label'
+                            : 'light-label'
+                        }
+                        for="nameMultiExpiry"
+                      >
+                        Expiry Date
+                      </Label>
+                    </FormGroup>
+                    <FormGroup className="form-label-group">
+                      <Input
+                        className="input-label"
+                        type="text"
+                        name="name1"
+                        value={desc}
+                        id="nameMultiDescription1"
+                        placeholder="Description"
+                        onChange={(e) => setdesc(e?.target?.value)}
+                      />
+                      <Label
+                        className={
+                          themeConfig.theme === 'dark'
+                            ? 'dark-label'
+                            : 'light-label'
+                        }
+                        for="nameMultiDescription1"
+                      >
+                        Description
+                      </Label>
+                    </FormGroup>
+                    <FormGroup
+                      className="form-label-group last-row-form"
+                      style={{ textAlign: 'right' }}
                     >
-                      Expiry Date
-                    </Label>
-                  </FormGroup>
-                  <FormGroup className="form-label-group">
-                    <Input
-                      className="input-label"
-                      type="text"
-                      name="name1"
-                      value={desc}
-                      id="nameMultiDescription1"
-                      placeholder="Description"
-                      onChange={(e) => setdesc(e?.target?.value)}
-                    />
-                    <Label
-                      className={
-                        themeConfig.theme === 'dark'
-                          ? 'dark-label'
-                          : 'light-label'
-                      }
-                      for="nameMultiDescription1"
-                    >
-                      Description
-                    </Label>
-                  </FormGroup>
-                  <FormGroup
-                    className="form-label-group last-row-form"
-                    style={{ textAlign: 'right' }}
-                  >
-                    <Button.Ripple
-                      outline
-                      color="secondary"
-                      type="reset"
-                      className="button-label"
-                      onClick={()=>{resetDropzone()}}
-                    >
-                      Reset
-                    </Button.Ripple>{' '}
-                    <Button.Ripple
-                      color="warning"
-                      type="submit"
-                      className="button-label"
-                      onClick={submitDropzone}
-                      disable={isDisabled ? 'true' : 'false'}
-                    >
-                      Add
-                    </Button.Ripple>
-                  </FormGroup>
+                      <Button.Ripple
+                        outline
+                        color="secondary"
+                        type="reset"
+                        className="button-label"
+                        onClick={() => { resetDropzone() }}
+                      >
+                        Reset
+                      </Button.Ripple>{' '}
+                      <Button.Ripple
+                        color="warning"
+                        type="submit"
+                        className="button-label"
+                        onClick={submitDropzone}
+                        disable={isDisabled ? 'true' : 'false'}
+                      >
+                        Add
+                      </Button.Ripple>
+                    </FormGroup>
                   </Form>
                 </Col>
                 <Col md="6" sm="12">
@@ -414,16 +555,19 @@ const DocumentVault = () => {
                       <div className="vx-collapse">
                         <CardHeader>
                           <Col>
-                            <b>Attachment Name / Alias</b>
+                            <b>Name / Alias</b>
                           </Col>
                           <Col>
-                            <b>File Name</b>
+                            <b>Expiry</b>
                           </Col>
                           <Col>
                             <b>Created At</b>
                           </Col>
                           <Col>
                             <b>Document Type</b>
+                          </Col>
+                          <Col>
+                            <b>Actions</b>
                           </Col>
                         </CardHeader>
                         <hr />
@@ -432,32 +576,53 @@ const DocumentVault = () => {
                             <>
                               <CardHeader key={collapseItem.id}>
                                 <Col>{collapseItem?.alias}</Col>
-                                <Col>{collapseItem?.filename}</Col>
+                                <Col>{collapseItem?.expiry}</Col>
                                 <Col>
                                   {collapseItem?.createdAt?.split('T')?.[0]}
                                 </Col>
                                 <Col>{collapseItem?.type}</Col>
+                                <Col>
 
-                                <CardTitle>
 
                                   <a
                                     href={collapseItem.attachment}
                                     download={collapseItem?.filename}
                                     tabIndex="_balnk"
+                                    style={{ margin: '10px' }}
                                   >
                                     <Download
                                       size={20}
                                       className="collapse-icon"
                                     />
                                   </a>
-                                  
+
                                   <Trash2
-                                      style={{margin: '10px'}}
-                                      size={20}
-                                      className="collapse-icon"
-                                      onClick={()=> {deletedoc(collapseItem._id)}}
-                                    />
-                                </CardTitle>
+                                    style={{ margin: '5px' }}
+                                    size={20}
+                                    className="collapse-icon"
+                                    onClick={() => { deletedoc(collapseItem._id) }}
+                                  />
+                                  <Eye
+                                    style={{ margin: '5px' }}
+                                    size={20}
+                                    className="collapse-icon"
+                                    onClick={() =>{ setselectedatt(collapseItem.attachment); toggleModal(); preview(collapseItem.attachment[0]); if(collapseItem.attachment.length > 1) setnext(collapseItem.attachment[1]) }}
+                                  />
+                                  {/* <CardTitle>
+                                     
+                      <Button.Ripple
+                      color="warning"
+                      type="submit"
+                      className="button-label"
+                      //onClick={submitDropzone}
+                      //disable={isDisabled ? 'true' : 'false'}
+                    >
+                      View 
+                    </Button.Ripple>
+                    
+                                </CardTitle> */}
+                                </Col>
+
                               </CardHeader>
                               <hr />
                             </>
