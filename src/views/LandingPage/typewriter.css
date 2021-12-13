@@ -1,6 +1,6 @@
 :root {
 	--speed: 2.9s;
-	--background: #ffebd2;
+	--background: coral;
 	--cursor: black;
 }
 
@@ -42,7 +42,7 @@
 
 .typewriter::after {
 	width: 2px;
-	background-color: white;
+	background-color: coral;
 	animation: Typewriter var(--speed) steps(31) forwards 1s,
 		Cursor 500ms steps(28) infinite;
 }
