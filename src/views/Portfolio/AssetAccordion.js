@@ -19,6 +19,7 @@ const AssetAccordion = (props) => {
   const liabilities = JSON.parse(sessionStorage.getItem('logInUserData'))?.liabilities
   const [status, setstatus] = useState('Closed')
   const [searchresult,setsearchresult] = useState([]);
+  const [searchtext,setsearchtext]=useState()
   const { collapseItems, colorOption } = props
 
   const toggleCollapse = (collapseIDnew) => {
@@ -43,7 +44,7 @@ const AssetAccordion = (props) => {
     return title
   }
 
-  let  renderitem = searchresult.length > 0 ? searchresult: collapseItems;
+  let  renderitem = searchtext?.length > 0 ? searchresult: collapseItems;
   const accordionMarginItems =
   renderitem.length > 0 ? (
     renderitem.map((collapseItem) => {
@@ -91,6 +92,7 @@ const AssetAccordion = (props) => {
 
     
   const search = (value) => {
+    setsearchtext(value);
     const result = collapseItems.filter(item => {
   const ser2 = props.assetShow ? liabilities[item.id -1]?.liabilityDetails : assets[item.id -1]?.assetDetails
 

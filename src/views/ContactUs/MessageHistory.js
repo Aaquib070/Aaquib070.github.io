@@ -34,10 +34,34 @@ const MsgHistory = (props) => {
   const [loading, setloading] = useState(false)
   const [bloburl, setbloburl] = useState()
   const [video, setvideo] = useState(false)
-
+  const [searchresult, setsearchresult] = useState([])
   const [deleteID, setdeleteID] = useState('')
+  const [searchtext,setsearchtext]=useState()
   const toggleModal = () => {
     setmodal(!modal)
+  }
+
+  const search = (value) => {
+    setsearchtext(value)
+     const result = props.collapseItems.filter(item => {
+					let	startsWithCondition =
+							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
+              item.type.toLowerCase().startsWith(value.toLowerCase()) ||
+							item.title.toLowerCase().startsWith(value.toLowerCase()) 
+
+          let	includesCondition =
+							item.desc.toLowerCase().includes(value.toLowerCase()) ||
+              item.type.toLowerCase().includes(value.toLowerCase()) ||
+							item.title.toLowerCase().includes(value.toLowerCase()) 
+
+					if (startsWithCondition || includesCondition) { 
+            return true
+          } 
+
+
+    })
+    setsearchresult(result);
+  
   }
 
   const playVideo = (id, type) => {
@@ -177,9 +201,10 @@ const MsgHistory = (props) => {
     )
     return content
   }
+  let  renderitem = searchtext?.length > 0 ? searchresult: props.collapseItems;
   const accordionMarginItems =
-    props.collapseItems?.length > 0 ? (
-      props.collapseItems.map((collapseItem) => {
+  renderitem?.length > 0 ? (
+    renderitem.map((collapseItem) => {
         return (
           <div className="collapse-margin" key={collapseItem._id}>
             <PopUp
@@ -268,7 +293,7 @@ const MsgHistory = (props) => {
                 borderRadius: '5rem',
                 fontSize: '1rem'
               }}
-              onChange={(e) => props.handleFilter(e)}
+              onChange={(e) => search(e.target.value)}
               placeholder="Find"
               className="placeholder"
             />
