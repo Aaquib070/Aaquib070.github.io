@@ -98,7 +98,7 @@ const ViewComponent = (props) => {
   return (
     <div className="data-list-action">
       <Eye
-        className="cursor-pointer"
+        className="cursor-pointer mr-1"
         size={window.screen.width < 500 ? 13 : 20}
         onClick={() => {
           if (!props.showPass) {
@@ -198,23 +198,17 @@ const PasswordVault = (props) => {
       sortable: false,
       width: '50px',
       cell: function temp(row) {
-        return <DeleteComponent row={row} deleteRow={() => deletepwd(row)} />
-      }
-    },
-    {
-      name: '',
-      sortable: false,
-      width: '50px',
-      cell: function temp(row) {
-        return (
-          <ViewComponent
+        return <>
+          
+        <ViewComponent
             showPass={showPass}
             set={() => {
               setshowIdx(row)
               setmodal(!modal)
             }}
           />
-        )
+          <DeleteComponent row={row} deleteRow={() => deletepwd(row)} />
+          </>
       }
     }
   ]
@@ -635,7 +629,7 @@ const PasswordVault = (props) => {
                           </CardBody>
                         </Card>
                       </Col>
-                      <Ccube />
+                      
                     </Row>
 
                     <Row>
@@ -645,20 +639,20 @@ const PasswordVault = (props) => {
                             <CardTitle>Saved Passwords</CardTitle>
                           </CardHeader>
                           <CardBody style={{ paddingTop: '0px' }}>
-                            <Form>
+                            {/* <Form> */}
                               {saved?.length === 0 && (
                                 <h3 style={{ textAlign: 'center' }}>
                                   No records found!!!
                                 </h3>
                               )}
                               {saved?.length > 0 && (
-                                <div
-                                  className={`data-list ${
-                                    props.thumbView ? 'thumb-view' : 'list-view'
-                                  }`}
-                                >
+                                // <div
+                                //   className={`data-list ${
+                                //     props.thumbView ? 'thumb-view' : 'list-view'
+                                //   }`}
+                                // >
                                   <DataTable
-                                    width="100"
+                                    width="200"
                                     data={saved}
                                     columns={columns}
                                     noHeader
@@ -674,9 +668,9 @@ const PasswordVault = (props) => {
                                     customStyles={selectedStyle}
                                     sortIcon={<ChevronDown />}
                                   />
-                                </div>
+                                // </div>
                               )}
-                            </Form>
+                            {/* </Form> */}
                           </CardBody>
                         </Card>
                       </Col>
@@ -689,6 +683,7 @@ const PasswordVault = (props) => {
             </Row>
           </div>
         </Col>
+        <Ccube />
       </Row>
     </React.Fragment>
   )
