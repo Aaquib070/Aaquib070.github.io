@@ -417,7 +417,7 @@ const ContactUs = (props) => {
                     <Col sm="">
                       <FormGroup className="form-label-group">
                         <Input
-                          type="text"
+                          type="number"
                           id="title"
                           className="input-label"
                           placeholder="Reciver Phone"
