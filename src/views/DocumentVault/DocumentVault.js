@@ -304,7 +304,9 @@ const DocumentVault = () => {
         setselectedforpreview(res.data[0])
 
         const attm = decryptdata(res.data[0]?.media)
-        const byteCharacters = atob(attm.split('base64,')[1])
+        
+        if(attm) {
+        const byteCharacters = atob(attm?.split('base64,')[1])
         const byteNumbers = new Array(byteCharacters.length)
         for (let i = 0; i < byteCharacters.length; i++) {
           byteNumbers[i] = byteCharacters.charCodeAt(i)
@@ -316,6 +318,10 @@ const DocumentVault = () => {
         const blobUrl = URL.createObjectURL(blob)
         setbloburl(blobUrl)
         setloading(false)
+      } else {
+        toggleModal();
+        toast.warning("Something went wrong");
+      }
       })
   }
 
@@ -442,6 +448,7 @@ const DocumentVault = () => {
         }
       })
       .then((res) => {
+        getDocuments();
         preview(selectedatt[previdx - 1])
         previdx !== 0 ? setprevidx(previdx - 1) : toggleModal()
         toast.success('Message deleted successfully!')
@@ -535,14 +542,14 @@ const DocumentVault = () => {
       <Modal
         isOpen={modal}
         toggle={() => {
-          toggleModal()
-          setprevidx()
+          toggleModal();
+          setprevidx(0)
         }}
         centered={true}
         size="lg"
       >
         <ModalHeader
-          toggle={toggleModal}
+          toggle={()=>{toggleModal();setprevidx(0)}}
           cssModule={{ 'modal-title': 'w-100 text-center' }}
         >
           <Row>
@@ -563,6 +570,7 @@ const DocumentVault = () => {
                   size={25}
                   className="collapse-icon"
                   onClick={() => {
+                    //deletemedia(selectedforpreview._id)
                     setDeleteId(selectedforpreview._id)
                     setopen(true)
                   }}
