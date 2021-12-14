@@ -11,7 +11,7 @@ import {
   ModalHeader,
   Modal
 } from 'reactstrap'
-
+import Autocomplete from '@mui/material/Autocomplete'
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import ReactAudioPlayer from 'react-audio-player'
 
@@ -38,7 +38,7 @@ import { toast } from 'react-toastify'
 import Sidebar from '../Nominee/NomineeSidebar'
 
 import themeConfig from 'configs/themeConfig'
-const colourOptions1 = [
+const msgTypes = [
   {
     value: 'Attachment',
     label: 'Attachment',
@@ -90,10 +90,15 @@ const ContactUs = (props) => {
   const [currentData, setcurrentData] = useState(null)
   const [isLoading, setisLoading] = useState(false)
   const [nominees, setnominees] = useState([])
+  const [nomineeslist, setnomineeslist] = useState([])
   const [modal, setmodal] = useState(false)
   const [fname, setfname] = useState('')
   const [fmail, setfmail] = useState('')
   const [fphone, setfphone] = useState('')
+  const [rname, setrname] = useState('')
+  const [remail, setremail] = useState('')
+  const [rphone, setrphone] = useState('')
+  const [nomineeOption2, setnomineeOption2] = useState([]);
   const [nomineeOption, setnomineeOption] = useState([
     {
       value: 'Add Nominee',
@@ -102,6 +107,19 @@ const ContactUs = (props) => {
       isFixed: false
     }
   ])
+  const autocomp = (n) => {
+    if(n?.value) {
+      const nom = nomineeslist.filter(e=> {return e._id === n.value});
+      setrname(nom[0].name);
+      setrphone(nom[0].email);
+      setremail(nom[0].primaryContact);
+    } else {
+      setrname(n);
+      setrphone('');
+      setremail('');
+    }
+
+  }
   const handleCheck = () => {
     !sameAsAbove && setdate()
     setsameAsAbove(!sameAsAbove)
@@ -148,6 +166,8 @@ const ContactUs = (props) => {
   useEffect(() => {
     if (props.dataList.data.length) {
       const nomineeOptionTemp = nomineeOption
+      const nomineeOptionTemp2 = nomineeOption2
+      setnomineeslist( props.dataList.data);
       props.dataList.data.forEach((e) => {
         const temp = {
           value: e._id,
@@ -156,8 +176,10 @@ const ContactUs = (props) => {
           isFixed: false
         }
         nomineeOptionTemp.push(temp)
+        nomineeOptionTemp2.push(temp)
       })
       setnomineeOption(nomineeOptionTemp)
+      setnomineeOption2(nomineeOptionTemp2)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataList.data])
@@ -166,22 +188,15 @@ const ContactUs = (props) => {
     setisLoading(true)
     try {
       await props.addData(obj)
+      setrname();
+      setrphone();
+      setremail();
       setisLoading(false)
       handleSidebar(false, true)
     } catch {
       setisLoading(false)
       toast.error('Add Nominee Failed! Please contact admin')
     }
-  }
-  const changeNominee = (event) => {
-    const nomineesTemp = []
-    event?.length &&
-      event.forEach((e) => {
-        e.value === 'Add Nominee'
-          ? setsidebar(true)
-          : nomineesTemp.push({ id: e.value, name: e.label })
-      })
-    setnominees(nomineesTemp)
   }
 
   const editItem = (item) => {
@@ -334,10 +349,10 @@ const ContactUs = (props) => {
                         </Label>
                       </FormGroup>
                     </Col>
-                    {type && (
+                   
                       <Col sm="">
                         <FormGroup className="form-label-group">
-                          <Select
+                          {/* <Select
                             isMulti
                             name="nominee"
                             options={nomineeOption}
@@ -350,11 +365,79 @@ const ContactUs = (props) => {
                             placeholder="Nominee"
                             id="nominee"
                             onChange={changeNominee}
+                          /> */}
+                          
+                          <Autocomplete
+                          autoSelect
+                          freeSolo
+                            id="combo-box-demo"
+                            options={nomineeOption2}
+                            onChange={(e,n)=>{autocomp(n)}}
+                           // sx={{ width: 300 }}
+                            renderInput={(params) =>{
+                              return (
+                                <div ref={params.InputProps.ref}>
+                                  <input id='rec' type="text" {...params.inputProps} placeholder='Reciver' className="input-label form-control" autoFocus />
+                              </div>)
+                            }} 
+                            
                           />
-                          <Label>Select Nominee</Label>
+                          {/* <Label for="rec">Select Nominee</Label> */}
                         </FormGroup>
                       </Col>
-                    )}
+                      
+                      
+                      </Row>
+                      <Row>
+
+                    <Col sm="">
+                      <FormGroup className="form-label-group">
+                        <Input
+                          type="text"
+                          id="title"
+                          className="input-label"
+                          placeholder="Reciver Email"
+                          value={remail}
+                          onChange={(e) => {
+                            setremail(e.target.value)
+                          }}
+                        />
+                        <Label
+                          for="title"
+                          className={
+                            themeConfig.theme === 'dark'
+                              ? 'dark-label'
+                              : 'light-label'
+                          }
+                        >
+                          Reciver Email
+                        </Label>
+                      </FormGroup>
+                    </Col>
+                    <Col sm="">
+                      <FormGroup className="form-label-group">
+                        <Input
+                          type="text"
+                          id="title"
+                          className="input-label"
+                          placeholder="Reciver Phone"
+                          value={rphone}
+                          onChange={(e) => {
+                            setrphone(e.target.value)
+                          }}
+                        />
+                        <Label
+                          for="title"
+                          className={
+                            themeConfig.theme === 'dark'
+                              ? 'dark-label'
+                              : 'light-label'
+                          }
+                        >
+                          Reciver Phone
+                        </Label>
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
                     <Col sm="">
@@ -363,7 +446,7 @@ const ContactUs = (props) => {
                           className="React"
                           classNamePrefix="select"
                           name="color"
-                          options={colourOptions1}
+                          options={msgTypes}
                           ref={selecttype}
                           isClearable={true}
                           isDisabled={edititem}
@@ -383,6 +466,7 @@ const ContactUs = (props) => {
                             className="input-label"
                             name="date"
                             id="exampleDate"
+                            style={{zIndex: 1}}
                             placeholder="Enter Date"
                             disabled={!!sameAsAbove}
                             onKeyDown={(e) => e.preventDefault()}
@@ -569,6 +653,9 @@ const ContactUs = (props) => {
                               date,
                               signature,
                               nominees,
+                              rname,
+                              remail,
+                              rphone,
                               msg: recVideo
                             })
 

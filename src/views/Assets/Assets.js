@@ -58,7 +58,7 @@ const AddAssets = (props) => {
     ? props.messages?.assetOption
     : assOpts
 
-  const colourOptions1 = Object.keys(assOpts).map((ass) => {
+  const assetTypes = Object.keys(assOpts).map((ass) => {
     return {
       value: ass,
       label: props.messages?.colorOption?.[ass]
@@ -549,12 +549,12 @@ const AddAssets = (props) => {
                                             classNamePrefix="select"
                                             ref={selectAssetRef}
                                             isDisabled={editItem}
-                                            value={colourOptions1.filter(
+                                            value={assetTypes.filter(
                                               (option) =>
                                                 option.value === assetType
                                             )}
                                             name="color"
-                                            options={colourOptions1}
+                                            options={assetTypes}
                                             isClearable={true}
                                             placeholder={
                                               messages?.assetOptionText

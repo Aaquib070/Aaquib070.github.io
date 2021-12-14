@@ -32,6 +32,7 @@ import {
 } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
+import Draggable from 'react-draggable';
 import txtFile from 'assets/img/icons/txt-file.png'
 import pptFile from 'assets/img/icons/ppt-file.png'
 import pdfFile from 'assets/img/icons/pdf-file.png'
@@ -193,46 +194,58 @@ const DocumentVault = () => {
       }
     },
     {
-      name: 'Document Type',
+      name: 'Type',
       selector: 'type',
       sortable: true
     },
     {
-      name: 'Download',
+      name: 'Action',
       sortable: false,
       cell: function EditComp(row) {
-        return (
-          <a
-            href={row.attachment}
-            download={row?.filename}
-            tabIndex="_blank"
-            style={{
-              margin: '10px',
-              cursor: 'pointer'
-            }}
-          >
-            <Download size={20} className="collapse-icon" />
-          </a>
-        )
-      }
-    },
-    {
-      name: 'Delete',
-      sortable: false,
-      cell: function EditComp(row) {
-        return (
-          <Trash2
-            style={{ margin: '5px', cursor: 'pointer' }}
+        return ( <>
+        <Download size={20} className="collapse-icon mr-1" onClick={()=> {downloadAll(row.attachment)}} />
+        <Trash2
+            //style={{ cursor: 'pointer' }}
             size={20}
-            className="collapse-icon"
+            className="collapse-icon csp"
             onClick={() => {
               setDeleteId(row._id)
               setopen(true)
             }}
           />
+        </>
+          // <a
+          //   href={row.attachment}
+          //   download={row?.filename}
+          //   tabIndex="_blank"
+          //   style={{
+          //     margin: '10px',
+          //     cursor: 'pointer'
+          //   }}
+          // >
+
+            
+          // </a>
         )
       }
-    }
+    },
+    // {
+    //   name: 'Delete',
+    //   sortable: false,
+    //   cell: function EditComp(row) {
+    //     return (
+    //       <Trash2
+    //         style={{ margin: '5px', cursor: 'pointer' }}
+    //         size={20}
+    //         className="collapse-icon"
+    //         onClick={() => {
+    //           setDeleteId(row._id)
+    //           setopen(true)
+    //         }}
+    //       />
+    //     )
+    //   }
+    // }
   ]
   const [modal, setmodal] = useState(false)
   const [selectedforpreview, setselectedforpreview] = useState()
@@ -284,6 +297,55 @@ const DocumentVault = () => {
         setbloburl(blobUrl)
         setloading(false)
       })
+  }
+
+
+  const downloadAll = (ids) => {
+   // setloading(true)
+
+   ids.forEach(id => {
+
+    const token = sessionStorage.getItem('authtoken')
+    axios
+      .get(`/backendapi/sender/msg/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        //setselectedforpreview(res.data[0])
+
+        const attm = decryptdata(res.data[0]?.media)
+        const byteCharacters = atob(attm.split('base64,')[1])
+        const byteNumbers = new Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i)
+        }
+        const byteArray = new Uint8Array(byteNumbers)
+        const blob = new Blob([byteArray], {
+          type: res.data[0]?.type
+        })
+        const blobUrl = URL.createObjectURL(blob)
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.setAttribute(
+          'download',
+          `${res.data[0]?.name}`,
+        );
+    
+        // Append to html link element page
+        document.body.appendChild(link);
+    
+        // Start download
+        link.click();
+    
+        // Clean up and remove the link
+        link.parentNode.removeChild(link);
+        //setbloburl(blobUrl)
+        //setloading(false)
+      })
+
+    })
   }
 
   const getDocuments = () => {
@@ -449,6 +511,7 @@ const DocumentVault = () => {
         isOpen={open}
         closeModal={() => setopen(false)}
       />
+      <Draggable>
       <Modal
         isOpen={modal}
         toggle={() => {
@@ -547,6 +610,7 @@ const DocumentVault = () => {
           )}
         </ModalBody>
       </Modal>
+      </Draggable>
       <h2 className="warning spacing nodisplay">My Documents</h2>
       <div key={Math.random()}></div>
       <Row>

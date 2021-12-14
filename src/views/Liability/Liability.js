@@ -57,7 +57,7 @@ const AddLiability = (props) => {
   const template = props.messages?.liabilityOption
     ? props.messages?.liabilityOption
     : liabOpts
-  const colourOptions1 = Object.keys(liabOpts).map((liab) => {
+  const liabiltyTypes = Object.keys(liabOpts).map((liab) => {
     return {
       value: liab,
       label: props.messages?.colorOption?.[liab]
@@ -536,10 +536,10 @@ const AddLiability = (props) => {
                                             classNamePrefix="select"
                                             ref={selectAssetRef}
                                             name="color"
-                                            options={colourOptions1}
+                                            options={liabiltyTypes}
                                             isClearable={true}
                                             isDisabled={editItem}
-                                            value={colourOptions1.filter(
+                                            value={liabiltyTypes.filter(
                                               (option) =>
                                                 option.value === liabilityType
                                             )}
