@@ -589,8 +589,8 @@ const DocumentVault = () => {
           </Row>
         </ModalHeader>
 
-        <ModalBody className="justify-content-center">
-          <PopUp
+        <ModalBody className="justify-content-center" >
+        <PopUp
             handleConfirm={() => {
               deletedoc()
               setopen(false)
@@ -598,13 +598,15 @@ const DocumentVault = () => {
             isOpen={open}
             closeModal={() => setopen(false)}
           />
-          {loading && <Spinner color="warning" size="lg" />}
+          {loading && <Spinner style={{marginLeft: '48%'}} color="warning" size="lg" />}
           {!loading && (
-            <div>
+            <div >
               <iframe
                 style={{ height: '400px', width: '100%' }}
+                className='myiframe'
                 title="Aaq"
-                src={`${bloburl}#toolbar=0`}
+                src={`${bloburl}#zoom=200`}
+                //src={`${bloburl}#toolbar=0`}
               />
             </div>
           )}
