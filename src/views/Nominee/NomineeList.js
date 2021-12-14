@@ -271,6 +271,7 @@ const Nominee = (props) => {
 
 
   useEffect(() => {
+    console.log('props.filteredData',props.filteredData)
     if (props.filteredData && props.filteredData?.length > 0) {
       setdata(props.filteredData)
       setallData(props.filteredData)

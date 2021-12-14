@@ -262,10 +262,32 @@ const DocumentVault = () => {
   const [expiry, setexpiry] = useState()
   const [desc, setdesc] = useState()
   const [documentList, setdocumentList] = useState([])
+  const [searchresult, setsearchresult] = useState([])
   const [bloburl, setbloburl] = useState()
   const [open, setopen] = useState(false)
   const [deleteId, setDeleteId] = useState(false)
 
+  const search = (value) => {
+
+
+    const result = documentList.filter(item => {
+					let	startsWithCondition =
+							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
+							item.alias.toLowerCase().startsWith(value.toLowerCase()) 
+
+          let	includesCondition =
+							item.desc.toLowerCase().includes(value.toLowerCase()) ||
+							item.alias.toLowerCase().includes(value.toLowerCase()) 
+
+					if (startsWithCondition || includesCondition) { 
+            return true
+          } 
+
+
+    })
+    setsearchresult(result);
+  
+  }
   const toggleModal = () => {
     setmodal(!modal)
   }
@@ -732,7 +754,20 @@ const DocumentVault = () => {
                   <Card>
                     <div style={{ display: 'flex' }}>
                       <Col>
-                        <CardTitle>Download Documents</CardTitle>
+                        <h3 className='mt-1'>Documents List</h3>
+                      </Col>
+                      <Col>
+                      <Input
+              type="text"
+              style={{
+                height: '75%',
+                borderRadius: '5rem',
+                fontSize: '1rem'
+              }}
+              onChange={(e) => search(e.target.value)}
+              placeholder="Find"
+              className="placeholder"
+            />
                       </Col>
                       <Col className="form-label-group">
                         <Select
@@ -763,7 +798,7 @@ const DocumentVault = () => {
                       <DataTable
                         width="200"
                         columns={columns}
-                        data={documentList}
+                        data={searchresult.length > 0 ? searchresult : documentList}
                         noHeader={true}
                         responsive
                         pointerOnHover
