@@ -269,6 +269,15 @@ const Nominee = (props) => {
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataList])
 
+
+  useEffect(() => {
+    if (props.filteredData && props.filteredData?.length > 0) {
+      setdata(props.filteredData)
+      setallData(props.filteredData)
+      
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.filteredData])
+
   useEffect(() => {
     props.getData()
     props.dataTest()
@@ -414,7 +423,8 @@ const Nominee = (props) => {
 const mapStateToProps = (state) => {
   return {
     dataList: state.dataList,
-    listLoading: state.dataList.totalRecordsLoading
+    listLoading: state.dataList.totalRecordsLoading,
+    filteredData: state.dataList.filteredData
   }
 }
 const mapDispatchToProps = (dispatch) => {

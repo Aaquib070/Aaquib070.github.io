@@ -70,6 +70,7 @@ const DataListReducer = (state = initialState, action) => {
 			}
 		case 'FILTER_DATA':
 			let value = action.value
+			
 			let filteredData = []
 			if (value.length) {
 				filteredData = (
@@ -77,19 +78,7 @@ const DataListReducer = (state = initialState, action) => {
 				).filter(item => {
 					let startsWithCondition = ''
 					let includesCondition = ''
-					if (item.spendId) {
-						startsWithCondition =
-							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
-							item.item.toLowerCase().startsWith(value.toLowerCase()) ||
-							item.amount.toLowerCase().startsWith(value.toLowerCase()) ||
-							item.label.toLowerCase().includes(value.toLowerCase())
-
-						includesCondition =
-							item.desc.toLowerCase().includes(value.toLowerCase()) ||
-							item.item.toLowerCase().includes(value.toLowerCase()) ||
-							item.amount.toLowerCase().includes(value.toLowerCase()) ||
-							item.label.toLowerCase().includes(value.toLowerCase())
-					} else {
+				
 						startsWithCondition =
 							item.name.toLowerCase().startsWith(value.toLowerCase()) ||
 							item.primaryContact
@@ -103,18 +92,19 @@ const DataListReducer = (state = initialState, action) => {
 							item.primaryContact.toLowerCase().includes(value.toLowerCase()) ||
 							item.email.toLowerCase().includes(value.toLowerCase()) ||
 							item.relation.toLowerCase().includes(value.toLowerCase())
-					}
-
+					
+							
 					if (startsWithCondition) {
 						return startsWithCondition
 					} else if (!startsWithCondition && includesCondition) {
 						return includesCondition
 					} else return null
 				})
+				
 				//.slice(state.params.page - 1, state.params.perPage)
 				return {...state, filteredData}
 			} else {
-				filteredData = state.data
+				//filteredData = state.data
 				return {...state, filteredData}
 			}
 		case 'FILTER_SPEND_DATA':
