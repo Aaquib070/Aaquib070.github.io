@@ -268,8 +268,6 @@ const DocumentVault = () => {
   const [deleteId, setDeleteId] = useState(false)
 
   const search = (value) => {
-
-
     const result = documentList.filter(item => {
 					let	startsWithCondition =
 							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
@@ -757,17 +755,17 @@ const DocumentVault = () => {
                         <h3 className='mt-1'>Documents List</h3>
                       </Col>
                       <Col>
-                      <Input
-              type="text"
-              style={{
-                height: '75%',
-                borderRadius: '5rem',
-                fontSize: '1rem'
-              }}
-              onChange={(e) => search(e.target.value)}
-              placeholder="Find"
-              className="placeholder"
-            />
+                        <Input
+                          type="text"
+                          style={{
+                            height: '75%',
+                            borderRadius: '5rem',
+                            fontSize: '1rem'
+                          }}
+                          onChange={(e) => search(e.target.value)}
+                          placeholder="Find"
+                          className="placeholder"
+                        />
                       </Col>
                       <Col className="form-label-group">
                         <Select
