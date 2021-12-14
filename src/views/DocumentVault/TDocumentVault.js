@@ -19,7 +19,6 @@ import {
 import { toast } from 'react-toastify'
 import PopUp from 'utility/Popup'
 import 'react-toastify/dist/ReactToastify.css'
-import DataTable from 'react-data-table-component'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
 import {
   Download,
@@ -27,8 +26,7 @@ import {
   Trash2,
   Eye,
   ChevronLeft,
-  ChevronRight,
-  ChevronDown
+  ChevronRight
 } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
@@ -42,18 +40,6 @@ import defFile from 'assets/img/icons/file.png'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import themeConfig from 'configs/themeConfig'
 import axios from 'axios'
-const selectedStyle = {
-  rows: {
-    selectedHighlighStyle: {
-      backgroundColor: 'rgba(115,103,240,.05)',
-      color: '#7367F0 !important',
-      boxShadow: '0 0 1px 0 #7367F0 !important',
-      '&:hover': {
-        transform: 'translateY(0px) !important'
-      }
-    }
-  }
-}
 const colourOptions2 = [
   { value: 'All', label: 'All' },
   { value: 'Asset', label: 'Asset' },
@@ -155,85 +141,6 @@ const ProgrammaticallyDropzone = (props) => {
 }
 const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 const DocumentVault = () => {
-  const columns = [
-    {
-      name: 'View',
-      sortable: false,
-      minWidth: '110px',
-      cell: function EditComp(row) {
-        return (
-          <Eye
-            style={{ cursor: 'pointer' }}
-            size={20}
-            onClick={() => {
-              setselecteddoc(row._id)
-              setselectedatt(row.attachment)
-              toggleModal()
-              preview(row.attachment[0])
-            }}
-          />
-        )
-      }
-    },
-    {
-      name: 'Name / Alias',
-      selector: 'alias',
-      sortable: true
-    },
-    {
-      name: 'Expiry',
-      selector: 'expiry',
-      sortable: true
-    },
-    {
-      name: 'Created At',
-      sortable: true,
-      cell: function EditComp(row) {
-        return row?.createdAt?.split('T')?.[0]
-      }
-    },
-    {
-      name: 'Document Type',
-      selector: 'type',
-      sortable: true
-    },
-    {
-      name: 'Download',
-      sortable: false,
-      cell: function EditComp(row) {
-        return (
-          <a
-            href={row.attachment}
-            download={row?.filename}
-            tabIndex="_blank"
-            style={{
-              margin: '10px',
-              cursor: 'pointer'
-            }}
-          >
-            <Download size={20} className="collapse-icon" />
-          </a>
-        )
-      }
-    },
-    {
-      name: 'Delete',
-      sortable: false,
-      cell: function EditComp(row) {
-        return (
-          <Trash2
-            style={{ margin: '5px', cursor: 'pointer' }}
-            size={20}
-            className="collapse-icon"
-            onClick={() => {
-              setDeleteId(row._id)
-              setopen(true)
-            }}
-          />
-        )
-      }
-    }
-  ]
   const [modal, setmodal] = useState(false)
   const [selectedforpreview, setselectedforpreview] = useState()
   const [selecteddoc, setselecteddoc] = useState()
@@ -694,17 +601,86 @@ const DocumentVault = () => {
                       </Col>
                     </div>
                     <CardBody>
-                      <DataTable
-                        width="200"
-                        columns={columns}
-                        data={documentList}
-                        noHeader={true}
-                        responsive
-                        pointerOnHover
-                        selectableRowsHighlight
-                        customStyles={selectedStyle}
-                        sortIcon={<ChevronDown />}
-                      />
+                      <div className="vx-collapse">
+                        <CardHeader>
+                          <Col lg="1">
+                            <b>View</b>
+                          </Col>
+                          <Col>
+                            <b>Name / Alias</b>
+                          </Col>
+                          <Col>
+                            <b>Expiry</b>
+                          </Col>
+                          <Col>
+                            <b>Created At</b>
+                          </Col>
+                          <Col>
+                            <b>Document Type</b>
+                          </Col>
+                          <Col>
+                            <b>Download</b>
+                          </Col>
+                          <Col lg="1">
+                            <b>Delete</b>
+                          </Col>
+                        </CardHeader>
+                        <hr />
+                        {documentList.map((collapseItem) => {
+                          return (
+                            <>
+                              <CardHeader key={collapseItem.id}>
+                                <Col lg="1">
+                                  <Eye
+                                    style={{ margin: '5px', cursor: 'pointer' }}
+                                    size={20}
+                                    onClick={() => {
+                                      setselecteddoc(collapseItem._id)
+                                      setselectedatt(collapseItem.attachment)
+                                      toggleModal()
+                                      preview(collapseItem.attachment[0])
+                                    }}
+                                  />
+                                </Col>
+                                <Col>{collapseItem?.alias} </Col>
+                                <Col>{collapseItem?.expiry}</Col>
+                                <Col>
+                                  {collapseItem?.createdAt?.split('T')?.[0]}
+                                </Col>
+                                <Col>{collapseItem?.type}</Col>
+                                <Col>
+                                  <a
+                                    href={collapseItem.attachment}
+                                    download={collapseItem?.filename}
+                                    tabIndex="_balnk"
+                                    style={{
+                                      margin: '10px',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    <Download
+                                      size={20}
+                                      className="collapse-icon"
+                                    />
+                                  </a>
+                                </Col>
+                                <Col lg="1">
+                                  <Trash2
+                                    style={{ margin: '5px', cursor: 'pointer' }}
+                                    size={20}
+                                    className="collapse-icon"
+                                    onClick={() => {
+                                      setDeleteId(collapseItem._id)
+                                      setopen(true)
+                                    }}
+                                  />
+                                </Col>
+                              </CardHeader>
+                              <hr />
+                            </>
+                          )
+                        })}
+                      </div>
                     </CardBody>
                   </Card>
                 </Col>
