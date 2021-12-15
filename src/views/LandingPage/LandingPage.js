@@ -15,7 +15,7 @@ import {
   // Button
 } from 'reactstrap'
 import { connect } from 'react-redux'
-import { Facebook, Linkedin, Twitter, Instagram, Youtube } from 'react-feather'
+import { Facebook, Linkedin, Twitter, Instagram, Youtube, PhoneCall } from 'react-feather'
 import 'assets/scss/pages/authentication.scss'
 import AlwaysOn from './AlwaysOn'
 // import useWindowSize from 'utility/context/useWindowSize'
@@ -58,8 +58,13 @@ const LandingPage = (props) => {
       icon: <Twitter />
     },
     {
+      type: 'caller',
+      icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>
+    },
+    {
       type: 'youtube',
       icon: <Youtube />
+
     }
   ]
 
