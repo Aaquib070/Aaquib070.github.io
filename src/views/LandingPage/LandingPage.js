@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
+import Google from './../../assets/img/icons/google.png'
+import Apple from './../../assets/img/icons/apple.png'
 import {
   // Card,
   // CardTitle,
@@ -13,7 +15,7 @@ import {
   // Button
 } from 'reactstrap'
 import { connect } from 'react-redux'
-import { Facebook, Linkedin, Twitter, Instagram } from 'react-feather'
+import { Facebook, Linkedin, Twitter, Instagram, Youtube } from 'react-feather'
 import 'assets/scss/pages/authentication.scss'
 import AlwaysOn from './AlwaysOn'
 // import useWindowSize from 'utility/context/useWindowSize'
@@ -54,6 +56,10 @@ const LandingPage = (props) => {
     {
       type: 'twitter',
       icon: <Twitter />
+    },
+    {
+      type: 'youtube',
+      icon: <Youtube />
     }
   ]
 
@@ -170,97 +176,14 @@ const LandingPage = (props) => {
           </Row> */}
         </div>
       </Row>
-      <div className="foooter">
-        <div
-          style={{
-            height: '60px',
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
-          <div style={{ width: '150px', height: '100%', display: 'block' }}>
-            <div style={{ fontSize: '35px' }}>Last Arzi</div>
-            <div style={{ fontSize: '10px', textAlign: 'center' }}>
-              What <span style={{ color: 'coral' }}>Will</span> you leave behind
-            </div>
-          </div>
-          <div
-            style={{ width: 'max-content', height: '100%', display: 'flex' }}
-          >
-            <div
-              style={{
-                backgroundColor: 'coral',
-                height: '90%',
-                width: '150px',
-                borderRadius: '0.5rem',
-                color: 'white',
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                padding: '5px',
-                textAlign: 'center',
-                marginRight: '20px'
-              }}
-            >
-              Google
-            </div>
-            <div
-              style={{
-                backgroundColor: 'coral',
-                height: '90%',
-                width: '150px',
-                borderRadius: '0.5rem',
-                color: 'white',
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                padding: '5px',
-                textAlign: 'center'
-              }}
-            >
-              Apple
-            </div>
-          </div>
-        </div>
-        <div style={{ height: '30px', display: 'flex', justifyContent: 'end' }}>
+      {window.screen.width <= 1024 ? (
+        <div className="mobile-foooter">
           <div
             style={{
-              height: '100%',
-              width: 'max-content',
+              width: '250px',
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'flex-end'
-            }}
-          >
-            {content.map((item) => {
-              return (
-                <div
-                  style={{
-                    marginLeft: '1.8rem',
-                    fontSize: '15px',
-                    cursor: 'pointer',
-                    height: 'max-content'
-                  }}
-                  key={item}
-                >
-                  {item}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        <div
-          style={{
-            height: 'max-content',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '10px'
-          }}
-        >
-          <div
-            style={{
-              width: '170px',
-              display: 'flex',
-              justifyContent: 'space-between'
+              margin: 'auto'
             }}
           >
             {logos.map((item) => {
@@ -269,29 +192,133 @@ const LandingPage = (props) => {
           </div>
           <div
             style={{
-              height: '100%',
-              width: 'max-content',
+              width: '150px',
+              height: 'max-content',
+              display: 'block',
+              margin: '15px auto'
+            }}
+          >
+            <div style={{ fontSize: '35px' }}>Last Arzi</div>
+            <div style={{ fontSize: '10px', textAlign: 'center' }}>
+              What <span style={{ color: 'coral' }}>Will</span> you leave behind
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="foooter">
+          <div
+            style={{
+              height: '60px',
               display: 'flex',
               justifyContent: 'space-between'
             }}
           >
-            {otherContent.map((item) => {
-              return (
-                <div
-                  style={{
-                    marginLeft: '1.6rem',
-                    fontSize: '13px',
-                    height: 'max-content'
-                  }}
-                  key={item}
-                >
-                  {item}
-                </div>
-              )
-            })}
+            <div style={{ width: '150px', height: '100%', display: 'block' }}>
+              <div style={{ fontSize: '35px' }}>Last Arzi</div>
+              <div style={{ fontSize: '10px', textAlign: 'center' }}>
+                What <span style={{ color: 'coral' }}>Will</span> you leave
+                behind
+              </div>
+            </div>
+            <div
+              style={{ width: 'max-content', height: '100%', display: 'flex' }}
+            >
+              <div
+                style={{
+                  width: '170px',
+                  backgroundImage: `url(${Google})`,
+                  marginRight: '20px',
+                  backgroundSize: '175px',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div
+                style={{
+                  width: '140px',
+                  backgroundImage: `url(${Apple})`,
+                  backgroundSize: '240px',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+            </div>
+          </div>
+          <div
+            style={{ height: '30px', display: 'flex', justifyContent: 'end' }}
+          >
+            <div
+              style={{
+                height: '100%',
+                width: 'max-content',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end'
+              }}
+            >
+              {content.map((item) => {
+                return (
+                  <div
+                    style={{
+                      marginLeft: '1.8rem',
+                      fontSize: '15px',
+                      cursor: 'pointer',
+                      height: 'max-content'
+                    }}
+                    key={item}
+                  >
+                    {item}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+          <div
+            style={{
+              height: 'max-content',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '10px'
+            }}
+          >
+            <div
+              style={{
+                width: '200px',
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              {logos.map((item) => {
+                return item.icon
+              })}
+            </div>
+            <div
+              style={{
+                height: '100%',
+                width: 'max-content',
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              {otherContent.map((item) => {
+                return (
+                  <div
+                    style={{
+                      marginLeft: '1.6rem',
+                      fontSize: '13px',
+                      height: 'max-content'
+                    }}
+                    key={item}
+                  >
+                    {item}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
