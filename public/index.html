@@ -8,13 +8,13 @@
       http-equiv="Content-Security-Policy"
       content="default-src
       'self' *.herokuapp.com http://localhost:5000
-       data: blob: gap: https://ssl.gstatic.com
+       data: blob: wss: gap: https://ssl.gstatic.com
        'unsafe-eval' 'unsafe-inline' ;
        style-src 'self' 'unsafe-inline'
        https://unpkg.com https://fonts.googleapis.com;
        font-src 'self' 'unsafe-inline' https://fonts.gstatic.com data:;
-       media-src 'self' blob: data:;
-        img-src 'self' https://* http://* blob: data: content:;"
+       media-src 'self' blob: data: wss:;
+        img-src 'self' https://* http://* blob: wss: data: content:;"
       name="format-detection"
       content="telephone=no"
     />
