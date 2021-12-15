@@ -32,7 +32,7 @@ import {
 } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
-import Draggable from 'react-draggable';
+import Draggable from 'react-draggable'
 import txtFile from 'assets/img/icons/txt-file.png'
 import pptFile from 'assets/img/icons/ppt-file.png'
 import pdfFile from 'assets/img/icons/pdf-file.png'
@@ -167,7 +167,7 @@ const DocumentVault = () => {
             style={{ cursor: 'pointer' }}
             size={20}
             onClick={() => {
-              setselecteddoc(row._id)
+              // setselecteddoc(row._id)
               setselectedatt(row.attachment)
               toggleModal()
               preview(row.attachment[0])
@@ -202,18 +202,25 @@ const DocumentVault = () => {
       name: 'Action',
       sortable: false,
       cell: function EditComp(row) {
-        return ( <>
-        <Download size={20} className="collapse-icon mr-1" onClick={()=> {downloadAll(row.attachment)}} />
-        <Trash2
-            //style={{ cursor: 'pointer' }}
-            size={20}
-            className="collapse-icon csp"
-            onClick={() => {
-              setDeleteId(row._id)
-              setopen(true)
-            }}
-          />
-        </>
+        return (
+          <>
+            <Download
+              size={20}
+              className="collapse-icon mr-1"
+              onClick={() => {
+                downloadAll(row.attachment)
+              }}
+            />
+            <Trash2
+              //style={{ cursor: 'pointer' }}
+              size={20}
+              className="collapse-icon csp"
+              onClick={() => {
+                setDeleteId(row._id)
+                setopen(true)
+              }}
+            />
+          </>
           // <a
           //   href={row.attachment}
           //   download={row?.filename}
@@ -224,11 +231,10 @@ const DocumentVault = () => {
           //   }}
           // >
 
-            
           // </a>
         )
       }
-    },
+    }
     // {
     //   name: 'Delete',
     //   sortable: false,
@@ -249,7 +255,7 @@ const DocumentVault = () => {
   ]
   const [modal, setmodal] = useState(false)
   const [selectedforpreview, setselectedforpreview] = useState()
-  const [selecteddoc, setselecteddoc] = useState()
+  // const [selecteddoc, setselecteddoc] = useState()
   const [selectedatt, setselectedatt] = useState([])
   //const [previous, setprevious] = useState();
   //const [next, setnext] = useState();
@@ -268,23 +274,21 @@ const DocumentVault = () => {
   const [deleteId, setDeleteId] = useState(false)
 
   const search = (value) => {
-    const result = documentList.filter(item => {
-					let	startsWithCondition =
-							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
-							item.alias.toLowerCase().startsWith(value.toLowerCase()) 
+    const result = documentList.filter((item) => {
+      const startsWithCondition =
+        item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
+        item.alias.toLowerCase().startsWith(value.toLowerCase())
 
-          let	includesCondition =
-							item.desc.toLowerCase().includes(value.toLowerCase()) ||
-							item.alias.toLowerCase().includes(value.toLowerCase()) 
+      const includesCondition =
+        item.desc.toLowerCase().includes(value.toLowerCase()) ||
+        item.alias.toLowerCase().includes(value.toLowerCase())
 
-					if (startsWithCondition || includesCondition) { 
-            return true
-          } 
-
-
+      if (startsWithCondition || includesCondition) {
+        return true
+      }
+      return false
     })
-    setsearchresult(result);
-  
+    setsearchresult(result)
   }
   const toggleModal = () => {
     setmodal(!modal)
@@ -304,73 +308,67 @@ const DocumentVault = () => {
         setselectedforpreview(res.data[0])
 
         const attm = decryptdata(res.data[0]?.media)
-        
-        if(attm) {
-        const byteCharacters = atob(attm?.split('base64,')[1])
-        const byteNumbers = new Array(byteCharacters.length)
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i)
+
+        if (attm) {
+          const byteCharacters = atob(attm?.split('base64,')[1])
+          const byteNumbers = new Array(byteCharacters.length)
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          const blob = new Blob([byteArray], {
+            type: res.data[0]?.type
+          })
+          const blobUrl = URL.createObjectURL(blob)
+          setbloburl(blobUrl)
+          setloading(false)
+        } else {
+          toggleModal()
+          toast.warning('Something went wrong')
         }
-        const byteArray = new Uint8Array(byteNumbers)
-        const blob = new Blob([byteArray], {
-          type: res.data[0]?.type
-        })
-        const blobUrl = URL.createObjectURL(blob)
-        setbloburl(blobUrl)
-        setloading(false)
-      } else {
-        toggleModal();
-        toast.warning("Something went wrong");
-      }
       })
   }
 
-
   const downloadAll = (ids) => {
-   // setloading(true)
+    // setloading(true)
 
-   ids.forEach(id => {
-
-    const token = sessionStorage.getItem('authtoken')
-    axios
-      .get(`/backendapi/sender/msg/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((res) => {
-        //setselectedforpreview(res.data[0])
-
-        const attm = decryptdata(res.data[0]?.media)
-        const byteCharacters = atob(attm.split('base64,')[1])
-        const byteNumbers = new Array(byteCharacters.length)
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i)
-        }
-        const byteArray = new Uint8Array(byteNumbers)
-        const blob = new Blob([byteArray], {
-          type: res.data[0]?.type
+    ids.forEach((id) => {
+      const token = sessionStorage.getItem('authtoken')
+      axios
+        .get(`/backendapi/sender/msg/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
-        const blobUrl = URL.createObjectURL(blob)
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.setAttribute(
-          'download',
-          `${res.data[0]?.name}`,
-        );
-    
-        // Append to html link element page
-        document.body.appendChild(link);
-    
-        // Start download
-        link.click();
-    
-        // Clean up and remove the link
-        link.parentNode.removeChild(link);
-        //setbloburl(blobUrl)
-        //setloading(false)
-      })
+        .then((res) => {
+          //setselectedforpreview(res.data[0])
 
+          const attm = decryptdata(res.data[0]?.media)
+          const byteCharacters = atob(attm.split('base64,')[1])
+          const byteNumbers = new Array(byteCharacters.length)
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          const blob = new Blob([byteArray], {
+            type: res.data[0]?.type
+          })
+          const blobUrl = URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = blobUrl
+          link.setAttribute('download', `${res.data[0]?.name}`)
+
+          // Append to html link element page
+          document.body.appendChild(link)
+
+          // Start download
+          link.click()
+
+          // Clean up and remove the link
+          link.parentNode.removeChild(link)
+          //setbloburl(blobUrl)
+          //setloading(false)
+        })
     })
   }
 
@@ -439,22 +437,22 @@ const DocumentVault = () => {
     setreset(true)
   }
 
-  const deletemedia = (id) => {
-    //axios.defaults.baseURL = 'http://localhost:5000'
-    axios
-      .delete(`/backendapi/document/media/deletebyid/${id}/${selecteddoc}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
-        }
-      })
-      .then((res) => {
-        getDocuments();
-        preview(selectedatt[previdx - 1])
-        previdx !== 0 ? setprevidx(previdx - 1) : toggleModal()
-        toast.success('Message deleted successfully!')
-      })
-      .catch()
-  }
+  // const deletemedia = (id) => {
+  //   //axios.defaults.baseURL = 'http://localhost:5000'
+  //   axios
+  //     .delete(`/backendapi/document/media/deletebyid/${id}/${selecteddoc}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
+  //       }
+  //     })
+  //     .then((res) => {
+  //       getDocuments()
+  //       preview(selectedatt[previdx - 1])
+  //       previdx !== 0 ? setprevidx(previdx - 1) : toggleModal()
+  //       toast.success('Message deleted successfully!')
+  //     })
+  //     .catch()
+  // }
 
   const submitDropzone = async (e) => {
     e.preventDefault()
@@ -539,107 +537,116 @@ const DocumentVault = () => {
         closeModal={() => setopen(false)}
       />
       <Draggable>
-      <Modal
-        isOpen={modal}
-        toggle={() => {
-          toggleModal();
-          setprevidx(0)
-        }}
-        centered={true}
-        size="lg"
-      >
-        <ModalHeader
-          toggle={()=>{toggleModal();setprevidx(0)}}
-          cssModule={{ 'modal-title': 'w-100 text-center' }}
+        <Modal
+          isOpen={modal}
+          toggle={() => {
+            toggleModal()
+            setprevidx(0)
+          }}
+          centered={true}
+          size="lg"
         >
-          <Row>
-            <Col>
-              {!loading && (
-                <a
-                  href={bloburl}
-                  download={selectedforpreview?.name}
-                  tabIndex="_balnk"
-                  style={{ margin: '10px', cursor: 'pointer' }}
-                >
-                  <Download size={25} className="collapse-icon" />
-                </a>
-              )}
-              {!loading && selectedatt.length > 1 && previdx !== 0 && (
-                <Trash2
-                  style={{ margin: '5px', cursor: 'pointer' }}
-                  size={25}
-                  className="collapse-icon"
-                  onClick={() => {
-                    //deletemedia(selectedforpreview._id)
-                    setDeleteId(selectedforpreview._id)
-                    setopen(true)
-                  }}
-                />
-              )}
-            </Col>
-            <Col
-              style={{
-                color: 'var(--warning)',
-                fontSize: '1.45rem',
-                fontWeight: 'bold',
-                letterSpacing: '1px'
-              }}
-            >
-              Preview {previdx + 1} of {selectedatt?.length}
-            </Col>
-
-            <Col
-              style={{
-                justifyContent: 'center'
-              }}
-            >
-              {previdx > 0 && !loading && (
-                <ChevronLeft
-                  style={{ cursor: 'pointer' }}
-                  size={25}
-                  onClick={() => {
-                    preview(selectedatt[previdx - 1])
-                    setprevidx(previdx - 1)
-                  }}
-                />
-              )}
-              {selectedatt.length > previdx + 1 && !loading && (
-                <ChevronRight
-                  size={25}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    preview(selectedatt[previdx + 1])
-                    setprevidx(previdx + 1)
-                  }}
-                />
-              )}
-            </Col>
-          </Row>
-        </ModalHeader>
-
-        <ModalBody className="justify-content-center" >
-        <PopUp
-            handleConfirm={() => {
-              deletedoc()
-              setopen(false)
+          <ModalHeader
+            toggle={() => {
+              toggleModal()
+              setprevidx(0)
             }}
-            isOpen={open}
-            closeModal={() => setopen(false)}
-          />
-          {loading && <Spinner style={{marginLeft: '48%'}} color="warning" size="lg" />}
-          {!loading && (
-            <div >
-              <iframe
-                style={{ height: '400px', width: '100%' }}
-                className='myiframe'
-                title="Aaq"
-                src={`${bloburl}#zoom=200`}
-                //src={`${bloburl}#toolbar=0`}
+            cssModule={{ 'modal-title': 'w-100 text-center' }}
+          >
+            <Row>
+              <Col>
+                {!loading && (
+                  <a
+                    href={bloburl}
+                    download={selectedforpreview?.name}
+                    tabIndex="_balnk"
+                    style={{ margin: '10px', cursor: 'pointer' }}
+                  >
+                    <Download size={25} className="collapse-icon" />
+                  </a>
+                )}
+                {!loading && selectedatt.length > 1 && previdx !== 0 && (
+                  <Trash2
+                    style={{ margin: '5px', cursor: 'pointer' }}
+                    size={25}
+                    className="collapse-icon"
+                    onClick={() => {
+                      //deletemedia(selectedforpreview._id)
+                      setDeleteId(selectedforpreview._id)
+                      setopen(true)
+                    }}
+                  />
+                )}
+              </Col>
+              <Col
+                style={{
+                  color: 'var(--warning)',
+                  fontSize: '1.45rem',
+                  fontWeight: 'bold',
+                  letterSpacing: '1px'
+                }}
+              >
+                Preview {previdx + 1} of {selectedatt?.length}
+              </Col>
+
+              <Col
+                style={{
+                  justifyContent: 'center'
+                }}
+              >
+                {previdx > 0 && !loading && (
+                  <ChevronLeft
+                    style={{ cursor: 'pointer' }}
+                    size={25}
+                    onClick={() => {
+                      preview(selectedatt[previdx - 1])
+                      setprevidx(previdx - 1)
+                    }}
+                  />
+                )}
+                {selectedatt.length > previdx + 1 && !loading && (
+                  <ChevronRight
+                    size={25}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      preview(selectedatt[previdx + 1])
+                      setprevidx(previdx + 1)
+                    }}
+                  />
+                )}
+              </Col>
+            </Row>
+          </ModalHeader>
+
+          <ModalBody className="justify-content-center">
+            <PopUp
+              handleConfirm={() => {
+                deletedoc()
+                setopen(false)
+              }}
+              isOpen={open}
+              closeModal={() => setopen(false)}
+            />
+            {loading && (
+              <Spinner
+                style={{ marginLeft: '48%' }}
+                color="warning"
+                size="lg"
               />
-            </div>
-          )}
-        </ModalBody>
-      </Modal>
+            )}
+            {!loading && (
+              <div>
+                <iframe
+                  style={{ height: '400px', width: '100%' }}
+                  className="myiframe"
+                  title="Aaq"
+                  src={`${bloburl}#zoom=200`}
+                  //src={`${bloburl}#toolbar=0`}
+                />
+              </div>
+            )}
+          </ModalBody>
+        </Modal>
       </Draggable>
       <h2 className="warning spacing nodisplay">My Documents</h2>
       <div key={Math.random()}></div>
@@ -760,7 +767,7 @@ const DocumentVault = () => {
                   <Card>
                     <div style={{ display: 'flex' }}>
                       <Col>
-                        <h3 className='mt-1'>Documents List</h3>
+                        <h3 className="mt-1">Documents List</h3>
                       </Col>
                       <Col>
                         <Input
@@ -804,7 +811,9 @@ const DocumentVault = () => {
                       <DataTable
                         width="200"
                         columns={columns}
-                        data={searchresult.length > 0 ? searchresult : documentList}
+                        data={
+                          searchresult.length > 0 ? searchresult : documentList
+                        }
                         noHeader={true}
                         responsive
                         pointerOnHover
