@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
 import themeConfig from 'configs/themeConfig'
-import { CardBody, FormGroup, Input, Col, Row, Button, Label } from 'reactstrap'
+import {
+  CardBody,
+  FormGroup,
+  Input,
+  Col,
+  Row,
+  Button,
+  Label,
+  Form
+} from 'reactstrap'
 import './Login.css'
 import 'swiper/css/swiper.css'
 import 'assets/scss/plugins/extensions/swiper.scss'
@@ -77,17 +86,18 @@ const Register = (props) => {
 
               sessionStorage.setItem('logInGreeting', true)
               sessionStorage.setItem('theme', resp.theme ? resp.theme : 'light')
-              axios
-              .get('/backendapi/dropdowns').then(drop => {
-                console.log(drop);
-                if(drop.data?.length > 0) {
-                  sessionStorage.setItem('dropdowns',JSON.stringify(drop.data[0]))
+              axios.get('/backendapi/dropdowns').then((drop) => {
+                console.log(drop)
+                if (drop.data?.length > 0) {
+                  sessionStorage.setItem(
+                    'dropdowns',
+                    JSON.stringify(drop.data[0])
+                  )
                 }
-                
+
                 setloggedIn(true)
               })
               // subscribe(resp.email)
-              
             } else if (res?.data[0]?.status === 'emailNotConfirmed') {
               const userkey =
                 props.routerProps && props.routerProps.match.params.userkey
@@ -130,64 +140,68 @@ const Register = (props) => {
       })
     }
   }
+
   return (
     <CardBody className="pt-1">
-      <div
-        className={
-          window.screen.width <= 500 ? 'formOTP p-0 mt-1' : 'formOTP pb-0'
-        }
-      >
-        {errorMsg && <h5 style={{ color: 'red' }}>{errorMsg}</h5>}
-        <Row>
-          <Col lg="12" md="12" sm="12">
-            <FormGroup className="form-label-group">
-              <Input
-                type="text"
-                className="input-label"
-                name="user"
-                placeholder="Username"
-                onChange={handleChangeUsername}
-              />
-              <Label
-                className={
-                  themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-                }
-                for="user"
-              >
-                Username
-              </Label>
-            </FormGroup>
-            <FormGroup className="form-label-group">
-              <Input
-                className="input-label"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChangePassword}
-              />
-              <Label
-                className={
-                  themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-                }
-                for="password"
-              >
-                Password
-              </Label>
-            </FormGroup>
-          </Col>
-        </Row>
-        <div className="loginModalDiv_head">
-          <Button.Ripple
-            color="warning"
-            disabled={
-              password === '' || mobileNo === '' || loginText === 'Signing In'
-            }
-            onClick={(e) => handleSubmit(e)}
-          >
-            {loginText}
-          </Button.Ripple>
+      <Form onSubmit={(e) => handleSubmit(e)}>
+        <div
+          className={
+            window.screen.width <= 500 ? 'formOTP p-0 mt-1' : 'formOTP pb-0'
+          }
+        >
+          {errorMsg && <h5 style={{ color: 'red' }}>{errorMsg}</h5>}
+          <Row>
+            <Col lg="12" md="12" sm="12">
+              <FormGroup className="form-label-group">
+                <Input
+                  type="text"
+                  className="input-label"
+                  name="user"
+                  placeholder="Username"
+                  onChange={handleChangeUsername}
+                />
+                <Label
+                  className={
+                    themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
+                  }
+                  for="user"
+                >
+                  Username
+                </Label>
+              </FormGroup>
+              <FormGroup className="form-label-group">
+                <Input
+                  className="input-label"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChangePassword}
+                />
+                <Label
+                  className={
+                    themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
+                  }
+                  for="password"
+                >
+                  Password
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
+          <div className="loginModalDiv_head">
+            <Button.Ripple
+              type="submit"
+              color="warning"
+              disabled={
+                password === '' || mobileNo === '' || loginText === 'Signing In'
+              }
+              onClick={(e) => handleSubmit(e)}
+            >
+              {loginText}
+            </Button.Ripple>
+          </div>
         </div>
-      </div>
+      </Form>
     </CardBody>
   )
 }

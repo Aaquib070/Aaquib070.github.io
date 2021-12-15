@@ -79,17 +79,11 @@ const LandingPage = (props) => {
     'Copyright'
   ]
   useEffect(() => {
-    plan &&
-      document.getElementById('plan').scrollIntoView({ behavior: 'smooth' })
-    why &&
-      document.getElementById('whyUs').scrollIntoView({ behavior: 'smooth' })
-    feature &&
-      document.getElementById('feature').scrollIntoView({ behavior: 'smooth' })
     download &&
       document
         .getElementById('DownloadOptions')
         .scrollIntoView({ behavior: 'smooth' })
-  }, [plan, why, feature, download])
+  }, [download])
 
   return (
     <div>
