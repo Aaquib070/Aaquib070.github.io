@@ -81,7 +81,7 @@ const Caller = () => {
   useEffect(() => {
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL
-    socket.current = io.connect('http://localhost:5000');
+    socket.current = io.connect(backendUrl);
     
 
     socket.current.on("yourID", (id) => {
