@@ -36,32 +36,30 @@ const MsgHistory = (props) => {
   const [video, setvideo] = useState(false)
   const [searchresult, setsearchresult] = useState([])
   const [deleteID, setdeleteID] = useState('')
-  const [searchtext,setsearchtext]=useState()
+  const [searchtext, setsearchtext] = useState()
   const toggleModal = () => {
     setmodal(!modal)
   }
 
   const search = (value) => {
     setsearchtext(value)
-     const result = props.collapseItems.filter(item => {
-					let	startsWithCondition =
-							item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
-              item.type.toLowerCase().startsWith(value.toLowerCase()) ||
-							item.title.toLowerCase().startsWith(value.toLowerCase()) 
+    const result = props.collapseItems.filter((item) => {
+      const startsWithCondition =
+        item.desc.toLowerCase().startsWith(value.toLowerCase()) ||
+        item.type.toLowerCase().startsWith(value.toLowerCase()) ||
+        item.title.toLowerCase().startsWith(value.toLowerCase())
 
-          let	includesCondition =
-							item.desc.toLowerCase().includes(value.toLowerCase()) ||
-              item.type.toLowerCase().includes(value.toLowerCase()) ||
-							item.title.toLowerCase().includes(value.toLowerCase()) 
+      const includesCondition =
+        item.desc.toLowerCase().includes(value.toLowerCase()) ||
+        item.type.toLowerCase().includes(value.toLowerCase()) ||
+        item.title.toLowerCase().includes(value.toLowerCase())
 
-					if (startsWithCondition || includesCondition) { 
-            return true
-          } 
-
-
+      if (startsWithCondition || includesCondition) {
+        return true
+      }
+      return false
     })
-    setsearchresult(result);
-  
+    setsearchresult(result)
   }
 
   const playVideo = (id, type) => {
@@ -201,10 +199,10 @@ const MsgHistory = (props) => {
     )
     return content
   }
-  let  renderitem = searchtext?.length > 0 ? searchresult: props.collapseItems;
+  const renderitem = searchtext?.length > 0 ? searchresult : props.collapseItems
   const accordionMarginItems =
-  renderitem?.length > 0 ? (
-    renderitem.map((collapseItem) => {
+    renderitem?.length > 0 ? (
+      renderitem.map((collapseItem) => {
         return (
           <div className="collapse-margin" key={collapseItem._id}>
             <PopUp

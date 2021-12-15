@@ -73,7 +73,6 @@ const disablePastDate = () => {
 }
 
 const ContactUs = (props) => {
-  const selectNomineeRef = React.createRef()
   const [recVideo, setRecVideo] = useState()
   const selecttype = React.createRef()
   const [date, setdate] = useState(currdt.toISOString().substr(0, 10) + 1)
@@ -98,7 +97,7 @@ const ContactUs = (props) => {
   const [rname, setrname] = useState('')
   const [remail, setremail] = useState('')
   const [rphone, setrphone] = useState('')
-  const [nomineeOption2, setnomineeOption2] = useState([]);
+  const [nomineeOption2, setnomineeOption2] = useState([])
   const [nomineeOption, setnomineeOption] = useState([
     {
       value: 'Add Nominee',
@@ -108,17 +107,18 @@ const ContactUs = (props) => {
     }
   ])
   const autocomp = (n) => {
-    if(n?.value) {
-      const nom = nomineeslist.filter(e=> {return e._id === n.value});
-      setrname(nom[0].name);
-      setrphone(nom[0].email);
-      setremail(nom[0].primaryContact);
+    if (n?.value) {
+      const nom = nomineeslist.filter((e) => {
+        return e._id === n.value
+      })
+      setrname(nom[0].name)
+      setrphone(nom[0].email)
+      setremail(nom[0].primaryContact)
     } else {
-      setrname(n);
-      setrphone('');
-      setremail('');
+      setrname(n)
+      setrphone('')
+      setremail('')
     }
-
   }
   const handleCheck = () => {
     !sameAsAbove && setdate()
@@ -167,7 +167,7 @@ const ContactUs = (props) => {
     if (props.dataList.data.length) {
       const nomineeOptionTemp = nomineeOption
       const nomineeOptionTemp2 = nomineeOption2
-      setnomineeslist( props.dataList.data);
+      setnomineeslist(props.dataList.data)
       props.dataList.data.forEach((e) => {
         const temp = {
           value: e._id,
@@ -188,9 +188,9 @@ const ContactUs = (props) => {
     setisLoading(true)
     try {
       await props.addData(obj)
-      setrname();
-      setrphone();
-      setremail();
+      setrname()
+      setrphone()
+      setremail()
       setisLoading(false)
       handleSidebar(false, true)
     } catch {
@@ -349,10 +349,10 @@ const ContactUs = (props) => {
                         </Label>
                       </FormGroup>
                     </Col>
-                   
-                      <Col sm="">
-                        <FormGroup className="form-label-group">
-                          {/* <Select
+
+                    <Col sm="">
+                      <FormGroup className="form-label-group">
+                        {/* <Select
                             isMulti
                             name="nominee"
                             options={nomineeOption}
@@ -366,30 +366,36 @@ const ContactUs = (props) => {
                             id="nominee"
                             onChange={changeNominee}
                           /> */}
-                          
-                          <Autocomplete
+
+                        <Autocomplete
                           autoSelect
                           freeSolo
-                            id="combo-box-demo"
-                            options={nomineeOption2}
-                            onChange={(e,n)=>{autocomp(n)}}
-                           // sx={{ width: 300 }}
-                            renderInput={(params) =>{
-                              return (
-                                <div ref={params.InputProps.ref}>
-                                  <input id='rec' type="text" {...params.inputProps} placeholder='Reciver' className="input-label form-control" autoFocus />
-                              </div>)
-                            }} 
-                            
-                          />
-                          {/* <Label for="rec">Select Nominee</Label> */}
-                        </FormGroup>
-                      </Col>
-                      
-                      
-                      </Row>
-                      <Row>
-
+                          id="combo-box-demo"
+                          options={nomineeOption2}
+                          onChange={(e, n) => {
+                            autocomp(n)
+                          }}
+                          // sx={{ width: 300 }}
+                          renderInput={(params) => {
+                            return (
+                              <div ref={params.InputProps.ref}>
+                                <input
+                                  id="rec"
+                                  type="text"
+                                  {...params.inputProps}
+                                  placeholder="Reciver"
+                                  className="input-label form-control"
+                                  autoFocus
+                                />
+                              </div>
+                            )
+                          }}
+                        />
+                        {/* <Label for="rec">Select Nominee</Label> */}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col sm="">
                       <FormGroup className="form-label-group">
                         <Input
@@ -466,7 +472,7 @@ const ContactUs = (props) => {
                             className="input-label"
                             name="date"
                             id="exampleDate"
-                            style={{zIndex: 1}}
+                            style={{ zIndex: 1 }}
                             placeholder="Enter Date"
                             disabled={!!sameAsAbove}
                             onKeyDown={(e) => e.preventDefault()}

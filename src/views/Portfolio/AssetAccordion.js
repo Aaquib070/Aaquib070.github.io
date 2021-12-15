@@ -16,10 +16,12 @@ import { ChevronDown } from 'react-feather'
 const AssetAccordion = (props) => {
   const [collapseID, setcollapseID] = useState('')
   const assets = JSON.parse(sessionStorage.getItem('logInUserData'))?.assets
-  const liabilities = JSON.parse(sessionStorage.getItem('logInUserData'))?.liabilities
+  const liabilities = JSON.parse(
+    sessionStorage.getItem('logInUserData')
+  )?.liabilities
   const [status, setstatus] = useState('Closed')
-  const [searchresult,setsearchresult] = useState([]);
-  const [searchtext,setsearchtext]=useState()
+  const [searchresult, setsearchresult] = useState([])
+  const [searchtext, setsearchtext] = useState()
   const { collapseItems, colorOption } = props
 
   const toggleCollapse = (collapseIDnew) => {
@@ -44,10 +46,10 @@ const AssetAccordion = (props) => {
     return title
   }
 
-  let  renderitem = searchtext?.length > 0 ? searchresult: collapseItems;
+  const renderitem = searchtext?.length > 0 ? searchresult : collapseItems
   const accordionMarginItems =
-  renderitem.length > 0 ? (
-    renderitem.map((collapseItem) => {
+    renderitem.length > 0 ? (
+      renderitem.map((collapseItem) => {
         return (
           <div className="collapse-margin" key={collapseItem.id}>
             <Card
@@ -90,36 +92,41 @@ const AssetAccordion = (props) => {
       </span>
     )
 
-    
   const search = (value) => {
-    setsearchtext(value);
-    const result = collapseItems.filter(item => {
-  const ser2 = props.assetShow ? liabilities[item.id -1]?.liabilityDetails : assets[item.id -1]?.assetDetails
+    setsearchtext(value)
+    const result = collapseItems.filter((item) => {
+      const ser2 = props.assetShow
+        ? liabilities[item.id - 1]?.liabilityDetails
+        : assets[item.id - 1]?.assetDetails
 
-      const search2 = ser2.filter(i=>{
-        let	startsWithCondition =
-							i.val.toLowerCase().startsWith(value.toLowerCase()) 
+      const search2 = ser2.filter((i) => {
+        const startsWithCondition = i.val
+          .toLowerCase()
+          .startsWith(value.toLowerCase())
 
-          let	includesCondition =
-							i.val.toLowerCase().includes(value.toLowerCase()) 
+        const includesCondition = i.val
+          .toLowerCase()
+          .includes(value.toLowerCase())
 
-					if (startsWithCondition || includesCondition) { 
-            return true
-          } 
+        if (startsWithCondition || includesCondition) {
+          return true
+        }
+        return false
       })
-					let	startsWithCondition =
-							item.title.toLowerCase().startsWith(value.toLowerCase()) 
+      const startsWithCondition = item.title
+        .toLowerCase()
+        .startsWith(value.toLowerCase())
 
-          let	includesCondition =
-							item.title.toLowerCase().includes(value.toLowerCase()) 
+      const includesCondition = item.title
+        .toLowerCase()
+        .includes(value.toLowerCase())
 
-					if (startsWithCondition || includesCondition || search2.length > 0) { 
-            return true
-          } 
-
-
+      if (startsWithCondition || includesCondition || search2.length > 0) {
+        return true
+      }
+      return false
     })
-    setsearchresult(result);
+    setsearchresult(result)
   }
 
   return (
