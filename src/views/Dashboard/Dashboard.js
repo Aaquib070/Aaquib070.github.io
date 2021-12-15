@@ -233,9 +233,11 @@ const LADashboard = (props) => {
       {width <= 500 && (
         <div className="menu_content mt-1">
           {columns.map((item, index) => {
+            const id= `mob-menu-${index}`
             return (
               <div
                 className="menu_options"
+                id={id}
                 key={index}
                 onClick={() => {
                   props.history.push(item.path)

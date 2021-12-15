@@ -19,7 +19,8 @@ import {
   UpdateProfile,
   Subscription,
   home,
-  AddAssets
+  AddAssets,
+  Caller
 } from 'routes/genericImport'
 const AppRouter = (props) => {
   return (
@@ -30,11 +31,13 @@ const AppRouter = (props) => {
         <PrivateRoute path="/terms_conditions" component={Terms_C} />
         <PrivateRoute path="/license" component={License} />
         <PrivateRoute path="/privacy" component={Privacy} />
+
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/nominee/list" component={NomineeList} />
         <PrivateRoute path="/spends" component={Spends} />
         <PrivateRoute path="/assets/add" component={AddAssets} />
         <PrivateRoute path="/vault/document" component={Vault} />
+        <PrivateRoute path="/caller" component={Caller} fullLayout/>
         <PrivateRoute path="/vault/password" component={PasswordVault} />
         <PrivateRoute
           path="/emailconfirmation/:userkey"

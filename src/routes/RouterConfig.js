@@ -12,6 +12,7 @@ const PrivateRoute = ({component: Component, fullLayout, ...rest}) => (
 			const {location: {pathname = ''} = {}} = props
 			const all =
 				pathname?.includes('home') ||
+				pathname?.includes('caller') ||
 				pathname?.includes('privacy') ||
 				pathname?.includes('license') ||
 				pathname?.includes('emailconfirmation') ||

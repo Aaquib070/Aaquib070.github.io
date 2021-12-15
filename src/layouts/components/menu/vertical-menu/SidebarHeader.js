@@ -42,7 +42,7 @@ const SidebarHeader = (props) => {
           </NavLink>
         </li>
         <li className="nav-item nav-toggle">
-          <div className="nav-link modern-nav-toggle">
+          <div className="nav-link modern-nav-toggle" id='toggle-nav'>
             {collapsed === false ? (
               <Disc
                 onClick={() => {

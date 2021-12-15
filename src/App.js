@@ -5,6 +5,7 @@ import 'App.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import axios from 'axios'
 import PopUp from 'utility/Popup'
+import Tour from 'views/Tour/AppTour';
 
 const App = () => {
   const [manageFailure, setManageFailure] = useState(false)
@@ -29,6 +30,7 @@ const App = () => {
   const msg = 'Your Session has expired, kindly login!!'
   return (
     <>
+    {/* <Tour /> */}
       {manageFailure && sessionStorage.getItem('logInUserData') && (
         <PopUp
           modalMessage={msg}
