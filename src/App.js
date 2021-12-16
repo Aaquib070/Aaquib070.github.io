@@ -15,7 +15,8 @@ const App = () => {
   const [waitingWorker, setwaitingWorker] = useState({})
   const [newVersionAvailable, setnewVersionAvailable] = useState(false)
   const backendUrl = process.env.REACT_APP_BACKEND_URL
-  //axios.defaults.baseURL = backendUrl
+  //axios.defaults.baseURL = 'http://localhost:5000'
+  axios.defaults.baseURL = backendUrl
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
