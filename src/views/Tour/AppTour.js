@@ -23,15 +23,20 @@ const AppTour = () => {
   }
 
     const steps = [
-      {
-        target: "#toggle-nav",
-        content: "Click here to fix sidebar",
-        disableBeacon: true
-      },
+      // {
+      //   target: "#toggle-nav",
+      //   content: "Click here to fix sidebar",
+      //   disableBeacon: true
+      // },
       
       {
         target: ".brand-logo",
         content: "Click here to go to home page",
+        disableBeacon: true
+      },
+      {
+        target: ".d-flex",
+        content: "Click here to go to settings and user propfile",
         disableBeacon: true
       },
       {
@@ -70,42 +75,42 @@ const AppTour = () => {
 
 
 
-      ,
-      {
-        target: "#mob-menu-0",
-        content: "This is Asset",
-        disableBeacon: true
-      }
-      ,
-      {
-        target: "#mob-menu-1",
-        content: "This is Liability",
-        disableBeacon: true
-      }
-      ,
-      {
-        target: "#mob-menu-2",
-        content: "this is Password vault",
-        disableBeacon: true
-      }
-      ,
-      {
-        target: "#mob-menu-3",
-        content: "Click here for user options",
-        disableBeacon: true
-      }
-      ,
-      {
-        target: "#mob-menu-4",
-        content: "Click here for user options",
-        disableBeacon: true
-      }
-      ,
-      {
-        target: "#mob-menu-5",
-        content: "Click here for user options",
-        disableBeacon: true
-      }
+      // ,
+      // {
+      //   target: "#mob-menu-0",
+      //   content: "This is Asset",
+      //   disableBeacon: true
+      // }
+      // ,
+      // {
+      //   target: "#mob-menu-1",
+      //   content: "This is Liability",
+      //   disableBeacon: true
+      // }
+      // ,
+      // {
+      //   target: "#mob-menu-2",
+      //   content: "this is Password vault",
+      //   disableBeacon: true
+      // }
+      // ,
+      // {
+      //   target: "#mob-menu-3",
+      //   content: "Click here for user options",
+      //   disableBeacon: true
+      // }
+      // ,
+      // {
+      //   target: "#mob-menu-4",
+      //   content: "Click here for user options",
+      //   disableBeacon: true
+      // }
+      // ,
+      // {
+      //   target: "#mob-menu-5",
+      //   content: "Click here for user options",
+      //   disableBeacon: true
+      // }
 
     ]
 

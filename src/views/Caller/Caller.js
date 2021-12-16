@@ -3,9 +3,6 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 // import Rodal from 'rodal'
 import {Howl} from 'howler'
-
-
-
 //import  'rodal/lib/rodal.css'
 import camera from './Icons/camera.svg'
 import camerastop from './Icons/camera-stop.svg'

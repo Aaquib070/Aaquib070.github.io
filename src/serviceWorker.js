@@ -21,6 +21,7 @@ const isLocalhost = Boolean(
 )
 
 export function register(config) {
+	console.log('ddddddddddddddddddddddddddddddddddddddddd', process.env.NODE_ENV, config);
 	if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 		// The URL constructor is available in all browsers that support SW.
 		const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href)
@@ -73,6 +74,7 @@ function registerValidSW(swUrl, config) {
 								'New content is available and will be used when all ' +
 									'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
 							)
+							//window.location.reload(true);
 
 							// Execute callback
 							if (config && config.onUpdate) {
