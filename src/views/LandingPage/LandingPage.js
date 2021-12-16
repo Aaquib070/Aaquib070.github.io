@@ -57,10 +57,10 @@ const LandingPage = (props) => {
       type: 'twitter',
       icon: <Twitter />
     },
-    {
-      type: 'caller',
-      icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>
-    },
+    // {
+    //   type: 'caller',
+    //   icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>
+    // },
     {
       type: 'youtube',
       icon: <Youtube />
