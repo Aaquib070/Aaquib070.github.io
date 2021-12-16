@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 //import PropTypes from 'prop-types'
-import {Row, Col} from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import Logo from 'assets/img/logo/favrm.png'
+import Art from 'assets/img/logo/art.gif'
 import './typewriter.css'
-import {Plans} from './Plans'
-import {Features} from './Features'
-import {DownloadOptions} from './DownloadOptions'
-import {WhyUs} from './WhyUs'
-import {connect} from 'react-redux'
+import { Plans } from './Plans'
+import { Features } from './Features'
+import { DownloadOptions } from './DownloadOptions'
+import { WhyUs } from './WhyUs'
+import { connect } from 'react-redux'
 
 const AlwaysOn = props => {
 	// const deviceWidth = useWindowSize().width
@@ -56,20 +57,34 @@ const AlwaysOn = props => {
 			id='AlwaysOn'
 			style={{
 				textAlign: 'center',
-				height: 'fit-content'
+				height: 'fit-content',
 			}}
 		>
-			<div className='video_placeholder'>
+			<img
+				alt='logo'
+				style={{
+
+					width: '100%',
+					height: '60%',
+				}}
+				//	className='brand-logo'
+				//height=''
+				src={Art}
+			/>
+			<div className='video_placeholder' style={{marginTop: '5px'}}>
+
+
 				<Row
 					className='pt-3'
 					style={{
+						//marginTop: '10px',
 						justifyContent: 'center',
 						alignItems: 'center'
 					}}
 				>
 					<img
 						alt='logo'
-						style={{marginRight: '5px', height: '50px', background: 'white'}}
+						style={{ marginRight: '5px', height: '50px', background: 'white' }}
 						className='brand-logo'
 						height='25'
 						src={Logo}
@@ -105,7 +120,7 @@ const AlwaysOn = props => {
 							WILL
 						</span>{' '}
 						you leave behind
-						<span style={{color: 'black'}}> ...</span>
+						<span style={{ color: 'black' }}> ...</span>
 					</Col>
 				</Row>
 			</div>
@@ -270,7 +285,7 @@ const AlwaysOn = props => {
 }
 const mapStateToProps = state => {
 	const {
-		customizer: {language: {AlwaysOn = {}, Dashboard = {}} = {}}
+		customizer: { language: { AlwaysOn = {}, Dashboard = {} } = {} }
 	} = state?.customizer
 	return {
 		msgAlwayson: AlwaysOn ? AlwaysOn : {},
