@@ -11,67 +11,69 @@ import { DownloadOptions } from './DownloadOptions'
 import { WhyUs } from './WhyUs'
 import { connect } from 'react-redux'
 
-const AlwaysOn = props => {
-	// const deviceWidth = useWindowSize().width
-	// const deviceWidth = window.innerWidth
+const AlwaysOn = (props) => {
+  // const deviceWidth = useWindowSize().width
+  // const deviceWidth = window.innerWidth
 
-	const {
-		plan,
-		setplan,
-		why,
-		setwhy,
-		feature,
-		setfeature,
-		download,
-		msgAlwayson,
-		featuresDashboard
-	} = props
-	// const { msg1, msg2, msg3, msg4, msg5 } = msgAlwayson
-	const getStyle = check => {
-		return `"btn-block" ${check ? 'tempFeaturetrue' : 'tempFeaturefalse'}`
-	}
-	const handleME = check => {
-		switch (check) {
-			case 'x':
-				setplan(false)
-				setfeature(true)
-				setwhy(false)
-				break
-			case 'y':
-				setplan(false)
-				setfeature(false)
-				setwhy(true)
-				break
-			case 'z':
-				setplan(true)
-				setfeature(false)
-				setwhy(false)
-				break
-			default:
-				return
-		}
-	}
-	return (
-		<div
-			className='why-menu-option animate'
-			id='AlwaysOn'
-			style={{
-				textAlign: 'center',
-				height: 'fit-content',
-			}}
-		>
-			<img
-				alt='logo'
-				style={{
-
-					width: '100%',
-					height: '60%',
-				}}
-				//	className='brand-logo'
-				//height=''
-				src={Art}
-			/>
-			<div className='video_placeholder' style={{marginTop: '5px'}}>
+  const {
+    plan,
+    setplan,
+    why,
+    setwhy,
+    feature,
+    setfeature,
+    download,
+    msgAlwayson,
+    featuresDashboard
+  } = props
+  // const { msg1, msg2, msg3, msg4, msg5 } = msgAlwayson
+  const getStyle = (check) => {
+    return `"btn-block" ${check ? 'tempFeaturetrue' : 'tempFeaturefalse'}`
+  }
+  const handleME = (check) => {
+    switch (check) {
+      case 'x':
+        setplan(false)
+        setfeature(true)
+        setwhy(false)
+        break
+      case 'y':
+        setplan(false)
+        setfeature(false)
+        setwhy(true)
+        break
+      case 'z':
+        setplan(true)
+        setfeature(false)
+        setwhy(false)
+        break
+      default:
+        return
+    }
+  }
+  return (
+    <div
+      className=""
+      id="AlwaysOn"
+      style={{
+        textAlign: 'center',
+        height: 'fit-content'
+      }}
+    >
+      <img
+        alt="logo"
+        style={{
+          width: '100%',
+          height: '560px',
+          objectFit: 'contain',
+          background: 'black',
+          marginTop: '4rem'
+        }}
+        //	className='brand-logo'
+        //height=''
+        src={Art}
+      />
+      {/* <div className='video_placeholder' style={{marginTop: '5px'}}>
 
 
 				<Row
@@ -123,8 +125,8 @@ const AlwaysOn = props => {
 						<span style={{ color: 'black' }}> ...</span>
 					</Col>
 				</Row>
-			</div>
-			{/* {deviceWidth > 500 ? (
+			</div> */}
+      {/* {deviceWidth > 500 ? (
         <Row style={{ height: '420px' }}>
           <Col className="messagegAlwayson">
             <p style={{ color: 'black' }}>
@@ -256,40 +258,40 @@ const AlwaysOn = props => {
           </Row>
         </Col>
       )} */}
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					width: '100%',
-					margin: '30px 0'
-				}}
-			>
-				<div className={getStyle(why)} onClick={() => handleME('y')}>
-					Why US
-				</div>
-				<div className={getStyle(feature)} onClick={() => handleME('x')}>
-					Feature
-				</div>
-				<div className={getStyle(plan)} onClick={() => handleME('z')}>
-					Plans
-				</div>
-			</div>
-			<div>
-				{why && <WhyUs {...msgAlwayson} />}
-				{feature && <Features {...featuresDashboard} />}
-				{plan && <Plans {...msgAlwayson} />}
-				{download && <DownloadOptions {...msgAlwayson} />}
-			</div>
-		</div>
-	)
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          margin: '30px 0'
+        }}
+      >
+        <div className={getStyle(why)} onClick={() => handleME('y')}>
+          Why US
+        </div>
+        <div className={getStyle(feature)} onClick={() => handleME('x')}>
+          Feature
+        </div>
+        <div className={getStyle(plan)} onClick={() => handleME('z')}>
+          Plans
+        </div>
+      </div>
+      <div>
+        {why && <WhyUs {...msgAlwayson} />}
+        {feature && <Features {...featuresDashboard} />}
+        {plan && <Plans {...msgAlwayson} />}
+        {download && <DownloadOptions {...msgAlwayson} />}
+      </div>
+    </div>
+  )
 }
-const mapStateToProps = state => {
-	const {
-		customizer: { language: { AlwaysOn = {}, Dashboard = {} } = {} }
-	} = state?.customizer
-	return {
-		msgAlwayson: AlwaysOn ? AlwaysOn : {},
-		featuresDashboard: Dashboard ? Dashboard : {}
-	}
+const mapStateToProps = (state) => {
+  const {
+    customizer: { language: { AlwaysOn = {}, Dashboard = {} } = {} }
+  } = state?.customizer
+  return {
+    msgAlwayson: AlwaysOn ? AlwaysOn : {},
+    featuresDashboard: Dashboard ? Dashboard : {}
+  }
 }
 export default connect(mapStateToProps)(AlwaysOn)
