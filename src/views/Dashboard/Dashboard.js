@@ -136,7 +136,6 @@ const LADashboard = (props) => {
       icon: <Lock color={desktopColor} className="warning" size="auto" />,
       path: '/vault/password'
     },
-        : 'Manage your nominees for your assets & liabities',
     {
       label: messages?.spends ? messages?.spends : 'Daily Spends',
       description: messages?.spendsText
