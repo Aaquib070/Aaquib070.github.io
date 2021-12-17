@@ -85,16 +85,6 @@ export const Features = (props) => {
       path: '/vault/password'
     },
     {
-      id: 3,
-      label: nominees ? nominees : 'Nominees',
-      description: nomineesText
-        ? nomineesText
-        : 'Manage your nominees for your assets & liabities',
-      background: Nominee,
-      selected: false,
-      path: '/nominee/list'
-    },
-    {
       id: 4,
       label: spends ? spends : 'Daily Spends',
       description: spendsText
@@ -103,6 +93,16 @@ export const Features = (props) => {
       background: Spend,
       selected: false,
       path: '/spends'
+    },
+    {
+      id: 3,
+      label: nominees ? nominees : 'Nominees',
+      description: nomineesText
+        ? nomineesText
+        : 'Manage your nominees for your assets & liabities',
+      background: Nominee,
+      selected: false,
+      path: '/nominee/list'
     },
     {
       id: 5,

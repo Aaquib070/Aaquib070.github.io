@@ -136,15 +136,7 @@ const LADashboard = (props) => {
       icon: <Lock color={desktopColor} className="warning" size="auto" />,
       path: '/vault/password'
     },
-    {
-      label: messages?.nominees ? messages?.nominees : 'Nominees',
-      description: messages?.nomineesText
-        ? messages?.nomineesText
         : 'Manage your nominees for your assets & liabities',
-      background: Nominee,
-      icon: <Users color={desktopColor} className="warning" size="auto" />,
-      path: '/nominee/list'
-    },
     {
       label: messages?.spends ? messages?.spends : 'Daily Spends',
       description: messages?.spendsText
@@ -153,6 +145,15 @@ const LADashboard = (props) => {
       background: Spend,
       icon: <FileMinus color={desktopColor} className="danger" size="auto" />,
       path: '/spends'
+    },
+    {
+      label: messages?.nominees ? messages?.nominees : 'Nominees',
+      description: messages?.nomineesText
+        ? messages?.nomineesText
+        : 'Manage your nominees for your assets & liabities',
+      background: Nominee,
+      icon: <Users color={desktopColor} className="warning" size="auto" />,
+      path: '/nominee/list'
     },
     {
       label: messages?.documents ? messages?.documents : 'Documents',
@@ -233,7 +234,7 @@ const LADashboard = (props) => {
       {width <= 500 && (
         <div className="menu_content mt-1">
           {columns.map((item, index) => {
-            const id= `mob-menu-${index}`
+            const id = `mob-menu-${index}`
             return (
               <div
                 className="menu_options"

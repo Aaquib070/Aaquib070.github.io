@@ -53,12 +53,12 @@
 
 .foooter {
   width: 100%;
-  height: 175px;
+  height: 110px;
   background-color: #e4e4e4;
   position: absolute;
   left: 0;
   display: block;
-  padding: 2rem calc(2rem + 15px) 0;
+  padding: 0.5rem calc(2rem + 15px) 0;
 }
 
 .mobile-foooter {

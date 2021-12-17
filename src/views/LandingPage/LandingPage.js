@@ -15,7 +15,14 @@ import {
   // Button
 } from 'reactstrap'
 import { connect } from 'react-redux'
-import { Facebook, Linkedin, Twitter, Instagram, Youtube, PhoneCall } from 'react-feather'
+import {
+  Facebook,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Youtube,
+  PhoneCall
+} from 'react-feather'
 import 'assets/scss/pages/authentication.scss'
 import AlwaysOn from './AlwaysOn'
 // import useWindowSize from 'utility/context/useWindowSize'
@@ -64,25 +71,18 @@ const LandingPage = (props) => {
     {
       type: 'youtube',
       icon: <Youtube />
-
     }
   ]
 
   const content = [
-    'Sitemap',
-    'Advertise With Us',
     'About us',
-    'Feedback',
-    'Careers',
-    'Contact Us'
+    //contact us in about us and in contact 2 options - feedback or querry
+    'Privacy Policy',
+    'Terms of use',
+    'Copyright',
+    'Advertise With Us'
   ]
 
-  const otherContent = [
-    'Terms of use',
-    'Privacy Policy',
-    'Code of Conduct',
-    'Copyright'
-  ]
   useEffect(() => {
     download &&
       document
@@ -102,7 +102,6 @@ const LandingPage = (props) => {
               overflow: 'hidden'
             }}
           >
-            
             <AlwaysOn
               plan={plan}
               setplan={setplan}
@@ -199,9 +198,6 @@ const LandingPage = (props) => {
             }}
           >
             <div style={{ fontSize: '35px' }}>Last Arzi</div>
-            <div style={{ fontSize: '10px', textAlign: 'center' }}>
-              What <span style={{ color: 'coral' }}>Will</span> you leave behind
-            </div>
           </div>
         </div>
       ) : (
@@ -213,11 +209,17 @@ const LandingPage = (props) => {
               justifyContent: 'space-between'
             }}
           >
-            <div style={{ width: '150px', height: '100%', display: 'block' }}>
-              <div style={{ fontSize: '35px' }}>Last Arzi</div>
-              <div style={{ fontSize: '10px', textAlign: 'center' }}>
-                What <span style={{ color: 'coral' }}>Will</span> you leave
-                behind
+            <div
+              style={{ width: 'max-content', height: '100%', display: 'block' }}
+            >
+              <div
+                style={{
+                  fontSize: '2.1rem',
+                  fontWeight: '500',
+                  padding: '10px 0 0 5px'
+                }}
+              >
+                Last Arzi
               </div>
             </div>
             <div
@@ -245,8 +247,33 @@ const LandingPage = (props) => {
             </div>
           </div>
           <div
-            style={{ height: '30px', display: 'flex', justifyContent: 'end' }}
+            style={{
+              height: '30px',
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
           >
+            <div
+              style={{
+                height: 'max-content',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '7px'
+              }}
+            >
+              <div
+                style={{
+                  width: '200px',
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}
+              >
+                {logos.map((item) => {
+                  return item.icon
+                })}
+              </div>
+            </div>
             <div
               style={{
                 height: '100%',
@@ -263,50 +290,6 @@ const LandingPage = (props) => {
                       marginLeft: '1.8rem',
                       fontSize: '15px',
                       cursor: 'pointer',
-                      height: 'max-content'
-                    }}
-                    key={item}
-                  >
-                    {item}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-          <div
-            style={{
-              height: 'max-content',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: '10px'
-            }}
-          >
-            <div
-              style={{
-                width: '200px',
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              {logos.map((item) => {
-                return item.icon
-              })}
-            </div>
-            <div
-              style={{
-                height: '100%',
-                width: 'max-content',
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              {otherContent.map((item) => {
-                return (
-                  <div
-                    style={{
-                      marginLeft: '1.6rem',
-                      fontSize: '13px',
                       height: 'max-content'
                     }}
                     key={item}

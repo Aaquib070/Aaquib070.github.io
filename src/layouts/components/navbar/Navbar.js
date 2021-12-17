@@ -160,19 +160,19 @@ const ThemeNavbar = (props) => {
                       <img
                         alt="logo"
                         className="brand-logo"
-                        height="30"
+                        height="35"
                         src={Logo}
                       />
                     )}
                     <h2
                       className="brand-text mb-0 ml-50"
                       style={{
-                        fontWeight: '400',
+                        fontWeight: '500',
                         color:
                           themeConfig.theme === 'dark'
                             ? '#ebeefd !important'
                             : '#757488',
-                        fontSize: '2.7rem'
+                        fontSize: '2.2rem'
                       }}
                     >
                       {mobileTitle}

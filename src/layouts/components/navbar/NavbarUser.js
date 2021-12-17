@@ -429,18 +429,9 @@ const NavbarUser = (props) => {
                   className="user-name text-bold-600"
                   style={{ fontSize: '1.14rem', marginRight: '.5rem' }}
                 >
-                  {props.userName}
+                  Hi, {props.userName}
                 </span>
               </div>
-              <span data-tour="user">
-                <img
-                  src={props.userImg}
-                  className="round"
-                  height="28"
-                  width="28"
-                  alt="avatar"
-                />
-              </span>
             </DropdownToggle>
             <UserDropdown
               {...props}
