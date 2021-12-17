@@ -9,7 +9,7 @@ import avatar1 from 'assets/img/avatar/female.png'
 import avatar2 from 'assets/img/avatar/male.png'
 import themeConfig from 'configs/themeConfig'
 import { useLocation } from 'react-router-dom'
-import Logo from 'assets/img/logo/favrm.png'
+import Logo from 'assets/img/logo/LA.svg'
 import './loginModalDiv.scss'
 import LoginNew from 'views/Login/Login'
 import ForgotPassword from 'views/Login/ForgotPassword'
@@ -151,25 +151,28 @@ const ThemeNavbar = (props) => {
             >
               <div className="bookmark-wrapper d-flex">
                 {props.collapsedContent && window.screen.width > 500 && (
-                  <NavLink to="/dashboard" className="navbar-brand d-flex">
+                  <NavLink
+                    to="/dashboard"
+                    className="navbar-brand d-flex"
+                    style={{ alignItems: 'center' }}
+                  >
                     {!user1 && (
                       <img
                         alt="logo"
-                        style={{ marginRight: '25px' }}
                         className="brand-logo"
-                        height="25"
+                        height="30"
                         src={Logo}
                       />
                     )}
                     <h2
-                      className="brand-text mb-0"
+                      className="brand-text mb-0 ml-50"
                       style={{
-                        fontWeight: '600',
+                        fontWeight: '400',
                         color:
                           themeConfig.theme === 'dark'
                             ? '#ebeefd !important'
                             : '#757488',
-                        paddingTop: 6
+                        fontSize: '2.7rem'
                       }}
                     >
                       {mobileTitle}
