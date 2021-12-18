@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 //import PropTypes from 'prop-types'
-import Art from 'assets/img/logo/art.gif'
+import { Art } from 'export'
 import './typewriter.css'
 import { Plans } from './Plans'
 import { Features } from './Features'

@@ -1,10 +1,12 @@
 import React from 'react'
 import Swiper from 'react-id-swiper'
-import img1 from 'assets/img/slider/banner-1.jpg'
-import img2 from 'assets/img/slider/banner-2.jpg'
-import img3 from 'assets/img/slider/banner-3.jpg'
-import img4 from 'assets/img/slider/banner-4.jpg'
-import img5 from 'assets/img/slider/banner-5.jpg'
+import {
+  imgBanner1,
+  imgBanner2,
+  imgBanner3,
+  imgBanner4,
+  imgBanner5
+} from 'export'
 
 const params = {
   spaceBetween: 200,
@@ -25,7 +27,7 @@ const Banner = () => {
       <Swiper {...params}>
         <div>
           <img
-            src={img1}
+            src={imgBanner1}
             alt="swiper 1"
             className="img-fluid"
             style={{ minHeight: '215px', marginBottom: '10px' }}
@@ -33,7 +35,7 @@ const Banner = () => {
         </div>
         <div>
           <img
-            src={img2}
+            src={imgBanner2}
             alt="swiper 2"
             className="img-fluid"
             style={{ minHeight: '230px' }}
@@ -41,7 +43,7 @@ const Banner = () => {
         </div>
         <div>
           <img
-            src={img3}
+            src={imgBanner3}
             alt="swiper 3"
             className="img-fluid"
             style={{ minHeight: '230px' }}
@@ -49,7 +51,7 @@ const Banner = () => {
         </div>
         <div>
           <img
-            src={img4}
+            src={imgBanner4}
             alt="swiper 4"
             className="img-fluid"
             style={{ minHeight: '230px' }}
@@ -57,7 +59,7 @@ const Banner = () => {
         </div>
         <div>
           <img
-            src={img5}
+            src={imgBanner5}
             alt="swiper 5"
             className="img-fluid"
             style={{ minHeight: '230px' }}

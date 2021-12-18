@@ -1,6 +1,6 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
-import logo from 'assets/img/logo/LA.svg'
+import { logo } from 'export'
 import 'assets/scss/components/app-loader.scss'
 const SpinnerComponent = (props) => {
   return (

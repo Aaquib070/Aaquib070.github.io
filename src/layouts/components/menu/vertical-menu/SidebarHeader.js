@@ -3,7 +3,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Disc, X, Circle } from 'react-feather'
 import classnames from 'classnames'
-import Logo from 'assets/img/logo/favrm.png'
+import { Logo } from 'export'
 import themeConfig from 'configs/themeConfig'
 const SidebarHeader = (props) => {
   const {
@@ -42,7 +42,7 @@ const SidebarHeader = (props) => {
           </NavLink>
         </li>
         <li className="nav-item nav-toggle">
-          <div className="nav-link modern-nav-toggle" id='toggle-nav'>
+          <div className="nav-link modern-nav-toggle" id="toggle-nav">
             {collapsed === false ? (
               <Disc
                 onClick={() => {

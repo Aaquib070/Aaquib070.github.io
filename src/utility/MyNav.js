@@ -26,11 +26,10 @@ import {
   Download,
   Settings
 } from 'react-feather'
-import LogoDark from 'assets/img/logo/LA.svg'
+import { Logo as LogoDark } from 'export'
 import themeConfig from 'configs/themeConfig'
 import { connect } from 'react-redux'
-import avatar1 from 'assets/img/avatar/female.png'
-import avatar2 from 'assets/img/avatar/male.png'
+import { avatar1, avatar2 } from 'export'
 import { Redirect } from 'react-router-dom'
 import { changeLanguage } from 'redux/actions/customizer'
 import { IntlContext } from 'utility/context/Internationalization'

@@ -1,38 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import { Row, Col, Card } from 'reactstrap'
-import AssetsLight from 'assets/img/cards/Assets/1.png'
-import DiaryLight from 'assets/img/cards/Diary/1.png'
-import DocumentsLight from 'assets/img/cards/Documents/1.png'
-import LiabilityLight from 'assets/img/cards/Liability/1.png'
-import NomineeLight from 'assets/img/cards/Nominee/1.png'
-import PortfolioLight from 'assets/img/cards/Portfolio/1.png'
-import SenderLight from 'assets/img/cards/Sender/1.png'
-import SpendLight from 'assets/img/cards/Spend/1.png'
-import VaultLight from 'assets/img/cards/Vault/1.png'
 
-import AssetsDark from 'assets/img/cards/Assets/2.png'
-import DiaryDark from 'assets/img/cards/Diary/2.png'
-import DocumentsDark from 'assets/img/cards/Documents/2.png'
-import LiabilityDark from 'assets/img/cards/Liability/2.png'
-import NomineeDark from 'assets/img/cards/Nominee/2.png'
-import PortfolioDark from 'assets/img/cards/Portfolio/2.png'
-import SenderDark from 'assets/img/cards/Sender/2.png'
-import SpendDark from 'assets/img/cards/Spend/2.png'
-import VaultDark from 'assets/img/cards/Vault/2.png'
-import themeConfig from 'configs/themeConfig'
+import {
+  Assets,
+  Diary,
+  Documents,
+  Liability,
+  Nominee,
+  Portfolio,
+  Sender,
+  Spend,
+  Vault,
+  Dark
+} from 'export'
+
 import './typewriter.css'
-
-const Assets = themeConfig.theme === 'dark' ? AssetsDark : AssetsLight
-const Diary = themeConfig.theme === 'dark' ? DiaryDark : DiaryLight
-const Documents = themeConfig.theme === 'dark' ? DocumentsDark : DocumentsLight
-const Liability = themeConfig.theme === 'dark' ? LiabilityDark : LiabilityLight
-const Nominee = themeConfig.theme === 'dark' ? NomineeDark : NomineeLight
-const Portfolio = themeConfig.theme === 'dark' ? PortfolioDark : PortfolioLight
-const Sender = themeConfig.theme === 'dark' ? SenderDark : SenderLight
-const Spend = themeConfig.theme === 'dark' ? SpendDark : SpendLight
-const Vault = themeConfig.theme === 'dark' ? VaultDark : VaultLight
-const Dark = themeConfig.theme === 'dark'
 
 export const Features = (props) => {
   const {
