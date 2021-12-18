@@ -1,7 +1,7 @@
 import React from 'react'
-//import PropTypes from 'prop-types'
+import { assets } from 'export'
 import {
-  DollarSign,
+  // DollarSign,
   Command,
   Lock,
   Users,
@@ -17,7 +17,7 @@ const navigationConfig = [
     id: 'assets',
     title: 'Assets',
     type: 'item',
-    icon: <DollarSign size={20} />,
+    icon: <img src={assets} alt="assets" />,
     permissions: ['admin', 'editor'],
     navLink: '/assets/add'
   },

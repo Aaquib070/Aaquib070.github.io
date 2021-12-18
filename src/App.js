@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import Router from 'routes/Router'
 import 'common/RippleButton'
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap'
 import 'App.css'
 //import './views/Caller/Caller.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import axios from 'axios'
-import * as serviceWorker from "./serviceWorker";
+import * as serviceWorker from './serviceWorker'
 import PopUp from 'utility/Popup'
-import Tour from 'views/Tour/AppTour';
+// import Tour from 'views/Tour/AppTour';
 
 const App = () => {
   const [manageFailure, setManageFailure] = useState(false)
@@ -28,29 +29,32 @@ const App = () => {
   )
 
   const UpdateAvailable = () => {
-
     return (
-      <div className='bodyMe' style={{display: 'block'}}>
-      <div className="updateAvailableContainer">
-        <div className="updateAvailable ">
-          <div><h5 style={{color: 'red'}}>New Update Avaialable!</h5></div>
-          <div className="incomingCallButtons flex">
-          <Button.Ripple
-                    block
-                    color='warning'
-                    className="btn-block"
-                    onClick={()=>{updateServiceWorker()}}
-                  >
-                    Update Now
-                  </Button.Ripple>
+      <div className="bodyMe" style={{ display: 'block' }}>
+        <div className="updateAvailableContainer">
+          <div className="updateAvailable ">
+            <div>
+              <h5 style={{ color: 'red' }}>New Update Avaialable!</h5>
+            </div>
+            <div className="incomingCallButtons flex">
+              <Button.Ripple
+                block
+                color="warning"
+                className="btn-block"
+                onClick={() => {
+                  updateServiceWorker()
+                }}
+              >
+                Update Now
+              </Button.Ripple>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     )
   }
 
-  const onServiceWorkerUpdate = registration => {
+  const onServiceWorkerUpdate = (registration) => {
     //toast.sucess('Heyyyyyyyy');
     console.log('heyyyyyyyyyyyyyyyyyyyyyyyyyy')
     setwaitingWorker(registration && registration.waiting)
@@ -59,28 +63,24 @@ const App = () => {
 
   const updateServiceWorker = () => {
     waitingWorker && waitingWorker.postMessage({ type: 'SKIP_WAITING' })
-    setnewVersionAvailable(false);
-    window.location.reload();
+    setnewVersionAvailable(false)
+    window.location.reload()
   }
 
-
   React.useEffect(() => {
-
     if (process.env.NODE_ENV === 'production') {
-      serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
+      serviceWorker.register({ onUpdate: onServiceWorkerUpdate })
     }
 
     if (newVersionAvailable) {
       updateServiceWorker()
     }
-
   }, [])
-
 
   // React.useEffect(() => {
 
   //   if (newVersionAvailable) {
-      
+
   //   }
   // }, [newVersionAvailable])
 
@@ -94,7 +94,7 @@ const App = () => {
   return (
     <>
       {/* <Tour /> */}
-      
+
       {newVersionAvailable && <UpdateAvailable />}
       {manageFailure && sessionStorage.getItem('logInUserData') && (
         <PopUp

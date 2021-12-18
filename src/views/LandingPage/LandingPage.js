@@ -20,8 +20,8 @@ import {
   Linkedin,
   Twitter,
   Instagram,
-  Youtube,
-  PhoneCall
+  Youtube
+  // PhoneCall
 } from 'react-feather'
 import 'assets/scss/pages/authentication.scss'
 import AlwaysOn from './AlwaysOn'

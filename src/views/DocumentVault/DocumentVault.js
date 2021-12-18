@@ -33,13 +33,15 @@ import {
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
 import Draggable from 'react-draggable'
-import txtFile from 'assets/img/icons/txt-file.png'
-import pptFile from 'assets/img/icons/ppt-file.png'
-import pdfFile from 'assets/img/icons/pdf-file.png'
-import xlsFile from 'assets/img/icons/xls-file.png'
-import docFile from 'assets/img/icons/doc-file.png'
-import zipFile from 'assets/img/icons/zip-file.png'
-import defFile from 'assets/img/icons/file.png'
+import {
+  txtFileIcon,
+  pptFileIcon,
+  pdfFileIcon,
+  xlsFileIcon,
+  docFileIcon,
+  zipFileIcon,
+  defFileIcon
+} from 'export'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import themeConfig from 'configs/themeConfig'
 import axios from 'axios'
@@ -101,28 +103,28 @@ const ProgrammaticallyDropzone = (props) => {
           className="dz-img"
           onError={(e) => {
             if (file.type === 'text/plain') {
-              e.target.src = txtFile
+              e.target.src = txtFileIcon
             } else if (file.type === 'application/pdf') {
-              e.target.src = pdfFile
+              e.target.src = pdfFileIcon
             } else if (file.type === 'application/x-zip-compressed') {
-              e.target.src = zipFile
+              e.target.src = zipFileIcon
             } else if (
               file.type ===
               'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ) {
-              e.target.src = docFile
+              e.target.src = docFileIcon
             } else if (
               file.type ===
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             ) {
-              e.target.src = xlsFile
+              e.target.src = xlsFileIcon
             } else if (
               file.type ===
               'application/vnd.openxmlformats-officedocument.presentationml.presentation'
             ) {
-              e.target.src = pptFile
+              e.target.src = pptFileIcon
             } else {
-              e.target.src = defFile
+              e.target.src = defFileIcon
             }
           }}
           alt={file.name}

@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 //import PropTypes from 'prop-types'
-import { Row, Col } from 'reactstrap'
-import Logo from 'assets/img/logo/favrm.png'
 import Art from 'assets/img/logo/art.gif'
 import './typewriter.css'
 import { Plans } from './Plans'
