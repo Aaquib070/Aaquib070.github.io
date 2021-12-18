@@ -8,7 +8,9 @@ import classnames from 'classnames'
 import themeConfig from 'configs/themeConfig'
 import { toast } from 'react-toastify'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
-const dailySpendsLabels = JSON.parse(sessionStorage.getItem('dropdowns')).dailySpendsLabels
+const dailySpendsLabels = JSON.parse(
+  sessionStorage.getItem('dropdowns')
+).dailySpendsLabels
 const SpendSidebar = (props) => {
   const [relation, setrelation] = useState('')
   const [relation1, setrelation1] = useState('other')
@@ -258,7 +260,9 @@ const SpendSidebar = (props) => {
             id="data-category"
             name="label"
             options={dailySpendsLabels}
-            value={dailySpendsLabels?.filter((option) => option.value === relation)}
+            value={dailySpendsLabels?.filter(
+              (option) => option.value === relation
+            )}
             isClearable={true}
             placeholder={'Label'}
             onChange={(e) => relationValue(e)}

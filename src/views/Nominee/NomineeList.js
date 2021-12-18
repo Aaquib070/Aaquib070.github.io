@@ -349,7 +349,7 @@ const Nominee = (props) => {
   if (props.listLoading) {
     return (
       <div className="d-flex justify-content-center">
-        <Spinner color="warning" size="lg" />
+        <Spinner />
       </div>
     )
   }

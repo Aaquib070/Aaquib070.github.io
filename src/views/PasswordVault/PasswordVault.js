@@ -131,7 +131,9 @@ const selectedStyle = {
     }
   }
 }
-const passwordTypeDropDown = JSON.parse(sessionStorage.getItem('dropdowns')).passwordTypes
+const passwordTypeDropDown = JSON.parse(
+  sessionStorage.getItem('dropdowns')
+).passwordTypes
 const PasswordVault = (props) => {
   const selectAssetRef = React.createRef()
   const [isLoading, setisLoading] = useState(false)
@@ -198,17 +200,18 @@ const PasswordVault = (props) => {
       sortable: false,
       width: '50px',
       cell: function temp(row) {
-        return <>
-          
-        <ViewComponent
-            showPass={showPass}
-            set={() => {
-              setshowIdx(row)
-              setmodal(!modal)
-            }}
-          />
-          <DeleteComponent row={row} deleteRow={() => deletepwd(row)} />
+        return (
+          <>
+            <ViewComponent
+              showPass={showPass}
+              set={() => {
+                setshowIdx(row)
+                setmodal(!modal)
+              }}
+            />
+            <DeleteComponent row={row} deleteRow={() => deletepwd(row)} />
           </>
+        )
       }
     }
   ]
@@ -629,7 +632,6 @@ const PasswordVault = (props) => {
                           </CardBody>
                         </Card>
                       </Col>
-                      
                     </Row>
 
                     <Row>
@@ -640,36 +642,36 @@ const PasswordVault = (props) => {
                           </CardHeader>
                           <CardBody style={{ paddingTop: '0px' }}>
                             {/* <Form> */}
-                              {saved?.length === 0 && (
-                                <h3 style={{ textAlign: 'center' }}>
-                                  No records found!!!
-                                </h3>
-                              )}
-                              {saved?.length > 0 && (
-                                // <div
-                                //   className={`data-list ${
-                                //     props.thumbView ? 'thumb-view' : 'list-view'
-                                //   }`}
-                                // >
-                                  <DataTable
-                                    width="200"
-                                    data={saved}
-                                    columns={columns}
-                                    noHeader
-                                    selectableRows={
-                                      window.screen.width < 500 ? false : false
-                                    }
-                                    responsive
-                                    pointerOnHover
-                                    selectableRowsHighlight
-                                    // onSelectedRowsChange={(data) =>
-                                    //   setselected(data.selectedRows)
-                                    // }
-                                    customStyles={selectedStyle}
-                                    sortIcon={<ChevronDown />}
-                                  />
-                                // </div>
-                              )}
+                            {saved?.length === 0 && (
+                              <h3 style={{ textAlign: 'center' }}>
+                                No records found!!!
+                              </h3>
+                            )}
+                            {saved?.length > 0 && (
+                              // <div
+                              //   className={`data-list ${
+                              //     props.thumbView ? 'thumb-view' : 'list-view'
+                              //   }`}
+                              // >
+                              <DataTable
+                                width="200"
+                                data={saved}
+                                columns={columns}
+                                noHeader
+                                selectableRows={
+                                  window.screen.width < 500 ? false : false
+                                }
+                                responsive
+                                pointerOnHover
+                                selectableRowsHighlight
+                                // onSelectedRowsChange={(data) =>
+                                //   setselected(data.selectedRows)
+                                // }
+                                customStyles={selectedStyle}
+                                sortIcon={<ChevronDown />}
+                              />
+                              // </div>
+                            )}
                             {/* </Form> */}
                           </CardBody>
                         </Card>

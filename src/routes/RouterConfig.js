@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Spinner } from 'reactstrap'
+import Spinner from 'common/Fallback-spinner'
 import { ContextLayout } from 'utility/context/Layout'
 // Set Layout and Component Using Private Route
 const PrivateRoute = ({ component: Component, fullLayout, ...rest }) => (
@@ -42,7 +42,7 @@ const PrivateRoute = ({ component: Component, fullLayout, ...rest }) => (
                         justifyContent: 'center'
                       }}
                     >
-                      <Spinner color="warning" size="lg" />
+                      <Spinner />
                     </div>
                   }
                 >
