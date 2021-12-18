@@ -1,16 +1,15 @@
 import React from 'react'
+import // AssetsIcon
+// DailySpendsIcon,
+// DiaryIcon,
+// DocumentsIcon,
+// LiabilityIcon,
+// NomineeIcon,
+// PasswordIcon,
+// PortfolioIcon
+'export'
 import {
-  AssetsIcon
-  // DailySpendsIcon,
-  // DiaryIcon,
-  // DocumentsIcon,
-  // LiabilityIcon,
-  // NomineeIcon,
-  // PasswordIcon,
-  // PortfolioIcon
-} from 'export'
-import {
-  // DollarSign,
+  DollarSign,
   Command,
   Lock,
   Users,
@@ -26,7 +25,7 @@ const navigationConfig = [
     id: 'assets',
     title: 'Assets',
     type: 'item',
-    icon: <img src={AssetsIcon} alt="assets" />,
+    icon: <DollarSign size={20} />,
     permissions: ['admin', 'editor'],
     navLink: '/assets/add'
   },
