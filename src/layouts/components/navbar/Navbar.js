@@ -168,10 +168,10 @@ const ThemeNavbar = (props) => {
                       className="brand-text mb-0 ml-50"
                       style={{
                         fontWeight: '500',
-                        color:
-                          themeConfig.theme === 'dark'
-                            ? '#ebeefd !important'
-                            : '#757488',
+                        color: 'coral',
+                        // themeConfig.theme === 'dark'
+                        //   ? '#ebeefd !important'
+                        //   : '#757488',
                         fontSize: '2.2rem'
                       }}
                     >

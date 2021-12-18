@@ -372,14 +372,14 @@ const NavbarUser = (props) => {
       {!user1 ? (
         window.screen.width <= 500 ? (
           <div className="button__div">
-            <Ripples color="var(--warning)" className="different-ripple">
+            <Ripples color="#49b412" className="different-ripple">
               <Button
                 className="button-label register-button"
                 onClick={() => {
                   props.toggleLoginModal('SignUp')
                 }}
               >
-                SignUp
+                SIGNUP
               </Button>
             </Ripples>
             <Ripples color="var(--warning)" className="different-ripple">
@@ -389,7 +389,7 @@ const NavbarUser = (props) => {
                   props.toggleLoginModal('SignIn')
                 }}
               >
-                SignIn
+                LOGIN
               </Button>
             </Ripples>
           </div>
@@ -401,7 +401,7 @@ const NavbarUser = (props) => {
                 props.toggleLoginModal('SignUp')
               }}
             >
-              SignUp
+              SIGNUP
             </Button>
             <Button
               color="warning"
@@ -413,7 +413,7 @@ const NavbarUser = (props) => {
                 color: { colortext }
               }}
             >
-              SignIn
+              LOGIN
             </Button>
           </>
         )

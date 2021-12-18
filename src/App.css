@@ -58,7 +58,7 @@
   position: absolute;
   left: 0;
   display: block;
-  padding: 0.5rem calc(2rem + 15px) 0;
+  padding: 0.5rem 2rem 0;
 }
 
 .mobile-foooter {
@@ -509,7 +509,7 @@ input {
   width: 100%;
   min-height: 210px;
   max-height: 210px;
-  margin: 17px 15px;
+  margin: 17px auto;
   overflow: hidden;
   backface-visibility: hidden;
 }
@@ -622,21 +622,21 @@ input {
 }
 
 .register-button {
-  color: var(--warning) !important;
+  color: #49b412 !important;
   background-color: transparent !important;
-  border: 1px solid var(--warning) !important;
+  border: 1px solid #49b412 !important;
   margin: 7px 0px 5px 10px;
 }
 
 .register-button:hover {
-  box-shadow: 0 8px 25px -8px var(--warning) !important;
-  color: var(--warning) !important;
+  box-shadow: 0 8px 25px -8px #49b412 !important;
+  color: #49b412 !important;
   background-color: transparent !important;
-  border: 1px solid var(--warning) !important;
+  border: 1px solid #49b412 !important;
 }
 
 .register-button:focus {
-  color: var(--warning) !important;
+  color: #49b412 !important;
 }
 
 .login-button {
@@ -679,7 +679,12 @@ input {
     margin: 0px;
     border: none !important;
   }
-  .register-button:hover,
+  .register-button:hover {
+    box-shadow: none !important;
+    color: #49b412 !important;
+    background-color: white !important;
+    border: none !important;
+  }
   .login-button:hover {
     box-shadow: none !important;
     color: var(--warning) !important;
@@ -692,14 +697,14 @@ input {
   background-color: white;
   height: max-content;
   margin: 20px auto 20px;
-  width: 98%;
+  width: 100%;
   border-radius: 0.5rem;
   position: relative;
   overflow: hidden;
 }
 
 .plan-menu-option {
-  width: 98%;
+  width: 100%;
   margin: auto;
   border-radius: 0.5rem;
   position: relative;
@@ -838,7 +843,7 @@ input {
 .why-menu-option {
   height: 250px;
   margin: 20px auto 20px;
-  width: 98%;
+  width: 100%;
   border-radius: 0.5rem;
   position: relative;
   overflow: hidden;

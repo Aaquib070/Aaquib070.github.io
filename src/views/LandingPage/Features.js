@@ -85,7 +85,7 @@ export const Features = (props) => {
       path: '/vault/password'
     },
     {
-      id: 4,
+      id: 3,
       label: spends ? spends : 'Daily Spends',
       description: spendsText
         ? spendsText
@@ -95,7 +95,7 @@ export const Features = (props) => {
       path: '/spends'
     },
     {
-      id: 3,
+      id: 4,
       label: nominees ? nominees : 'Nominees',
       description: nomineesText
         ? nomineesText
