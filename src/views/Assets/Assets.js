@@ -97,8 +97,6 @@ const AddAssets = (props) => {
   ])
   useEffect(() => {
     !props.listLoading && props.getData()
-    //  &&
-    // props.dataList.data.length &&
     getAssets()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

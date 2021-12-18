@@ -97,7 +97,7 @@ const CustomHeader = (props) => {
             type="text"
             style={{ height: '75%', borderRadius: '5rem', fontSize: '1rem' }}
             onChange={(e) => props.handleFilter(e)}
-            placeholder="Find"
+            placeholder="Search"
             className="placeholder"
           />
         </div>
@@ -269,13 +269,11 @@ const Nominee = (props) => {
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataList])
 
-
   useEffect(() => {
-    console.log('props.filteredData',props.filteredData)
+    console.log('props.filteredData', props.filteredData)
     if (props.filteredData && props.filteredData?.length > 0) {
       setdata(props.filteredData)
       setallData(props.filteredData)
-      
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.filteredData])
 

@@ -101,7 +101,7 @@ const CustomHeader = (props) => {
               fontSize: '1rem'
             }}
             onChange={(e) => props.handleFilter(e)}
-            placeholder="Find"
+            placeholder="Search"
             className="placeholder"
           />
         </div>

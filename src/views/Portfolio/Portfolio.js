@@ -256,7 +256,6 @@ const Portfolio = (props) => {
               activeTab && 'active-border'
             }`}
             onClick={() => setactiveTab(true)}
-            style={{}}
           >
             <h3 style={{ color: 'grey' }}>Default View</h3>
           </Col>
@@ -267,7 +266,6 @@ const Portfolio = (props) => {
               !activeTab && 'active-border'
             }`}
             onClick={() => setactiveTab(false)}
-            style={{}}
           >
             <h3 style={{ color: 'grey' }}>Nominee View</h3>
           </Col>

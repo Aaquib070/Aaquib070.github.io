@@ -9,8 +9,8 @@ import {
   FileText,
   FileMinus,
   Briefcase,
-  Send,
-  PhoneCall
+  Send
+  // PhoneCall
 } from 'react-feather'
 const navigationConfig = [
   {

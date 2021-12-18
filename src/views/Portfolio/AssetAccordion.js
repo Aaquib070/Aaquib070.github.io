@@ -149,7 +149,7 @@ const AssetAccordion = (props) => {
                 fontSize: '1rem'
               }}
               onChange={(e) => search(e.target.value)}
-              placeholder="Find"
+              placeholder="Search"
               className="placeholder"
             />
           </CardTitle>
