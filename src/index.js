@@ -17,7 +17,6 @@ const renderReactDom = () => {
   // configureAxios()
   ReactDOM.render(
     <Provider store={store}>
-      <Spinner />
       <Suspense fallback={<Spinner />}>
         <Layout>
           <IntlProviderWrapper>

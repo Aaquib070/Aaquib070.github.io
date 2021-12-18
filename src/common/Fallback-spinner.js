@@ -6,12 +6,17 @@ const SpinnerComponent = (props) => {
   return (
     <div className="fallback-spinner vh-100">
       <img className="fallback-logo" src={logo} alt="logo" />
-      <svg width="100px" height="100px" viewBox="-3 -4 39 39">
+      <svg className="loader" viewBox="-3 -4 105 105">
+        <defs>
+          <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="coral" />
+            <stop offset="100%" stopColor="#49b412" />
+          </linearGradient>
+        </defs>
         <polygon
-          fill="#EFEFEF"
-          stroke="#333333"
-          strokeWidth="1"
-          points="16,0 32,32 0,32"
+          points="50 15, 100 100, 0 100"
+          className="triangle"
+          stroke="url(#linear)"
         />
       </svg>
     </div>

@@ -22,18 +22,29 @@
 }
 
 .loader {
-  //animation: rotate 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite
-  transform-origin: 50% 65%;
+  // animation: rotate 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+  left: -20px;
+  top: -65px;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+  width: 275px;
+  height: auto;
 }
 
 .loader .triangle {
-  stroke-dasharray: 17;
-  animation: dash 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+  stroke-dasharray: 50;
+  animation: dash 1.5s linear infinite;
+  // stroke: linear-gradient(coral, #49b412);
+  stroke-width: 1.5;
+  fill: transparent;
+  stroke-linecap: round;
 }
 
 @keyframes dash {
   to {
-    stroke-dashoffset: 136;
+    stroke-dashoffset: 200;
   }
 }
 
