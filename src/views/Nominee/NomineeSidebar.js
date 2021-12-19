@@ -257,7 +257,7 @@ const NomineeSidebar = (props) => {
           />
           <Label className={Dark ? 'dark-label' : 'light-label'}>Name*</Label>
 
-          <FormFeedback invalid={errorname}>{errorname}</FormFeedback>
+          {/* <FormFeedback invalid={errorname}>{errorname}</FormFeedback> */}
         </FormGroup>
         <FormGroup className="form-label-group mt-2">
           <Select
@@ -291,11 +291,27 @@ const NomineeSidebar = (props) => {
               id="data-Relation"
               style={{ borderColor: errorrelation1 ? 'red' : '' }}
             />
-            <FormFeedback invalid={errorrelation1}>
+            {/* <FormFeedback invalid={errorrelation1}>
               {errorrelation1}
-            </FormFeedback>
+            </FormFeedback> */}
           </FormGroup>
         )}
+        <FormGroup className="form-label-group mt-2 mb-0">
+          <Input
+            className="input-label "
+            type="textarea"
+            value={address}
+            invalid={erroraddress}
+            name="address"
+            placeholder="Address*"
+            onChange={handleValue}
+            id="data-Address"
+          />
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
+            Address *
+          </Label>
+          {/* <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback> */}
+        </FormGroup>
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label"
@@ -309,7 +325,7 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: erroremail ? 'red' : '' }}
           />
           <Label className={Dark ? 'dark-label' : 'light-label'}>Email*</Label>
-          <FormFeedback invalid={erroremail}>{erroremail}</FormFeedback>
+          {/* <FormFeedback invalid={erroremail}>{erroremail}</FormFeedback> */}
         </FormGroup>
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
@@ -326,16 +342,9 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: errorcontact1 ? 'red' : '' }}
           />
           <Label className={Dark ? 'dark-label' : 'light-label'}>Contact</Label>
-          <FormFeedback invalid={errorcontact1}>{errorcontact1}</FormFeedback>
+          {/* <FormFeedback invalid={errorcontact1}>{errorcontact1}</FormFeedback> */}
         </FormGroup>
-        <FormGroup className="mt-2 mb-0" check>
-          <Label check> Whatsapp Contact same as contact</Label>
-          <Input
-            type="checkbox"
-            checked={sameAsAbove}
-            onChange={() => handleCheck()}
-          />
-        </FormGroup>
+
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label"
@@ -348,30 +357,23 @@ const NomineeSidebar = (props) => {
             onChange={handleValue}
             onKeyPress={(e) => handleKeyMobileNumber(e)}
             id="data-price"
-            placeholder="WhatsApp Contact"
+            placeholder="WhatsApp"
           />
           <Label className={Dark ? 'dark-label' : 'light-label'}>
-            WhatsApp Contact
+            Whatsapp
           </Label>
-          <FormFeedback invalid={errorcontact2}>{errorcontact2}</FormFeedback>
+          {/* <FormFeedback invalid={errorcontact2}>{errorcontact2}</FormFeedback> */}
         </FormGroup>
-        <FormGroup className="form-label-group mt-2 mb-0">
+        <div className="pt-1">
           <Input
-            className="input-label "
-            bsSize="lg"
-            type="textarea"
-            value={address}
-            invalid={erroraddress}
-            name="address"
-            placeholder="Address*"
-            onChange={handleValue}
-            id="data-Address"
+            type="checkbox"
+            checked={sameAsAbove}
+            onChange={() => handleCheck()}
           />
-          <Label className={Dark ? 'dark-label' : 'light-label'}>
-            Address *
+          <Label style={{ paddingLeft: '8.5rem' }}>
+            Whatsapp same as contact
           </Label>
-          <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback>
-        </FormGroup>
+        </div>
         {props.thumbView && img.length <= 0 ? (
           <label
             className="btn btn-primary"
