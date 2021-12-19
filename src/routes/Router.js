@@ -20,9 +20,16 @@ import {
   Subscription,
   home,
   AddAssets,
+  AdminDashboard,
   Caller
 } from 'routes/genericImport'
+
+import ReactGA from 'react-ga';
+
 const AppRouter = (props) => {
+  React.useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  },[props]);
   return (
     // Set the directory path if you are deploying in sub-folder
     <HashRouter basename="/#">
@@ -52,6 +59,7 @@ const AppRouter = (props) => {
           component={() => <Redirect to="/diary" />}
         />
         <PrivateRoute path="/portfolio" component={Portfolio} />
+        <PrivateRoute path="/admin" component={AdminDashboard} />
         <PrivateRoute path="/postman" component={Postman} />
         <PrivateRoute path="/liability/add" component={AddLiability} />
         <PrivateRoute

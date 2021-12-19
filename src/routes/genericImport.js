@@ -2,6 +2,8 @@ import { lazy } from 'react'
 
 export const Privacy = lazy(() => import('views/PrivacyTerms/PrivacyTerms'))
 export const License = lazy(() => import('views/PrivacyTerms/License'))
+
+export const AdminDashboard = lazy(() => import('views/Admin/AdminDashboard'))
 export const Terms_C = lazy(() => import('views/PrivacyTerms/TermsConditions'))
 export const Dashboard = lazy(() => import('views/Dashboard/Dashboard'))
 export const NomineeList = lazy(() => import('views/Nominee/NomineeList'))

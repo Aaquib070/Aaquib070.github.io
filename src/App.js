@@ -9,6 +9,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import axios from 'axios'
 import * as serviceWorker from './serviceWorker'
 import PopUp from 'utility/Popup'
+import ReactGA from 'react-ga';
 // import Tour from 'views/Tour/AppTour';
 
 const App = () => {
@@ -27,6 +28,10 @@ const App = () => {
         : Promise.reject(err)
     }
   )
+
+  React.useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+   });
 
   const UpdateAvailable = () => {
     return (
