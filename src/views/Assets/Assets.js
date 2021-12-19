@@ -580,11 +580,22 @@ const AddAssets = (props) => {
                                         </FormGroup>
                                       </Col>
                                       <Col md="6" sm="12">
-                                        <FormGroup className="form-label-group">
+                                        <FormGroup
+                                          className="form-label-group"
+                                          style={{
+                                            border:
+                                              assetType && !nominees?.length
+                                                ? '1px solid red'
+                                                : 'none'
+                                          }}
+                                        >
                                           <Select
                                             isMulti
                                             name="nominee"
                                             options={nomineeOption}
+                                            // invalid={
+                                            //   assetType && !nominees?.length
+                                            // }
                                             value={nominees.map((n) => {
                                               const as = nomineeOption.filter(
                                                 (e) => {
@@ -602,7 +613,7 @@ const AddAssets = (props) => {
                                             placeholder={
                                               messages?.nomineeOption
                                                 ? messages.nomineeOption
-                                                : 'Nominees'
+                                                : 'Nominee(s)'
                                             }
                                             id="nominee"
                                             onChange={(e) => {
