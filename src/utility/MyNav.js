@@ -26,7 +26,7 @@ import {
   Download,
   Settings
 } from 'react-feather'
-import { Logo as LogoDark, Dark } from 'export'
+import { Logo, Dark } from 'export'
 import { connect } from 'react-redux'
 import { avatar1, avatar2 } from 'export'
 import { Redirect } from 'react-router-dom'
@@ -36,7 +36,6 @@ import ReactCountryFlag from 'react-country-flag'
 
 const user1 = JSON.parse(sessionStorage.getItem('logInUserData'))
 const colortext = Dark ? '#ebeefd' : '#757488'
-const Logo = Dark ? LogoDark : LogoDark
 const MyNav = (props) => {
   const [theme, setTheme] = useState(
     sessionStorage.getItem('theme') === 'light' ? false : true

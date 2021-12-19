@@ -46,8 +46,6 @@ import female from 'assets/img/avatar/female.png'
 import male from 'assets/img/avatar/male.png'
 import art from 'assets/img/logo/art.gif'
 
-import favrm from 'assets/img/logo/favrm.png'
-
 import LA from 'assets/img/logo/LA.svg'
 
 import Banner1 from 'assets/img/slider/banner-1.jpg'
@@ -62,12 +60,10 @@ export const imgBanner3 = Banner3
 export const imgBanner4 = Banner4
 export const imgBanner5 = Banner5
 
-export const logo = LA
+export const Logo = LA
 export const Art = art
 export const avatar1 = female
 export const avatar2 = male
-export const Logo = favrm
-
 export const Dark = themeConfig.theme === 'dark'
 
 export const Assets = Dark ? AssetsDark : AssetsLight

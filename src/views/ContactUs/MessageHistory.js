@@ -281,9 +281,9 @@ const MsgHistory = (props) => {
           marginBottom: props.page === 'portfolio' ? '2.2rem' : '1rem'
         }}
       >
-        <CardHeader className="d-flex ">
+        <CardHeader className="d-flex px-0">
           <CardTitle className="actions-left d-flex">{props.heading}</CardTitle>
-          <CardTitle className="actions-right d-flex filter-section">
+          <CardTitle className="actions-right d-flex filter-section w-100 mt-2">
             <Input
               type="text"
               style={{
