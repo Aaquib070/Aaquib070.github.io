@@ -41,7 +41,7 @@ const SecretQues = (props) => {
           name="secretAnswer1"
           onChange={changeHandler}
         />
-        <Label for="passwordq1">{secretQustion1}</Label>
+        <Label>{secretQustion1}</Label>
       </FormGroup>
       <div style={{ textAlign: 'center' }}>OR</div>
       <FormGroup className="form-label-group">
@@ -52,7 +52,7 @@ const SecretQues = (props) => {
           name="secretAnswer2"
           onChange={changeHandler}
         />
-        <Label for="passwordq2">{secretQustion2}</Label>
+        <Label>{secretQustion2}</Label>
       </FormGroup>
       <div style={{ textAlign: 'center' }}>OR</div>
       <FormGroup className="form-label-group">
@@ -63,7 +63,7 @@ const SecretQues = (props) => {
           name="secretAnswer3"
           onChange={changeHandler}
         />
-        <Label for="passwordq3">{secretQustion3}</Label>
+        <Label>{secretQustion3}</Label>
       </FormGroup>
       <div className="d-flex justify-content-center">
         <Button.Ripple

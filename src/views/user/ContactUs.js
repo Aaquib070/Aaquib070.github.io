@@ -60,13 +60,11 @@ const UserAccountTab = (props) => {
             placeholder="Choose a topic"
             onChange={(e) => setcontactUsFormType(e ? e.value : '')}
           />{' '}
-          <Label for="optionSelect">Choose a topic *:</Label>
+          <Label>Choose a topic *:</Label>
         </FormGroup>
       </Row>
       <Row>
-        <Label for="description" className="mt-2">
-          Description *
-        </Label>
+        <Label className="mt-2">Description *</Label>
         <Input
           className="mt-50"
           type="textarea"
@@ -77,9 +75,7 @@ const UserAccountTab = (props) => {
         />
       </Row>
       <Row>
-        <Label for="attachment" className="mt-2">
-          Attachments
-        </Label>
+        <Label className="mt-2">Attachments</Label>
         <Input
           className="mt-50"
           type="File"

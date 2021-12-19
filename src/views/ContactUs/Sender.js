@@ -264,7 +264,7 @@ const ContactUs = (props) => {
                         setfname(e.target.value)
                       }}
                     />
-                    <Label for="EmailMulti">Name</Label>
+                    <Label>Name</Label>
                   </FormGroup>
                   <FormGroup className="form-label-group">
                     <Input
@@ -277,7 +277,7 @@ const ContactUs = (props) => {
                         setfmail(e.target.value)
                       }}
                     />
-                    <Label for="EmailMulti">Email</Label>
+                    <Label>Email</Label>
                   </FormGroup>
                   <FormGroup className="form-label-group">
                     <Input
@@ -290,7 +290,7 @@ const ContactUs = (props) => {
                         setfphone(e.target.value)
                       }}
                     />
-                    <Label for="EmailMulti">Contact</Label>
+                    <Label>Contact</Label>
                   </FormGroup>
 
                   <FormGroup
@@ -336,10 +336,7 @@ const ContactUs = (props) => {
                             settitle(e.target.value)
                           }}
                         />
-                        <Label
-                          for="title"
-                          className={Dark ? 'dark-label' : 'light-label'}
-                        >
+                        <Label className={Dark ? 'dark-label' : 'light-label'}>
                           Title
                         </Label>
                       </FormGroup>
@@ -386,7 +383,7 @@ const ContactUs = (props) => {
                             )
                           }}
                         />
-                        {/* <Label for="rec">Select Nominee</Label> */}
+                        {/* <Label>Select Nominee</Label> */}
                       </FormGroup>
                     </Col>
                   </Row>
@@ -403,10 +400,7 @@ const ContactUs = (props) => {
                             setremail(e.target.value)
                           }}
                         />
-                        <Label
-                          for="title"
-                          className={Dark ? 'dark-label' : 'light-label'}
-                        >
+                        <Label className={Dark ? 'dark-label' : 'light-label'}>
                           Reciver Email
                         </Label>
                       </FormGroup>
@@ -423,10 +417,7 @@ const ContactUs = (props) => {
                             setrphone(e.target.value)
                           }}
                         />
-                        <Label
-                          for="title"
-                          className={Dark ? 'dark-label' : 'light-label'}
-                        >
+                        <Label className={Dark ? 'dark-label' : 'light-label'}>
                           Reciver Phone
                         </Label>
                       </FormGroup>
@@ -468,7 +459,6 @@ const ContactUs = (props) => {
                             value={date}
                           />
                           <Label
-                            for="exampleDate"
                             className={Dark ? 'dark-label' : 'light-label'}
                           >
                             Date *
@@ -488,10 +478,7 @@ const ContactUs = (props) => {
                         onChange={(e) => setfile(e.target.value)}
                         value={file}
                       />
-                      <Label
-                        for="exampleFile"
-                        className={Dark ? 'dark-label' : 'light-label'}
-                      >
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
                         File *
                       </Label>
                     </FormGroup>
@@ -523,10 +510,7 @@ const ContactUs = (props) => {
                             setdesc(e.target.value)
                           }}
                         />
-                        <Label
-                          for="description"
-                          className={Dark ? 'dark-label' : 'light-label'}
-                        >
+                        <Label className={Dark ? 'dark-label' : 'light-label'}>
                           Description
                         </Label>
                       </FormGroup>
@@ -545,7 +529,6 @@ const ContactUs = (props) => {
                               }}
                             />
                             <Label
-                              for="description"
                               className={Dark ? 'dark-label' : 'light-label'}
                             >
                               Signature

@@ -552,9 +552,7 @@ const AddLiability = (props) => {
                                               handleChange(e)
                                             }}
                                           />
-                                          <Label for="nameMulti">
-                                            Liability Type
-                                          </Label>
+                                          <Label>Liability Type</Label>
                                         </FormGroup>
                                       </Col>
                                       <Col md="6" sm="12">
@@ -801,7 +799,7 @@ const AddLiability = (props) => {
                           setfname(e.target.value)
                         }}
                       />
-                      <Label for="EmailMulti">Enter Field Name</Label>
+                      <Label>Enter Field Name</Label>
                     </FormGroup>
                     <FormGroup
                       className="form-label-group"
@@ -818,7 +816,7 @@ const AddLiability = (props) => {
                         placeholder="Field Type..."
                         onChange={(e) => setftype(e ? e.value : ' ')}
                       />
-                      <Label for="nameMulti">Field Type</Label>
+                      <Label>Field Type</Label>
                     </FormGroup>
                     <FormGroup
                       className="form-label-group mb-0"

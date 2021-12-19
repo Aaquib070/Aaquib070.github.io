@@ -447,7 +447,6 @@ const PasswordVault = (props) => {
           <br />
           <br />
           <FormGroup>
-            {/* <Label for="password">Password:</Label> */}
             <Input
               type="password"
               id="password"
@@ -525,7 +524,6 @@ const PasswordVault = (props) => {
                                       className={
                                         Dark ? 'dark-label' : 'light-label'
                                       }
-                                      for="accountNumberMulti"
                                     >
                                       Password For *
                                     </Label>
@@ -546,7 +544,6 @@ const PasswordVault = (props) => {
                                       className={
                                         Dark ? 'dark-label' : 'light-label'
                                       }
-                                      for="userNameMulti"
                                     >
                                       User Name
                                     </Label>
@@ -569,7 +566,6 @@ const PasswordVault = (props) => {
                                       className={
                                         Dark ? 'dark-label' : 'light-label'
                                       }
-                                      for="nameMultiPassword"
                                     >
                                       Password *
                                     </Label>

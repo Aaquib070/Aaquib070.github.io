@@ -128,10 +128,7 @@ const MobileEntry = (props) => {
               id="data-price1"
               placeholder="Enter Mobile No*"
             />
-            <Label
-              className={Dark ? 'dark-label' : 'light-label'}
-              for="data-price1"
-            >
+            <Label className={Dark ? 'dark-label' : 'light-label'}>
               Mobile No
             </Label>
             {numberError && (

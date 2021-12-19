@@ -160,10 +160,7 @@ const Register = (props) => {
                   placeholder="Username"
                   onChange={handleChangeUsername}
                 />
-                <Label
-                  className={Dark ? 'dark-label' : 'light-label'}
-                  for="user"
-                >
+                <Label className={Dark ? 'dark-label' : 'light-label'}>
                   Username
                 </Label>
               </FormGroup>
@@ -175,10 +172,7 @@ const Register = (props) => {
                   placeholder="Password"
                   onChange={handleChangePassword}
                 />
-                <Label
-                  className={Dark ? 'dark-label' : 'light-label'}
-                  for="password"
-                >
+                <Label className={Dark ? 'dark-label' : 'light-label'}>
                   Password
                 </Label>
               </FormGroup>

@@ -75,8 +75,8 @@ const NomineeSidebar = (props) => {
   const setnameFunc = () => seterrorname('Enter Valid Name')
   const setemailFunc = () => seterroremail('Enter Valid Email')
   const setaddressFunc = () => seterroraddress('Enter Valid Address')
-  const setcontact1Func = () => seterrorcontact1('Enter Valid Primary No.')
-  const setcontact2Func = () => seterrorcontact2('Enter Valid Secondary No.')
+  const setcontact1Func = () => seterrorcontact1('Enter Valid Contact No.')
+  const setcontact2Func = () => seterrorcontact2('Enter Valid whatsapp No.')
   const setrelationFunc = () => seterrorrelation('Enter Valid Relation')
   const setrelation1Func = () => seterrorrelation1('Enter Valid Relation')
   const relationValue = (e) => {
@@ -91,46 +91,11 @@ const NomineeSidebar = (props) => {
     switch (name) {
       case 'name':
         setname(value)
-        !(!value?.length || !value.trim()) && seterrorname('')
-        break
-      case 'email':
-        setemail(value)
-        const tempMAil = value.match(
-          /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/
-        )
-        !(!value || !tempMAil || !value.trim()) && seterroremail('')
-        break
-      case 'address':
-        setaddress(value.replace(/[\n\r]/g, ', '))
-        !(!value || !value.trim()) && seterroraddress('')
-        break
-      case 'phone':
-        setcontact1(value)
-        setcontact2(value)
-        !(!value?.length || value.length !== 10 || !value.trim()) &&
-          seterrorcontact1('')
-        break
-      case 'phoneC':
-        setcontact2(value)
-        !(value.length !== 10 || !value.trim()) && seterrorcontact2('')
-        !value?.length && seterrorcontact2('')
-        break
-      case 'relation1':
-        setrelation1(value)
-        !(!value?.length || !value.trim()) && seterrorrelation1('')
-        break
-      default:
-        break
-    }
-  }
-  const handleValueBlur = (e) => {
-    const { name } = e.target
-    const value = e.target.value
-    switch (name) {
-      case 'name':
         !value?.length || !value.trim() ? setnameFunc() : seterrorname('')
         break
       case 'email':
+        setemail(value)
+        // eslint-disable-next-line no-case-declarations
         const tempMAil = value.match(
           /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/
         )
@@ -143,11 +108,15 @@ const NomineeSidebar = (props) => {
         !value || !value.trim() ? setaddressFunc() : seterroraddress('')
         break
       case 'phone':
+        setcontact1(value)
+        setcontact2(value)
         !value?.length || value.length !== 10 || !value.trim()
           ? setcontact1Func()
           : seterrorcontact1('')
+
         break
       case 'phoneC':
+        setcontact2(value)
         value.length !== 10 || !value.trim()
           ? setcontact2Func()
           : seterrorcontact2('')
@@ -159,6 +128,7 @@ const NomineeSidebar = (props) => {
           : seterrorrelation('')
         break
       case 'relation1':
+        setrelation1(value)
         !value?.length || !value.trim()
           ? setrelation1Func()
           : seterrorrelation1('')
@@ -279,22 +249,16 @@ const NomineeSidebar = (props) => {
             type="text"
             name="name"
             value={name}
+            invalid={errorname}
             placeholder="Name*"
             onChange={handleValue}
-            onBlur={handleValueBlur}
             id="data-name"
             style={{ borderColor: errorname ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-name"
-          >
-            Name*
-          </Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Name*</Label>
+
+          <FormFeedback invalid={errorname}>{errorname}</FormFeedback>
         </FormGroup>
-        {errorname && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>{errorname}</span>
-        )}
         <FormGroup className="form-label-group mt-2">
           <Select
             id="data-category"
@@ -306,13 +270,11 @@ const NomineeSidebar = (props) => {
             isClearable={true}
             placeholder={'Relation'}
             onChange={(e) => relationValue(e)}
-            onBlur={handleValueBlur}
           />
           <Label
             className={
               Dark ? 'dark-label select-label' : 'light-label select-label'
             }
-            for="data-category"
           >
             Relation*
           </Label>
@@ -323,18 +285,16 @@ const NomineeSidebar = (props) => {
               type="text"
               name="relation1"
               value={relation1}
+              invalid={errorrelation1}
               placeholder="Relation Name*"
               onChange={handleValue}
-              onBlur={handleValueBlur}
               id="data-Relation"
               style={{ borderColor: errorrelation1 ? 'red' : '' }}
             />
+            <FormFeedback invalid={errorrelation1}>
+              {errorrelation1}
+            </FormFeedback>
           </FormGroup>
-        )}
-        {errorrelation1 && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>
-            {errorrelation1}
-          </span>
         )}
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
@@ -345,45 +305,29 @@ const NomineeSidebar = (props) => {
             invalid={erroremail}
             placeholder="Email*"
             onChange={handleValue}
-            onBlur={handleValueBlur}
             id="data-email"
             style={{ borderColor: erroremail ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-email"
-          >
-            Email*
-          </Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Email*</Label>
           <FormFeedback invalid={erroremail}>{erroremail}</FormFeedback>
         </FormGroup>
-
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label"
             type="type"
             maxLength={10}
             value={contact1}
+            invalid={errorcontact1}
             name="phone"
             onChange={handleValue}
-            onBlur={handleValueBlur}
             onKeyPress={(e) => handleKeyMobileNumber(e)}
             id="data-price1"
             placeholder="Contact*"
             style={{ borderColor: errorcontact1 ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-price1"
-          >
-            Contact
-          </Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Contact</Label>
+          <FormFeedback invalid={errorcontact1}>{errorcontact1}</FormFeedback>
         </FormGroup>
-        {errorcontact1 && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>
-            {errorcontact1}
-          </span>
-        )}
         <FormGroup className="mt-2 mb-0" check>
           <Label check> Whatsapp Contact same as contact</Label>
           <Input
@@ -399,55 +343,35 @@ const NomineeSidebar = (props) => {
             maxLength={10}
             value={contact2}
             name="phoneC"
+            invalid={errorcontact2}
             disabled={sameAsAbove}
             onChange={handleValue}
-            onBlur={handleValueBlur}
             onKeyPress={(e) => handleKeyMobileNumber(e)}
             id="data-price"
             placeholder="WhatsApp Contact"
-            style={{ borderColor: errorcontact2 ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-price"
-          >
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
             WhatsApp Contact
           </Label>
+          <FormFeedback invalid={errorcontact2}>{errorcontact2}</FormFeedback>
         </FormGroup>
-
-        {errorcontact2 && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>
-            {errorcontact2}
-          </span>
-        )}
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label "
-            style={{
-              height: '115px',
-              borderColor: erroraddress ? 'red' : ''
-            }}
+            bsSize="lg"
             type="textarea"
             value={address}
+            invalid={erroraddress}
             name="address"
             placeholder="Address*"
             onChange={handleValue}
-            onBlur={handleValueBlur}
             id="data-Address"
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-Address"
-          >
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
             Address *
           </Label>
+          <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback>
         </FormGroup>
-        {erroraddress && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>
-            {erroraddress}
-          </span>
-        )}
-
         {props.thumbView && img.length <= 0 ? (
           <label
             className="btn btn-primary"

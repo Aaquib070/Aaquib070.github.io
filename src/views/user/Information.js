@@ -192,7 +192,7 @@ const UserInfoTab = () => {
             <Col md={window.screen.width <= 500 ? '12' : '6'}>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="address1">Address Line 1</Label>
+                  <Label>Address Line 1</Label>
                   <Input
                     type="text"
                     id="address1" //placeholder="Address Line 1"
@@ -203,7 +203,7 @@ const UserInfoTab = () => {
               </Row>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="address1">Address Line 2</Label>
+                  <Label>Address Line 2</Label>
                   <Input
                     type="text"
                     id="address1" //placeholder="Address Line 2"
@@ -214,7 +214,7 @@ const UserInfoTab = () => {
               </Row>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="pincode">Pincode</Label>
+                  <Label>Pincode</Label>
                   <Input
                     type="number"
                     id="pincode" //placeholder="Pincode"
@@ -225,7 +225,7 @@ const UserInfoTab = () => {
               </Row>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="city">City</Label>
+                  <Label>City</Label>
                   <Input
                     type="text"
                     //defaultValue="Camden Town"
@@ -238,7 +238,7 @@ const UserInfoTab = () => {
               </Row>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="State">State</Label>
+                  <Label>State</Label>
                   <Input
                     type="text"
                     //defaultValue="London"
@@ -251,7 +251,7 @@ const UserInfoTab = () => {
               </Row>
               <Row xs="1">
                 <FormGroup>
-                  <Label for="Country">Country</Label>
+                  <Label>Country</Label>
                   <Input
                     type="text"
                     //defaultValue="UK"
@@ -269,9 +269,7 @@ const UserInfoTab = () => {
             >
               <Row>
                 <FormGroup style={{ marginBottom: '1rem' }}>
-                  <Label className="d-block mb-50" for="communication">
-                    Communication
-                  </Label>
+                  <Label className="d-block mb-50">Communication</Label>
                   <div className="d-inline-block mr-1">
                     <Checkbox
                       color="primary"

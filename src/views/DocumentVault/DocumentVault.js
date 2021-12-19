@@ -672,10 +672,7 @@ const DocumentVault = () => {
                         placeholder="Attachment Name / Alias"
                         onChange={(e) => setalias(e.target.value)}
                       />
-                      <Label
-                        className={Dark ? 'dark-label' : 'light-label'}
-                        for="nameMultiname"
-                      >
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
                         Attachment Name / Alias
                       </Label>
                     </FormGroup>
@@ -690,10 +687,7 @@ const DocumentVault = () => {
                         placeholder="Expiry Date"
                         onChange={(e) => setexpiry(e.target.value)}
                       />
-                      <Label
-                        className={Dark ? 'dark-label' : 'light-label'}
-                        for="nameMultiExpiry"
-                      >
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
                         Expiry Date
                       </Label>
                     </FormGroup>
@@ -707,10 +701,7 @@ const DocumentVault = () => {
                         placeholder="Description"
                         onChange={(e) => setdesc(e?.target?.value)}
                       />
-                      <Label
-                        className={Dark ? 'dark-label' : 'light-label'}
-                        for="nameMultiDescription1"
-                      >
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
                         Description
                       </Label>
                     </FormGroup>
@@ -794,7 +785,7 @@ const DocumentVault = () => {
                             handleFilter(e)
                           }}
                         />
-                        <Label for="nameMulti">Field Type</Label>
+                        <Label>Field Type</Label>
                       </Col>
                     </div>
                     <CardBody>

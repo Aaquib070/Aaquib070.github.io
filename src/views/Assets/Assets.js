@@ -572,7 +572,7 @@ const AddAssets = (props) => {
                                               )
                                             }}
                                           />
-                                          <Label for="nameMulti">
+                                          <Label>
                                             {messages?.assetOptionText
                                               ? messages.assetOptionText
                                               : 'Asset Type'}
@@ -661,7 +661,6 @@ const AddAssets = (props) => {
                                                   }}
                                                 />
                                                 <Label
-                                                  for="cityMulti"
                                                   className={
                                                     Dark
                                                       ? 'dark-label'
@@ -825,7 +824,7 @@ const AddAssets = (props) => {
                           setfname(e.target.value)
                         }}
                       />
-                      <Label for="EmailMulti">Enter Field Name</Label>
+                      <Label>Enter Field Name</Label>
                     </FormGroup>
 
                     <FormGroup
@@ -843,7 +842,7 @@ const AddAssets = (props) => {
                         placeholder="Field Type..."
                         onChange={(e) => setftype(e ? e.value : '')}
                       />
-                      <Label for="nameMulti">Field Type</Label>
+                      <Label>Field Type</Label>
                     </FormGroup>
                     <FormGroup
                       className="form-label-group mb-0"

@@ -241,12 +241,7 @@ const SpendSidebar = (props) => {
             onBlur={handleValueBlur}
             style={{ borderColor: errorname ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-name"
-          >
-            Item
-          </Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Item</Label>
           {errorname && (
             <span style={{ color: 'red', fontSize: '0.8rem' }}>
               {errorname}
@@ -270,7 +265,6 @@ const SpendSidebar = (props) => {
             className={
               Dark ? 'dark-label select-label' : 'light-label select-label'
             }
-            for="data-category"
           >
             Select Label*
           </Label>
@@ -309,12 +303,7 @@ const SpendSidebar = (props) => {
             onBlur={handleValueBlur}
             style={{ borderColor: errordate ? 'red' : '' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-name"
-          >
-            Date *
-          </Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Date *</Label>
           {errordate && (
             <span style={{ color: 'red', fontSize: '0.8rem' }}>
               {errordate}
@@ -335,10 +324,7 @@ const SpendSidebar = (props) => {
             onBlur={handleValueBlur}
             style={{ borderColor: errorcontact1 ? 'red' : '' }}
           />
-          <Label
-            for="data-price"
-            className={Dark ? 'dark-label' : 'light-label'}
-          >
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
             Amount *
           </Label>
           {errorcontact1 && (
@@ -361,10 +347,7 @@ const SpendSidebar = (props) => {
             onBlur={handleValueBlur}
             style={{ borderColor: erroraddress ? 'red' : '', height: '115px' }}
           />
-          <Label
-            className={Dark ? 'dark-label' : 'light-label'}
-            for="data-name"
-          >
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
             Description *
           </Label>
           {erroraddress && (
