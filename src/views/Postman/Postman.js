@@ -61,7 +61,7 @@ const disablePastDate = () => {
   return `${yyyy}-${mm}-${dd}`
 }
 
-const ContactUs = (props) => {
+const Postman = (props) => {
   const [recVideo, setRecVideo] = useState()
   const selecttype = React.createRef()
   const [date, setdate] = useState(currdt.toISOString().substr(0, 10) + 1)
@@ -724,4 +724,4 @@ export default connect(mapStateToProps, {
   editMessage,
   addData,
   getScheduledMessages
-})(ContactUs)
+})(Postman)

@@ -125,7 +125,7 @@ export const Features = (props) => {
         : 'Save, schedule, send text, audio, video messages',
       background: Sender,
       selected: false,
-      path: '/contactUs'
+      path: '/postman'
     }
   ])
 

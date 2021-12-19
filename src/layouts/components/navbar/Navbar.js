@@ -79,7 +79,7 @@ const ThemeNavbar = (props) => {
         case '/vault/document':
           setMobileTitle('Documents')
           break
-        case '/contactUs':
+        case '/postman':
           setMobileTitle('Postman')
           break
         case '/home/session':

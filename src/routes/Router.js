@@ -12,7 +12,7 @@ import {
   Diary,
   MailConfirm,
   Portfolio,
-  Sender,
+  Postman,
   Privacy,
   Terms_C,
   AddLiability,
@@ -52,7 +52,7 @@ const AppRouter = (props) => {
           component={() => <Redirect to="/diary" />}
         />
         <PrivateRoute path="/portfolio" component={Portfolio} />
-        <PrivateRoute path="/contactUs" component={Sender} />
+        <PrivateRoute path="/postman" component={Postman} />
         <PrivateRoute path="/liability/add" component={AddLiability} />
         <PrivateRoute
           exact

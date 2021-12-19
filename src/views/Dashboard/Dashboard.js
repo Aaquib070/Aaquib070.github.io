@@ -87,7 +87,7 @@ const LADashboard = (props) => {
     {
       label: props?.sender?.heading ? props?.sender?.heading : 'Postman',
       icon: <Share color={mobileColor} className="success" size="auto" />,
-      path: '/contactUs'
+      path: '/postman'
     }
   ]
   const dashboard = [
@@ -170,7 +170,7 @@ const LADashboard = (props) => {
         : 'Save, schedule, send text, audio, video messages',
       background: Sender,
       icon: <Share color={desktopColor} className="success" size="auto" />,
-      path: '/contactUs'
+      path: '/postman'
     }
   ]
   useEffect(() => {

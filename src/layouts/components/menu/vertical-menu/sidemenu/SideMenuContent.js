@@ -222,7 +222,7 @@ const SideMenuContent = (props) => {
           />
         ),
         permissions: ['admin', 'editor'],
-        navLink: '/contactUs'
+        navLink: '/postman'
       }
     ]
     const home = {
