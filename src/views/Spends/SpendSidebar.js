@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Label, Input, FormGroup, Button } from 'reactstrap'
 import { X } from 'react-feather'
+import { Dark } from 'export'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Select from 'react-select'
 import { Spinner } from 'reactstrap'
 import classnames from 'classnames'
-import themeConfig from 'configs/themeConfig'
 import { toast } from 'react-toastify'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
 const dailySpendsLabels = JSON.parse(
@@ -242,9 +242,7 @@ const SpendSidebar = (props) => {
             style={{ borderColor: errorname ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-name"
           >
             Item
@@ -270,9 +268,7 @@ const SpendSidebar = (props) => {
           />
           <Label
             className={
-              themeConfig.theme === 'dark'
-                ? 'dark-label select-label'
-                : 'light-label select-label'
+              Dark ? 'dark-label select-label' : 'light-label select-label'
             }
             for="data-category"
           >
@@ -314,9 +310,7 @@ const SpendSidebar = (props) => {
             style={{ borderColor: errordate ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-name"
           >
             Date *
@@ -343,9 +337,7 @@ const SpendSidebar = (props) => {
           />
           <Label
             for="data-price"
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
           >
             Amount *
           </Label>
@@ -370,9 +362,7 @@ const SpendSidebar = (props) => {
             style={{ borderColor: erroraddress ? 'red' : '', height: '115px' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-name"
           >
             Description *

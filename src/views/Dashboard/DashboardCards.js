@@ -1,11 +1,9 @@
 import React from 'react'
 import { Card } from 'reactstrap'
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 import { ArrowRightCircle } from 'react-feather'
 
 const DashboardCards = (props) => {
-  const Dark = themeConfig.theme === 'dark'
-
   const addClass = () => {
     document
       .getElementById(`back-image-${props.index}`)

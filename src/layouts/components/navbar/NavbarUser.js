@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import ReactCountryFlag from 'react-country-flag'
 import { connect } from 'react-redux'
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 import { setSection } from 'redux/actions/auth/loginActions'
 import { changeLanguage } from 'redux/actions/customizer'
 import { IntlContext } from 'utility/context/Internationalization'
@@ -108,7 +108,7 @@ const customOptions = ({ value, flag }) => {
   )
 }
 
-const colortext = themeConfig.theme === 'dark' ? '#ebeefd' : 'rgb(66 66 66)'
+const colortext = Dark ? '#ebeefd' : 'rgb(66 66 66)'
 const UserDropdown = (props) => {
   return (
     <DropdownMenu right>
@@ -262,10 +262,7 @@ const NavbarUser = (props) => {
             <DropdownMenu
               right
               style={{
-                background:
-                  themeConfig.theme === 'dark'
-                    ? 'rgba(0,0,0,0.8)'
-                    : 'rgba(255,255,255,0.8)',
+                background: Dark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)',
                 backdropFilter: 'blur(5px)'
               }}
             >

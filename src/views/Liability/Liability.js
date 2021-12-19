@@ -34,7 +34,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 import { Delete, Edit, Trash } from 'react-feather'
 import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'
@@ -637,7 +637,7 @@ const AddLiability = (props) => {
                                                 <Label
                                                   for={e.id}
                                                   className={
-                                                    themeConfig.theme === 'dark'
+                                                    Dark
                                                       ? 'dark-label'
                                                       : 'light-label'
                                                   }

@@ -25,52 +25,52 @@ const selectedStyle = {
 const Portfolio = (props) => {
   const columns = [
     {
-      name: 'Type',
+      name: <b>Type</b>,
       selector: 'assetType',
       sortable: true
     },
     {
-      name: 'Nominated',
+      name: <b>Nominated</b>,
       selector: 'nominees',
       sortable: true
     },
     {
-      name: 'Details',
+      name: <b>Details</b>,
       selector: 'details',
       sortable: true
     },
     {
-      name: 'Value',
+      name: <b>Value</b>,
       selector: 'value',
       sortable: true
     },
     {
-      name: 'Remarks',
+      name: <b>Remarks</b>,
       selector: 'remarks',
       sortable: true
     }
   ]
   const columnsNomineeView = [
     {
-      name: 'Nominee ',
+      name: <b>Nominee</b>,
       selector: 'nomineeName',
       sortable: true,
       maxWidth: '240px'
     },
     {
-      name: 'Relation',
+      name: <b>Relation</b>,
       selector: 'relation',
       sortable: true,
       maxWidth: '170px'
     },
     {
-      name: 'Asset',
+      name: <b>Asset</b>,
       selector: 'assetTypeValue',
       maxWidth: '370px',
       sortable: true
     },
     {
-      name: 'Liability',
+      name: <b>Liability</b>,
       maxWidth: '335px',
       selector: 'liabilityTypeValue',
       sortable: true
@@ -81,20 +81,16 @@ const Portfolio = (props) => {
   const [nomList, setNomList] = useState([])
   const [liabilityList, setliabilityList] = useState([])
   const [assetList, setassetList] = useState([])
-  // const [nomineesList, setnomineesList] = useState([])
   const [type, setType] = useState('Asset')
   const { listLoading, nomineesListData, getData } = props
   useEffect(() => {
     !listLoading && getData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     nomineesListData?.length && getAssets()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nomineesListData])
   useEffect(() => {
     !activeTab && getNominees()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab])
   const getAssets = () => {
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
@@ -139,9 +135,6 @@ const Portfolio = (props) => {
           })
         setassetList(temp?.reverse())
       })
-    // const tempNominee =[]
-    // nomineesListData.forEach((nominee,i)=>{
-    // 	user.assets.filter(x => x._id === nominee.id) })
     axios
       .get(`/backendapi/user/liabilities/${user._id}`, {
         headers: {

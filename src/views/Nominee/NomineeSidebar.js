@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Label, Input, FormGroup, Button } from 'reactstrap'
+import { Label, Input, FormGroup, FormFeedback, Button } from 'reactstrap'
 import { X } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import classnames from 'classnames'
+import { Dark } from 'export'
 import Select from 'react-select'
-import themeConfig from 'configs/themeConfig'
 import { toast } from 'react-toastify'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
 
@@ -286,9 +286,7 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: errorname ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-name"
           >
             Name*
@@ -312,9 +310,7 @@ const NomineeSidebar = (props) => {
           />
           <Label
             className={
-              themeConfig.theme === 'dark'
-                ? 'dark-label select-label'
-                : 'light-label select-label'
+              Dark ? 'dark-label select-label' : 'light-label select-label'
             }
             for="data-category"
           >
@@ -346,6 +342,7 @@ const NomineeSidebar = (props) => {
             type="email"
             name="email"
             value={email}
+            invalid={erroremail}
             placeholder="Email*"
             onChange={handleValue}
             onBlur={handleValueBlur}
@@ -353,17 +350,14 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: erroremail ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-email"
           >
             Email*
           </Label>
+          <FormFeedback invalid={erroremail}>{erroremail}</FormFeedback>
         </FormGroup>
-        {erroremail && (
-          <span style={{ color: 'red', fontSize: '0.8rem' }}>{erroremail}</span>
-        )}
+
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label"
@@ -379,9 +373,7 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: errorcontact1 ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-price1"
           >
             Contact
@@ -416,9 +408,7 @@ const NomineeSidebar = (props) => {
             style={{ borderColor: errorcontact2 ? 'red' : '' }}
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-price"
           >
             WhatsApp Contact
@@ -446,9 +436,7 @@ const NomineeSidebar = (props) => {
             id="data-Address"
           />
           <Label
-            className={
-              themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-            }
+            className={Dark ? 'dark-label' : 'light-label'}
             for="data-Address"
           >
             Address *

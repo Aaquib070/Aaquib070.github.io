@@ -10,7 +10,8 @@ import {
   Portfolio,
   Sender,
   Spend,
-  Vault
+  Vault,
+  Dark
 } from 'export'
 import 'swiper/css/swiper.css'
 import {
@@ -31,14 +32,13 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 //import 'assets/scss/plugins/extensions/toastr.scss'
-import themeConfig from 'configs/themeConfig'
 import DashboardCards from './DashboardCards'
 
 import { connect } from 'react-redux'
 import { changeLanguage } from 'redux/actions/customizer'
 
 const mobileColor = '#ff7d00'
-const desktopColor = themeConfig.theme === 'dark' ? '#757488' : 'white'
+const desktopColor = Dark ? '#757488' : 'white'
 
 const LADashboard = (props) => {
   const [width, setwidth] = useState(window.innerWidth)

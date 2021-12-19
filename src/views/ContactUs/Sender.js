@@ -36,8 +36,7 @@ import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'
 import { toast } from 'react-toastify'
 import Sidebar from '../Nominee/NomineeSidebar'
-
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 const msgTypes = [
   {
     value: 'Attachment',
@@ -339,11 +338,7 @@ const ContactUs = (props) => {
                         />
                         <Label
                           for="title"
-                          className={
-                            themeConfig.theme === 'dark'
-                              ? 'dark-label'
-                              : 'light-label'
-                          }
+                          className={Dark ? 'dark-label' : 'light-label'}
                         >
                           Title
                         </Label>
@@ -410,11 +405,7 @@ const ContactUs = (props) => {
                         />
                         <Label
                           for="title"
-                          className={
-                            themeConfig.theme === 'dark'
-                              ? 'dark-label'
-                              : 'light-label'
-                          }
+                          className={Dark ? 'dark-label' : 'light-label'}
                         >
                           Reciver Email
                         </Label>
@@ -434,11 +425,7 @@ const ContactUs = (props) => {
                         />
                         <Label
                           for="title"
-                          className={
-                            themeConfig.theme === 'dark'
-                              ? 'dark-label'
-                              : 'light-label'
-                          }
+                          className={Dark ? 'dark-label' : 'light-label'}
                         >
                           Reciver Phone
                         </Label>
@@ -482,11 +469,7 @@ const ContactUs = (props) => {
                           />
                           <Label
                             for="exampleDate"
-                            className={
-                              themeConfig.theme === 'dark'
-                                ? 'dark-label'
-                                : 'light-label'
-                            }
+                            className={Dark ? 'dark-label' : 'light-label'}
                           >
                             Date *
                           </Label>
@@ -507,11 +490,7 @@ const ContactUs = (props) => {
                       />
                       <Label
                         for="exampleFile"
-                        className={
-                          themeConfig.theme === 'dark'
-                            ? 'dark-label'
-                            : 'light-label'
-                        }
+                        className={Dark ? 'dark-label' : 'light-label'}
                       >
                         File *
                       </Label>
@@ -546,11 +525,7 @@ const ContactUs = (props) => {
                         />
                         <Label
                           for="description"
-                          className={
-                            themeConfig.theme === 'dark'
-                              ? 'dark-label'
-                              : 'light-label'
-                          }
+                          className={Dark ? 'dark-label' : 'light-label'}
                         >
                           Description
                         </Label>
@@ -571,11 +546,7 @@ const ContactUs = (props) => {
                             />
                             <Label
                               for="description"
-                              className={
-                                themeConfig.theme === 'dark'
-                                  ? 'dark-label'
-                                  : 'light-label'
-                              }
+                              className={Dark ? 'dark-label' : 'light-label'}
                             >
                               Signature
                             </Label>

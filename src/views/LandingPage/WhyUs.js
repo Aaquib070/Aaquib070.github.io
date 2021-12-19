@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 import './typewriter.css'
 import { Row, Col } from 'reactstrap'
-
-const Dark = themeConfig.theme === 'dark'
 
 export const WhyUs = (props) => {
   const { msg1, msg2, msg3, msg4, msg5 } = props

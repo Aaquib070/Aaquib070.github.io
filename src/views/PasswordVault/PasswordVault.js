@@ -23,19 +23,16 @@ import {
   CardTitle,
   Label
 } from 'reactstrap'
+import { Dark } from 'export'
 import DataTable from 'react-data-table-component'
 import { encryptdata, decryptdata } from 'utility/context/SecurityTool'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import { Edit, Eye, Trash, ChevronDown } from 'react-feather'
 import 'react-toastify/dist/ReactToastify.css'
-
-//import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/react-paginate.scss'
 import 'assets/scss/pages/data-list.scss'
 import crypto from 'crypto'
-
-import themeConfig from 'configs/themeConfig'
 
 import 'assets/scss/plugins/extensions/dropzone.scss'
 
@@ -526,9 +523,7 @@ const PasswordVault = (props) => {
                                     />
                                     <Label
                                       className={
-                                        themeConfig.theme === 'dark'
-                                          ? 'dark-label'
-                                          : 'light-label'
+                                        Dark ? 'dark-label' : 'light-label'
                                       }
                                       for="accountNumberMulti"
                                     >
@@ -549,9 +544,7 @@ const PasswordVault = (props) => {
                                     />
                                     <Label
                                       className={
-                                        themeConfig.theme === 'dark'
-                                          ? 'dark-label'
-                                          : 'light-label'
+                                        Dark ? 'dark-label' : 'light-label'
                                       }
                                       for="userNameMulti"
                                     >
@@ -574,9 +567,7 @@ const PasswordVault = (props) => {
                                     />
                                     <Label
                                       className={
-                                        themeConfig.theme === 'dark'
-                                          ? 'dark-label'
-                                          : 'light-label'
+                                        Dark ? 'dark-label' : 'light-label'
                                       }
                                       for="nameMultiPassword"
                                     >

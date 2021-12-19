@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 import { X } from 'react-feather'
-import themeConfig from 'configs/themeConfig'
-
-const Dark = themeConfig.theme === 'dark'
+import { Dark } from 'export'
 
 const Summary = (props) => {
   const { modal, plans, setModal, quantity } = props

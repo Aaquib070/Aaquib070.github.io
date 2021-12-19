@@ -5,8 +5,7 @@ import { connect, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import { NavLink, useHistory } from 'react-router-dom'
 import NavbarUser from './NavbarUser'
-import { avatar1, avatar2 } from 'export'
-import themeConfig from 'configs/themeConfig'
+import { avatar1, avatar2, Dark } from 'export'
 import { useLocation } from 'react-router-dom'
 import { Logo } from 'export'
 import './loginModalDiv.scss'
@@ -102,8 +101,7 @@ const ThemeNavbar = (props) => {
       <div className="" />
       <Navbar
         style={{
-          background:
-            themeConfig.theme === 'dark' ? '#21212a' : 'rgba(255,255,255)'
+          background: Dark ? '#21212a' : 'rgba(255,255,255)'
         }}
         className={classnames(
           `${
@@ -168,7 +166,7 @@ const ThemeNavbar = (props) => {
                       style={{
                         fontWeight: '500',
                         color: 'coral',
-                        // themeConfig.theme === 'dark'
+                        // Dark
                         //   ? '#ebeefd !important'
                         //   : '#757488',
                         fontSize: '2.2rem'

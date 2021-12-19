@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import themeConfig from 'configs/themeConfig'
 import {
   CardBody,
   FormGroup,
@@ -14,6 +13,7 @@ import './Login.css'
 import 'swiper/css/swiper.css'
 import 'assets/scss/plugins/extensions/swiper.scss'
 import crypto from 'crypto'
+import { Dark } from 'export'
 import 'assets/scss/pages/authentication.scss'
 import axios from 'axios'
 import { decryptdata, encryptdata } from 'utility/context/SecurityTool'
@@ -161,9 +161,7 @@ const Register = (props) => {
                   onChange={handleChangeUsername}
                 />
                 <Label
-                  className={
-                    themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-                  }
+                  className={Dark ? 'dark-label' : 'light-label'}
                   for="user"
                 >
                   Username
@@ -178,9 +176,7 @@ const Register = (props) => {
                   onChange={handleChangePassword}
                 />
                 <Label
-                  className={
-                    themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-                  }
+                  className={Dark ? 'dark-label' : 'light-label'}
                   for="password"
                 >
                   Password

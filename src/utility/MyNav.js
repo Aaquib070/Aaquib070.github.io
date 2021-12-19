@@ -26,8 +26,7 @@ import {
   Download,
   Settings
 } from 'react-feather'
-import { Logo as LogoDark } from 'export'
-import themeConfig from 'configs/themeConfig'
+import { Logo as LogoDark, Dark } from 'export'
 import { connect } from 'react-redux'
 import { avatar1, avatar2 } from 'export'
 import { Redirect } from 'react-router-dom'
@@ -36,8 +35,8 @@ import { IntlContext } from 'utility/context/Internationalization'
 import ReactCountryFlag from 'react-country-flag'
 
 const user1 = JSON.parse(sessionStorage.getItem('logInUserData'))
-const colortext = themeConfig.theme === 'dark' ? '#ebeefd' : '#757488'
-const Logo = themeConfig.theme === 'dark' ? LogoDark : LogoDark
+const colortext = Dark ? '#ebeefd' : '#757488'
+const Logo = Dark ? LogoDark : LogoDark
 const MyNav = (props) => {
   const [theme, setTheme] = useState(
     sessionStorage.getItem('theme') === 'light' ? false : true
@@ -250,7 +249,7 @@ const MyNav = (props) => {
           <g id="layer1" transform="translate(95.406706,-21.009959)">
             <path
               style={{
-                fill: themeConfig.theme === 'dark' ? '#21212a' : '#ffffff',
+                fill: Dark ? '#21212a' : '#ffffff',
                 stroke: 'var(--warning)',
                 strokeWidth: '10px',
                 strokeLinecap: 'butt',
@@ -303,10 +302,9 @@ const MyNav = (props) => {
                   <DropdownMenu
                     right
                     style={{
-                      background:
-                        themeConfig.theme === 'dark'
-                          ? 'rgba(0,0,0,0.8)'
-                          : 'rgba(255,255,255,0.8)',
+                      background: Dark
+                        ? 'rgba(0,0,0,0.8)'
+                        : 'rgba(255,255,255,0.8)',
                       backdropFilter: 'blur(5px)'
                     }}
                   >

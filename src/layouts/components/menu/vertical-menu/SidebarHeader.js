@@ -3,8 +3,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Disc, X, Circle } from 'react-feather'
 import classnames from 'classnames'
-import { Logo } from 'export'
-import themeConfig from 'configs/themeConfig'
+import { Logo, Dark } from 'export'
+
 const SidebarHeader = (props) => {
   const {
     toggleSidebarMenu,
@@ -31,10 +31,7 @@ const SidebarHeader = (props) => {
             <h2
               className="brand-text mb-0"
               style={{
-                color:
-                  themeConfig.theme === 'dark'
-                    ? '#ebeefd '
-                    : '#757488 !important'
+                color: Dark ? '#ebeefd ' : '#757488 !important'
               }}
             >
               Last Arzi

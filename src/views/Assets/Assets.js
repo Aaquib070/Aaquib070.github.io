@@ -26,6 +26,7 @@ import axios from 'axios'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
+import { Dark } from 'export'
 import 'react-toastify/dist/ReactToastify.css'
 
 //import 'assets/scss/plugins/extensions/toastr.scss'
@@ -33,7 +34,7 @@ import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'
 import { Edit, Trash, Delete } from 'react-feather'
-import themeConfig from 'configs/themeConfig'
+
 import { encryptdata } from 'utility/context/SecurityTool'
 import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'
@@ -662,7 +663,7 @@ const AddAssets = (props) => {
                                                 <Label
                                                   for="cityMulti"
                                                   className={
-                                                    themeConfig.theme === 'dark'
+                                                    Dark
                                                       ? 'dark-label'
                                                       : 'light-label'
                                                   }

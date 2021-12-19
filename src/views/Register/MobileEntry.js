@@ -3,7 +3,7 @@ import countryCodes from './country_codes'
 import ReactCountryFlag from 'react-country-flag'
 import { validatePhoneNumber } from 'redux/actions/auth/phoneValidate'
 import { connect } from 'react-redux'
-import themeConfig from 'configs/themeConfig'
+import { Dark } from 'export'
 import { FormGroup, Input, Col, Row, Button, Label } from 'reactstrap'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
 import Select from 'react-select'
@@ -129,9 +129,7 @@ const MobileEntry = (props) => {
               placeholder="Enter Mobile No*"
             />
             <Label
-              className={
-                themeConfig.theme === 'dark' ? 'dark-label' : 'light-label'
-              }
+              className={Dark ? 'dark-label' : 'light-label'}
               for="data-price1"
             >
               Mobile No

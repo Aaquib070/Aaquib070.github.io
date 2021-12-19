@@ -40,10 +40,10 @@ import {
   xlsFileIcon,
   docFileIcon,
   zipFileIcon,
-  defFileIcon
+  defFileIcon,
+  Dark
 } from 'export'
 import 'assets/scss/plugins/extensions/dropzone.scss'
-import themeConfig from 'configs/themeConfig'
 import axios from 'axios'
 const selectedStyle = {
   rows: {
@@ -673,11 +673,7 @@ const DocumentVault = () => {
                         onChange={(e) => setalias(e.target.value)}
                       />
                       <Label
-                        className={
-                          themeConfig.theme === 'dark'
-                            ? 'dark-label'
-                            : 'light-label'
-                        }
+                        className={Dark ? 'dark-label' : 'light-label'}
                         for="nameMultiname"
                       >
                         Attachment Name / Alias
@@ -695,11 +691,7 @@ const DocumentVault = () => {
                         onChange={(e) => setexpiry(e.target.value)}
                       />
                       <Label
-                        className={
-                          themeConfig.theme === 'dark'
-                            ? 'dark-label'
-                            : 'light-label'
-                        }
+                        className={Dark ? 'dark-label' : 'light-label'}
                         for="nameMultiExpiry"
                       >
                         Expiry Date
@@ -716,11 +708,7 @@ const DocumentVault = () => {
                         onChange={(e) => setdesc(e?.target?.value)}
                       />
                       <Label
-                        className={
-                          themeConfig.theme === 'dark'
-                            ? 'dark-label'
-                            : 'light-label'
-                        }
+                        className={Dark ? 'dark-label' : 'light-label'}
                         for="nameMultiDescription1"
                       >
                         Description
