@@ -155,8 +155,8 @@ const NomineeSidebar = (props) => {
       (relation === 'Others' && !relation1?.length) ||
       erroremail ||
       !email?.length ||
-      erroraddress ||
-      !address?.length ||
+      // erroraddress ||
+      // !address?.length ||
       errorcontact1 ||
       !contact1?.length ||
       errorcontact2
@@ -268,7 +268,7 @@ const NomineeSidebar = (props) => {
               (option) => option.value === relation
             )}
             isClearable={true}
-            placeholder={'Relation'}
+            placeholder={'Relation*'}
             onChange={(e) => relationValue(e)}
           />
           <Label
@@ -296,22 +296,7 @@ const NomineeSidebar = (props) => {
             </FormFeedback> */}
           </FormGroup>
         )}
-        <FormGroup className="form-label-group mt-2 mb-0">
-          <Input
-            className="input-label "
-            type="textarea"
-            value={address}
-            invalid={erroraddress}
-            name="address"
-            placeholder="Address*"
-            onChange={handleValue}
-            id="data-Address"
-          />
-          <Label className={Dark ? 'dark-label' : 'light-label'}>
-            Address *
-          </Label>
-          {/* <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback> */}
-        </FormGroup>
+
         <FormGroup className="form-label-group mt-2 mb-0">
           <Input
             className="input-label"
@@ -364,16 +349,28 @@ const NomineeSidebar = (props) => {
           </Label>
           {/* <FormFeedback invalid={errorcontact2}>{errorcontact2}</FormFeedback> */}
         </FormGroup>
-        <div className="pt-1">
+        <FormGroup check inline className="p-0 ml-25 mt-25">
           <Input
             type="checkbox"
+            className="w-max"
             checked={sameAsAbove}
             onChange={() => handleCheck()}
           />
-          <Label style={{ paddingLeft: '8.5rem' }}>
-            Whatsapp same as contact
-          </Label>
-        </div>
+          <Label check>Whatsapp same as contact</Label>
+        </FormGroup>
+        <FormGroup className="form-label-group mt-1 mb-0">
+          <Input
+            className="input-label "
+            type="textarea"
+            value={address}
+            name="address"
+            placeholder="Address"
+            onChange={handleValue}
+            id="data-Address"
+          />
+          <Label className={Dark ? 'dark-label' : 'light-label'}>Address</Label>
+          {/* <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback> */}
+        </FormGroup>
         {props.thumbView && img.length <= 0 ? (
           <label
             className="btn btn-primary"
