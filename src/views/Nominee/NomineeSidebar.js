@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Label, Input, FormGroup, FormFeedback, Button } from 'reactstrap'
+import { Label, Input, FormGroup, Button } from 'reactstrap'
 import { X } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import classnames from 'classnames'
@@ -323,10 +323,12 @@ const NomineeSidebar = (props) => {
             onChange={handleValue}
             onKeyPress={(e) => handleKeyMobileNumber(e)}
             id="data-price1"
-            placeholder="Contact*"
+            placeholder="Contact No.*"
             style={{ borderColor: errorcontact1 ? 'red' : '' }}
           />
-          <Label className={Dark ? 'dark-label' : 'light-label'}>Contact</Label>
+          <Label className={Dark ? 'dark-label' : 'light-label'}>
+            Contact No.
+          </Label>
           {/* <FormFeedback invalid={errorcontact1}>{errorcontact1}</FormFeedback> */}
         </FormGroup>
 
@@ -356,7 +358,7 @@ const NomineeSidebar = (props) => {
             checked={sameAsAbove}
             onChange={() => handleCheck()}
           />
-          <Label check>Whatsapp same as contact</Label>
+          <Label check>Whatsapp same as contact no.</Label>
         </FormGroup>
         <FormGroup className="form-label-group mt-1 mb-0">
           <Input
