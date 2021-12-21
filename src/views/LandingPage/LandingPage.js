@@ -77,10 +77,10 @@ const LandingPage = (props) => {
   const content = [
     'About us',
     //contact us in about us and in contact 2 options - feedback or querry
-    'Privacy Policy',
+    'Privacy policy',
     'Terms of use',
     'Copyright',
-    'Advertise With Us'
+    'Advertise with us'
   ]
 
   useEffect(() => {

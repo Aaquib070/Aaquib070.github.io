@@ -138,7 +138,7 @@ const AssetAccordion = (props) => {
           marginBottom: props.page === 'portfolio' ? '2.2rem' : '1rem'
         }}
       >
-        <CardHeader className="d-flex ">
+        <CardHeader className="d-block">
           <CardTitle className="actions-left d-flex">{props.heading}</CardTitle>
           <CardTitle className="actions-right d-flex filter-section">
             <Input
@@ -150,7 +150,7 @@ const AssetAccordion = (props) => {
               }}
               onChange={(e) => search(e.target.value)}
               placeholder="Search"
-              className="placeholder"
+              className="placeholder my-50"
             />
           </CardTitle>
         </CardHeader>

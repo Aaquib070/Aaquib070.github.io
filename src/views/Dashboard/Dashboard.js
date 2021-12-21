@@ -37,7 +37,7 @@ import DashboardCards from './DashboardCards'
 import { connect } from 'react-redux'
 import { changeLanguage } from 'redux/actions/customizer'
 
-const mobileColor = '#ff7d00'
+const mobileColor = 'coral'
 const desktopColor = Dark ? '#757488' : 'white'
 
 const LADashboard = (props) => {
