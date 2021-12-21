@@ -92,6 +92,14 @@ const navigationConfig = [
     icon: <Send size={20} />,
     permissions: ['admin', 'editor'],
     navLink: '/postman'
+  },
+  {
+    id: 'admin',
+    title: 'admin',
+    type: 'item',
+    icon: <Send size={20} />,
+    permissions: ['admin', 'editor'],
+    navLink: '/admin'
   }
 ]
 

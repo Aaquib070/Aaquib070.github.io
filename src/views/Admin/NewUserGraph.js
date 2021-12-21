@@ -78,11 +78,11 @@ class NewUserGraph extends React.Component {
     },
     series: [
       {
-        name: "This Month",
+        name: "Visted",
         data: [120, 340, 170, 450, 450, 42, 490, 300]
       },
       {
-        name: "Last Month",
+        name: "Account Created",
         data: [90, 300, 150, 350, 330, 180, 250, 240]
       }
     ]
@@ -91,20 +91,20 @@ class NewUserGraph extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>New Users</CardTitle>
+          <CardTitle>New Users Footfall</CardTitle>
           <Settings size={20} className="cursor-pointer text-muted" />
         </CardHeader>
         <CardBody>
           <div className="d-flex justify-content-start mb-1">
             <div className="mr-2">
-              <p className="mb-50 text-bold-600">This Month</p>
+              <p className="mb-50 text-bold-600">Visited</p>
               <h2 className="text-bold-400">
                 
                 <span className="text-success">12,300</span>
               </h2>
             </div>
             <div>
-              <p className="mb-50 text-bold-600">Last Month</p>
+              <p className="mb-50 text-bold-600">Account Created</p>
               <h2 className="text-bold-400">
                
                 <span>8,700</span>

@@ -12,7 +12,8 @@ import {
   FileText,
   FileMinus,
   Briefcase,
-  Send
+  Send,
+  Activity
 } from 'react-feather'
 import SideMenuGroup from './SideMenuGroup'
 import { Badge } from 'reactstrap'
@@ -223,6 +224,19 @@ const SideMenuContent = (props) => {
         ),
         permissions: ['admin', 'editor'],
         navLink: '/postman'
+      },
+      {
+        id: 'admin',
+        title: props?.sender?.heading ? props?.sender?.heading : 'Admin',
+        type: 'item',
+        icon: (
+          <Activity
+            {...(window.screen.width <= 500 && { color: mobileColor })}
+            size={20}
+          />
+        ),
+        permissions: ['admin', 'editor'],
+        navLink: '/admin'
       }
     ]
     const home = {
