@@ -201,7 +201,8 @@ export const addData = (obj) => {
     email: encryptdata(obj.email, true),
     primaryContact: encryptdata(obj.contact1, true),
     secondaryContact: encryptdata(obj.contact2, true),
-    address: encryptdata(obj.address, true)
+    address: encryptdata(obj.address, true),
+    secrets: obj.secrets
     //usage: 'Unused'
   }
   if (obj.relation === 'others' && obj.relation1)

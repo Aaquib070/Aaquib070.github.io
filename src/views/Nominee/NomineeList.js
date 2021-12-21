@@ -192,7 +192,7 @@ const Nominee = (props) => {
       {
         name: 'Info',
         sortable: true,
-        width: '50px',
+        width: '80px',
         cell: function EditComp(row) {
           return <EditComponent row={row} currentData={handleCurrentData} />
         }
@@ -217,7 +217,7 @@ const Nominee = (props) => {
       {
         name: 'Relation',
         selector: 'relation',
-        maxWidth: '50px',
+        width: '130px',
         sortable: true,
         cell: function EditComp(row) {
           return (
@@ -233,7 +233,7 @@ const Nominee = (props) => {
       {
         name: 'Trash',
         sortable: true,
-        width: '50px',
+        width: '80px',
         cell: function EditComp(row) {
           return (
             <DeleteComponent
@@ -372,7 +372,7 @@ const Nominee = (props) => {
               closeModal={() => setopen(false)}
             />
             <DataTable
-              width="200"
+              // width="200"
               columns={window.screen.width < 500 ? mobilecolumns : columns}
               data={value.length ? allData : data}
               noHeader

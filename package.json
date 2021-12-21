@@ -8,6 +8,7 @@
     "@mui/material": "^5.2.3",
     "aes256": "^1.1.0",
     "ag-grid-community": "^22.1.1",
+    "apexcharts": "^3.32.0",
     "audio-react-recorder": "^1.0.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",

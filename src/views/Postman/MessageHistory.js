@@ -269,7 +269,7 @@ const MsgHistory = (props) => {
         <ModalBody>
           {loading && <Spinner color="warning" size="sm" />}
           {!loading && video && (
-            <video src={bloburl} controls autoPlay width={500} height={300} />
+            <video src={bloburl} controls autoPlay width="100%" height={300} />
           )}
           {!loading && !video && <ReactAudioPlayer src={bloburl} controls />}
         </ModalBody>

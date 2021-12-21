@@ -32,8 +32,8 @@
 }
 
 // Color palettes
-@import "palette-variables";
-@import "./palette-gradient";
+@import 'palette-variables';
+@import './palette-gradient';
 
 // Color Classes
 //   Text color: .color .lighten-* / .darken-* / .accent-*
@@ -46,7 +46,7 @@
 
 @each $color_name, $color in $colors {
   @each $color_type, $color_value in $color {
-    @if $color_type== "base" {
+    @if $color_type== 'base' {
       .#{$color_name} {
         color: $color_value !important;
       }
@@ -103,7 +103,7 @@
 
       // badge
       .badge.badge-light-#{$color_name} {
-        background-color: color-function($color_name, "light-badge");
+        background-color: color-function($color_name, 'light-badge');
         color: $color_value !important;
         font-weight: 500;
         text-transform: uppercase;
@@ -125,12 +125,12 @@
 
       // Basic buttons
       .btn-#{$color_name} {
-        border-color: color-function($color_name, "darken-2") !important;
+        border-color: color-function($color_name, 'darken-2') !important;
         background-color: $color_value !important;
         color: #fff;
 
         &:hover {
-          border-color: color-function($color_name, "darken-1") !important;
+          border-color: color-function($color_name, 'darken-1') !important;
           color: #fff !important;
           box-shadow: 0 8px 25px -8px rgba($color-value, 1);
         }
@@ -292,8 +292,8 @@
       // Form Input Elements
       // Checkbox & Radio
       input {
-        &[type="checkbox"].bg-#{$color_name},
-        &[type="radio"].bg-#{$color_name} {
+        &[type='checkbox'].bg-#{$color_name},
+        &[type='radio'].bg-#{$color_name} {
           + .custom-control-label {
             &:before {
               background-color: $color_value !important;
@@ -321,7 +321,7 @@
         }
       }
 
-      // Vertical Layout Menu Themes 
+      // Vertical Layout Menu Themes
       .vertical-layout {
         .main-menu.theme-#{$color_name} {
           .navbar-header {
@@ -337,8 +337,8 @@
                 a {
                   background: linear-gradient(
                     118deg,
-                    rgba($color_value, 1),
-                    rgba($color_value, 0.7)
+                    #282828,
+                    rgb(64 63 68 / 66%)
                   );
                   box-shadow: 0 0 10px 1px rgba($color_value, 0.7) !important;
                 }
@@ -347,8 +347,8 @@
                 li.active {
                   background: linear-gradient(
                     118deg,
-                    rgba($color_value, 1),
-                    rgba($color_value, 0.7)
+                    #282828,
+                    rgb(117 116 136 / 66%)
                   );
                   box-shadow: 0 0 10px 1px rgba($color_value, 0.7) !important;
                 }
@@ -359,22 +359,22 @@
       }
 
       // Horizontal Layout
-      .horizontal-layout.theme-#{$color_name}{
-        .header-navbar{
-          .brand-text{
+      .horizontal-layout.theme-#{$color_name} {
+        .header-navbar {
+          .brand-text {
             color: $color_value !important;
           }
         }
-        .navbar-horizontal{
-          #main-menu-navigation{
-            .nav-item.active{
-              .nav-link{
+        .navbar-horizontal {
+          #main-menu-navigation {
+            .nav-item.active {
+              .nav-link {
                 background: linear-gradient(
                   118deg,
                   rgba($color_value, 1),
                   rgba($color_value, 0.7)
                 );
-                box-shadow: 0 0 10px 1px rgba($color_value, 0.7) !important;;
+                box-shadow: 0 0 10px 1px rgba($color_value, 0.7) !important;
               }
             }
           }
@@ -423,18 +423,18 @@
       }
 
       .btn-#{$color_name}.btn-#{$color_type} {
-        border-color: color-function($color_name, "darken-2") !important;
+        border-color: color-function($color_name, 'darken-2') !important;
         background-color: $color_value !important;
 
         &:hover {
-          border-color: color-function($color_name, "darken-2") !important;
-          background-color: color-function($color_name, "darken-3") !important;
+          border-color: color-function($color_name, 'darken-2') !important;
+          background-color: color-function($color_name, 'darken-3') !important;
         }
 
         &:focus,
         &:active {
-          border-color: color-function($color_name, "darken-3") !important;
-          background-color: color-function($color_name, "darken-4") !important;
+          border-color: color-function($color_name, 'darken-3') !important;
+          background-color: color-function($color_name, 'darken-4') !important;
         }
       }
 

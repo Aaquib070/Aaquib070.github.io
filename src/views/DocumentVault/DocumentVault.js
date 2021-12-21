@@ -746,47 +746,48 @@ const DocumentVault = () => {
               <Row>
                 <Col sm="12">
                   <Card>
-                    <div style={{ display: 'flex' }}>
-                      <Col>
+                    <div>
+                      <Row>
                         <h3 className="mt-1">Documents List</h3>
-                      </Col>
-                      <Col>
-                        <Input
-                          type="text"
-                          style={{
-                            height: '75%',
-                            borderRadius: '5rem',
-                            fontSize: '1rem'
-                          }}
-                          onChange={(e) => search(e.target.value)}
-                          placeholder="Search"
-                          className="placeholder"
-                        />
-                      </Col>
-                      <Col className="form-label-group">
-                        <Select
-                          isMulti
-                          id="optionSelect"
-                          className="React"
-                          classNamePrefix="select"
-                          isClearable={true}
-                          value={filter.map((n) => {
-                            const as = colourOptions2.filter((e) => {
-                              return e.value === n.id
-                            })
-                            return {
-                              value: as[0].value,
-                              label: as[0].label
-                            }
-                          })}
-                          options={colourOptions2}
-                          placeholder="Field Type..."
-                          onChange={(e) => {
-                            handleFilter(e)
-                          }}
-                        />
-                        <Label>Field Type</Label>
-                      </Col>
+                      </Row>
+                      <Row className="mt-50">
+                        <Col className="form-label-group p-25">
+                          <Select
+                            isMulti
+                            id="optionSelect"
+                            className="React"
+                            classNamePrefix="select"
+                            isClearable={true}
+                            value={filter.map((n) => {
+                              const as = colourOptions2.filter((e) => {
+                                return e.value === n.id
+                              })
+                              return {
+                                value: as[0].value,
+                                label: as[0].label
+                              }
+                            })}
+                            options={colourOptions2}
+                            placeholder="Field Type..."
+                            onChange={(e) => {
+                              handleFilter(e)
+                            }}
+                          />
+                          <Label>Field Type</Label>
+                        </Col>
+                        <Col className="p-25">
+                          <Input
+                            type="text"
+                            style={{
+                              borderRadius: '5rem',
+                              fontSize: '1rem'
+                            }}
+                            onChange={(e) => search(e.target.value)}
+                            placeholder="Search"
+                            className="placeholder"
+                          />
+                        </Col>
+                      </Row>
                     </div>
                     <CardBody>
                       <DataTable

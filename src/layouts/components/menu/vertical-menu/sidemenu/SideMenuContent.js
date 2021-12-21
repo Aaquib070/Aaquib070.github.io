@@ -21,7 +21,7 @@ import { ChevronRight } from 'react-feather'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 
-const mobileColor = '#ff7d00'
+const mobileColor = 'coral'
 const SideMenuContent = (props) => {
   const history = useHistory()
 
@@ -112,12 +112,7 @@ const SideMenuContent = (props) => {
         id: 'assets',
         title: messages?.asset ? messages?.asset : 'Assets',
         type: 'item',
-        icon: (
-          <DollarSign
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <DollarSign color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/assets/add'
       },
@@ -127,7 +122,8 @@ const SideMenuContent = (props) => {
         type: 'item',
         icon: (
           <Command
-            {...(window.screen.width <= 500 && { color: mobileColor })}
+            //color={mobileColor}
+            color={mobileColor}
             size={20}
           />
         ),
@@ -138,12 +134,7 @@ const SideMenuContent = (props) => {
         id: 'nominee',
         title: messages?.nominees ? messages?.nominees : 'Nominees',
         type: 'item',
-        icon: (
-          <Users
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Users color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/nominee/list'
       },
@@ -151,12 +142,7 @@ const SideMenuContent = (props) => {
         id: 'portfolio',
         title: messages?.portfolio ? messages?.portfolio : 'Portfolio',
         type: 'item',
-        icon: (
-          <Briefcase
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Briefcase color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/portfolio'
       },
@@ -164,12 +150,7 @@ const SideMenuContent = (props) => {
         id: 'pwd',
         title: messages?.vault ? messages?.vault : 'Password Vault',
         type: 'item',
-        icon: (
-          <Lock
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Lock color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/vault/password'
       },
@@ -177,12 +158,7 @@ const SideMenuContent = (props) => {
         id: 'Password Vault',
         title: messages?.documents ? messages?.documents : 'Documents',
         type: 'item',
-        icon: (
-          <Archive
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Archive color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/vault/document'
       },
@@ -190,12 +166,7 @@ const SideMenuContent = (props) => {
         id: 'diary',
         title: messages?.diary ? messages?.diary : 'Secret Diary',
         type: 'item',
-        icon: (
-          <FileText
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <FileText color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/diary'
       },
@@ -203,12 +174,7 @@ const SideMenuContent = (props) => {
         id: 'dailyspends',
         title: messages?.spends ? messages?.spends : 'Daily Spends',
         type: 'item',
-        icon: (
-          <FileMinus
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <FileMinus color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/spends'
       },
@@ -216,12 +182,7 @@ const SideMenuContent = (props) => {
         id: 'contact',
         title: props?.sender?.heading ? props?.sender?.heading : 'Postman',
         type: 'item',
-        icon: (
-          <Send
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Send color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/postman'
       },
@@ -229,12 +190,7 @@ const SideMenuContent = (props) => {
         id: 'admin',
         title: props?.sender?.heading ? props?.sender?.heading : 'Admin',
         type: 'item',
-        icon: (
-          <Activity
-            {...(window.screen.width <= 500 && { color: mobileColor })}
-            size={20}
-          />
-        ),
+        icon: <Activity color={mobileColor} size={20} />,
         permissions: ['admin', 'editor'],
         navLink: '/admin'
       }
@@ -243,12 +199,7 @@ const SideMenuContent = (props) => {
       id: 'home',
       title: 'Home',
       type: 'item',
-      icon: (
-        <Home
-          {...(window.screen.width <= 500 && { color: mobileColor })}
-          size={20}
-        />
-      ),
+      icon: <Home color={mobileColor} size={20} />,
       permissions: ['admin', 'editor'],
       navLink: '/dashboard'
     }
@@ -289,7 +240,7 @@ const SideMenuContent = (props) => {
       )
     }
 
-    let renderItem = (
+    const renderItem = (
       <li
         className={classnames('nav-item', {
           'has-sub': item.type === 'collapse',

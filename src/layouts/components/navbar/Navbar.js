@@ -182,7 +182,7 @@ const ThemeNavbar = (props) => {
                       className="brand-text mb-0 ml-50"
                       style={{
                         fontWeight: '600',
-                        color: '#FF9F43',
+                        color: 'coral',
                         textAlign: 'center',
                         paddingTop: '9px'
                       }}

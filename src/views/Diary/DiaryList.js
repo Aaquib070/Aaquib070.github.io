@@ -182,8 +182,7 @@ const DiaryList = (props) => {
                       <div
                         style={{
                           padding: '0.5rem',
-                          backgroundColor: 'var(--danger)',
-                          borderTopRightRadius: '0.5rem'
+                          backgroundColor: 'var(--danger)'
                         }}
                         onClick={(e) => {
                           // e.stopPropagation()
