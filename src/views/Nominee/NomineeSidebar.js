@@ -243,7 +243,8 @@ const NomineeSidebar = (props) => {
       contact1: contact1?.trim(),
       contact2: contact2?.trim(),
       id: id?.trim(),
-      name: name?.trim()
+      name: name?.trim(),
+      secrets
     }
     if (props.data !== null) {
       obj._id = props.data._id
@@ -436,15 +437,32 @@ const NomineeSidebar = (props) => {
           {secrets.map((data) => {
             return (
               <>
-                <FormGroup className="form-label-group mt-1 mb-0">
+                <FormGroup
+                  className="form-label-group mt-1 mb-0"
+                  style={{
+                    border: '1px solid #d9d9d9',
+                    borderRadius: '5px',
+                    padding: '2px'
+                  }}
+                >
                   <b>{data.id}.</b>
-                  <span>{data.question}</span>
+                  <span
+                    style={{
+                      marginLeft: '5px'
+                    }}
+                  >
+                    {data.question}
+                  </span>
                   <b>
                     <XCircle
+                      color="var(--warning)"
+                      size="20"
                       className="float-right"
                       onClick={() => handleCross(data.id)}
                     />
                     <Edit2
+                      color="#49b412"
+                      size="20"
                       className="float-right"
                       onClick={() => editQues(data.id)}
                     />
