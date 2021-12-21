@@ -368,7 +368,7 @@ const NavbarUser = (props) => {
                   fontSize: '0.95rem',
                   fontWeight: '500'
                 }}
-                href="/"
+                href="/#/user/feed"
               >
                 Contact Us
               </DropdownItem>
