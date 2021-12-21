@@ -1,3 +1,50 @@
+.plan-table {
+  height: max-content;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 1000px;
+  border-radius: 0.5rem;
+  border-collapse: separate;
+  border-spacing: 1rem;
+}
+
+.shadow-dark {
+  box-shadow: 0 0 10px -5px white;
+  color: white;
+}
+
+.shadow-light {
+  box-shadow: 0 0 10px -5px #21212a;
+  color: #21212a;
+}
+
+.plan-table th {
+  font-size: 1.3rem;
+  border: 1px solid coral;
+}
+
+.plan-table td {
+  font-size: 1rem;
+}
+
+.plan-table th,
+.plan-table td {
+  padding: 1rem 0;
+}
+
+.plan-table td:not(:first-child) {
+  border-radius: 2rem;
+  width: 210px;
+  border-width: 2px;
+  border: none;
+  box-shadow: inset 0px 0px 10px 0px #49b412;
+}
+
+.plan-table td:first-child {
+  font-weight: bold;
+  border: 1px solid coral !important;
+}
+
 .w-max {
   width: max-content !important;
 }
@@ -23,7 +70,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: rem0 1px 4px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
   padding: 1.0000001064rem;
   justify-content: space-between;
   animation: callAnimation 2s infinite ease-in-out;
@@ -62,6 +109,7 @@
   left: 0;
   display: block;
   padding: 0.5rem 2rem 0;
+  margin-top: 3rem;
 }
 
 .mobile-foooter {
@@ -72,6 +120,7 @@
   left: 0;
   display: block;
   padding: 2rem 0 0;
+  margin-top: 3rem;
 }
 
 #scroll-y {
@@ -712,9 +761,11 @@ input {
   border-radius: 0.5rem;
   position: relative;
   display: flex;
-  justify-content: space-evenly;
-  padding: 10px;
+  justify-content: center;
+  padding: 2.5rem 1rem;
   height: max-content;
+  overflow-x: auto;
+  text-align: center;
 }
 
 .active-border {
@@ -752,34 +803,6 @@ input {
   box-shadow: inset 3px -9px 7px -10px grey;
 }
 
-.table_Topic {
-  background-color: rgba(225, 225, 225, 0.6) !important;
-}
-.table_topic {
-  background-color: rgba(225, 225, 225, 0.3) !important;
-}
-
-.table_Basic {
-  background-color: rgba(255, 255, 0, 0.6) !important;
-}
-.table_basic {
-  background-color: rgba(255, 255, 0, 0.3) !important;
-}
-
-.table_Premium {
-  background-color: rgba(0, 255, 255, 0.6) !important;
-}
-.table_premium {
-  background-color: rgba(0, 255, 255, 0.3) !important;
-}
-
-.table_Elite {
-  background-color: rgba(0, 225, 0, 0.6) !important;
-}
-.table_elite {
-  background-color: rgba(0, 225, 0, 0.3) !important;
-}
-
 .plan_container {
   border-radius: 10px;
   padding: 1rem;
@@ -813,9 +836,9 @@ input {
 
 @media (max-width: 1000px) {
   .plan-menu-option {
-    height: 380px;
+    height: max-content;
     display: block;
-    padding: 0 0 10px;
+    padding: 1.5rem;
   }
 
   .plan_container {
