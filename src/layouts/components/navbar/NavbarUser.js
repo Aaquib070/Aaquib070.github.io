@@ -152,6 +152,35 @@ const UserDropdown = (props) => {
 }
 const user1 = sessionStorage.getItem('logInUserData')
 const NavbarUser = (props) => {
+  const beforeInstallPromptHandler = e => {
+    console.log('pppppppppppppppppppp',e)
+    var button = document.getElementById('download-app');
+    console.log(button)
+    let deferredPrompt;
+    e.preventDefault();
+	  deferredPrompt = e;
+    button.addEventListener('click', (e) => {
+      console.log('hey');
+      deferredPrompt && deferredPrompt.prompt();
+      deferredPrompt &&  deferredPrompt.userChoice
+        .then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          } else {
+            console.log('User dismissed the A2HS prompt');
+          }
+          deferredPrompt = null;
+        });
+    }, false);
+  }
+
+  React.useEffect(()=>{
+    window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler)
+  //   return () => {
+  //     window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
+  // };
+  },[beforeInstallPromptHandler])
+  
   const [themeCheck, setthemeCheck] = useState(
     sessionStorage.getItem('theme') === 'light' ? false : true
   )
@@ -245,6 +274,11 @@ const NavbarUser = (props) => {
   }
   return (
     <div className="d-flex">
+      <div style={{marginTop:'8px', marginRight: '10px'}}>
+      <input style={{width: '105px',fontSize: '10px', marginRight: '-24px'}}
+       type='button' id='download-app' value='Download App'/>
+       <Download style={{paddingRight: '5px'}} size="18" className="ml-50" stroke={colortext} />
+      </div>
       {window.screen.width > 500 && <DropdownLang />}
 
       {window.screen.width > 500 && (
@@ -266,19 +300,20 @@ const NavbarUser = (props) => {
                 backdropFilter: 'blur(5px)'
               }}
             >
-              <DropdownItem
+              {/* <DropdownItem
                 className="w-100"
-                tag={'a'}
+                // tag={'button'}
+                // id='download-app4'
                 style={{
                   color: colortext,
                   fontSize: '0.95rem',
                   fontWeight: '500'
                 }}
-                onClick={handleDownload}
+                //onClick={e=>{console.log(e)}}
               >
                 Download App
                 <Download size="15" className="ml-50" stroke={colortext} />
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem
                 className="w-100"
                 tag={'a'}

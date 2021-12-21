@@ -1,7 +1,9 @@
 /* eslint-disable radix */
 import React, { useState, useEffect } from 'react'
+import { Dark } from 'export'
+import Select from 'react-select'
 import { encryptdata } from 'utility/context/SecurityTool'
-import { DropdownToggle, Input } from 'reactstrap'
+import { DropdownToggle, Input, Card,Row,CardTitle,Col,CardHeader,CardBody, Button, Label,FormGroup } from 'reactstrap'
 import PopUp from 'utility/Popup'
 import { toast } from 'react-toastify'
 import DataTable from 'react-data-table-component'
@@ -23,6 +25,17 @@ import axios from 'axios'
 
 import 'assets/scss/plugins/extensions/react-paginate.scss'
 import 'assets/scss/pages/data-list.scss'
+
+const dailySpendsLabels = JSON.parse(
+  sessionStorage.getItem('dropdowns')
+).dailySpendsLabels
+
+const yearData = [
+  {label: "Last 3 month", value: 3},
+  {label: "Last 6 month", value: 6},
+  {label: "Last 1 year", value: 12},
+  {label: "Last 3 years", value: 36},
+]
 
 const selectedStyle = {
   rows: {
@@ -74,10 +87,21 @@ const DeleteComponent = (props) => {
   )
 }
 const CustomHeader = (props) => {
+  
   return (
-    <div className="data-list-header d-flex justify-content-between">
+    <div style={{height: '150%', marginBottom: '30px'}} className="data-list-header d-flex justify-content-between ">
       <div className="actions-left d-flex">
-        <DropdownToggle
+      <Button.Ripple
+          color="warning"
+          type="reset"
+          className="button-label"
+          outline
+          onClick={() => props.handleSidebar(true, true)}
+        >
+          <span className="align-middle">Add</span>
+        </Button.Ripple>
+        
+        {/* <DropdownToggle
           color="white"
           className="sort-dropdown mx-50"
           style={{
@@ -89,7 +113,7 @@ const CustomHeader = (props) => {
           onClick={() => props.handleSidebar(true, true)}
         >
           <span className="align-middle">Add</span>
-        </DropdownToggle>
+        </DropdownToggle> */}
       </div>
       <div className="actions-right d-flex">
         <div className="filter-section">
@@ -98,7 +122,8 @@ const CustomHeader = (props) => {
             style={{
               height: '75%',
               borderRadius: '5rem',
-              fontSize: '1rem'
+              fontSize: '1rem',
+              width: '300px'
             }}
             onChange={(e) => props.handleFilter(e)}
             placeholder="Search"
@@ -140,6 +165,9 @@ const conditionalRowStyles = [
   // }
 ]
 const DataListConfig = (props) => {
+  const [label, setlabel] = useState([]);
+  const [year, setyear] = useState(3);
+  const [filters,setfilters] = useState({});
   const [data, setdata] = useState([])
   const [open, setopen] = useState(false)
   const [deleteThisRow, setDeleteRow] = useState('')
@@ -152,6 +180,7 @@ const DataListConfig = (props) => {
   const [totalRecords, settotalRecords] = useState(0)
   const [sortIndex, setsortIndex] = useState([])
   const [addNew, setaddNew] = useState('')
+  const [splitdata, setsplitdata] = useState({});
   const [isLoading, setisLoading] = useState(false)
   const columns = [
       {
@@ -183,7 +212,7 @@ const DataListConfig = (props) => {
       {
         name: 'Description',
         selector: 'desc',
-        minWidth: '150px',
+        minWidth: '200px',
         sortable: true
         //cell: row => `$${row.price}`
       },
@@ -196,12 +225,13 @@ const DataListConfig = (props) => {
         name: 'Date',
         minWidth: '200px',
         selector: 'date',
+        minWidth: '50px',
         sortable: true
       },
       {
         name: 'Amount',
         selector: 'amount',
-        minWidth: '150px',
+        minWidth: '50px',
         sortable: true
         //cell: row => `$${row.price}`
       },
@@ -289,10 +319,37 @@ const DataListConfig = (props) => {
         }
       }
     ]
+
+    const groupBy = (arr, property) => {
+      return arr.reduce((memo, x) => {
+        if (!memo[x[property]]) { memo[x[property]] = []; }
+        memo[x[property]].push(x);
+        return memo;
+      }, {});
+    };
   useEffect(() => {
     if (props?.data) {
       setdata(props?.data)
       setallData(props.dataList.allData)
+      const tempData= props.dataList.allData;
+      tempData && tempData.forEach((element,i) => {
+        if(element.date) {
+          const d = new Date(element.date);
+       let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+      let mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
+         tempData[i].seperator = `${mo}, ${ye}`
+        }
+        
+      });
+      const newTemp = groupBy(tempData,'seperator')
+      
+    //   const vm = {};
+    //   vm.dec = props.dataList.allData.filter(item => /(.*)-12-(.*)/.test(item.date));
+    // vm.nov = props.dataList.allData.filter(item => /(.*)-11-(.*)/.test(item.date));
+    // vm.oct = props.dataList.allData.filter(item => /(.*)-10-(.*)/.test(item.date));
+    // vm.sep = props.dataList.allData.filter(item => /(.*)-09-(.*)/.test(item.date));
+    // console.log('vm', vm);
+    setsplitdata(newTemp)
       //totalPages(props.dataList.totalPages)
       // setcurrentPage(parseInt(props.parsedFilter?.page) - 1)
       setrowsPerPage(parseInt(props.parsedFilter?.perPage))
@@ -302,7 +359,7 @@ const DataListConfig = (props) => {
   }, [props.data])
 
   useEffect(() => {
-    props.getSpendData(props.parsedFilter)
+    props.getSpendData(props.parsedFilter, filters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -349,15 +406,20 @@ const DataListConfig = (props) => {
         : {}
       const nominee = {
         userId: userData._id,
-        item: encryptdata(obj.name),
-        label: encryptdata(obj.relation),
+        // item: encryptdata(obj.name),
+        // label: encryptdata(obj.relation),
+        // date: obj.date,
+        // amount: encryptdata(obj.contact1),
+        // desc: encryptdata(obj.address)
+        item: obj.name,
+        label: obj.relation,
         date: obj.date,
-        amount: encryptdata(obj.contact1),
-        desc: encryptdata(obj.address)
+        amount: obj.contact1,
+        desc: obj.address
       }
       if (obj.relation === 'others' && obj.relation1)
         nominee.relation = encryptdata(obj.relation1, true)
-
+      //axios.defaults.baseURL = 'http://localhost:5000'
       axios
         .post('/backendapi/spend/add', nominee, {
           headers: {
@@ -396,11 +458,11 @@ const DataListConfig = (props) => {
       const nominee = {
         _id: obj._id,
         userId: userData._id,
-        item: encryptdata(obj.name),
-        label: encryptdata(obj.relation1),
+        item:obj.name,
+        label: obj.relation1,
         date: obj.date,
-        amount: encryptdata(obj.contact1),
-        desc: encryptdata(obj.address)
+        amount: obj.contact1,
+        desc: obj.address
       }
       axios
         .post('/backendapi/spend/update', nominee, {
@@ -421,6 +483,18 @@ const DataListConfig = (props) => {
         })
     }
   }
+
+  const changelabelFilter = (event) => {
+    const labels = []
+    event?.length &&
+      event.forEach((e) => {
+        labels.push(e)
+      })
+      console.log(labels)
+    setlabel(labels)
+  }
+
+
   const handleCurrentData = (obj) => {
     obj.name = obj.item
     obj.relation1 = obj.label
@@ -439,9 +513,13 @@ const DataListConfig = (props) => {
     )
   }
   return (
+    <>
     <div
       className={`data-list ${props.thumbView ? 'thumb-view' : 'list-view'}`}
     >
+      
+
+      
       <PopUp
         handleConfirm={() => {
           handleDelete()
@@ -450,7 +528,7 @@ const DataListConfig = (props) => {
         isOpen={open}
         closeModal={() => setopen(false)}
       />
-      <DataTable
+      {/* <DataTable
         width="200"
         columns={window.screen.width < 500 ? mobilecolumns : columns}
         data={value.length ? data : allData}
@@ -459,8 +537,8 @@ const DataListConfig = (props) => {
         selectableRows={window.screen.width < 500 ? false : false}
         responsive
         pointerOnHover
-        selectableRowsHighlight
-        conditionalRowStyles={conditionalRowStyles}
+       // selectableRowsHighlight
+       // conditionalRowStyles={conditionalRowStyles}
         // onSelectedRowsChange={(data) => setselected(data.selectedRows)}
         customStyles={selectedStyle}
         subHeaderComponent={
@@ -474,7 +552,17 @@ const DataListConfig = (props) => {
           />
         }
         sortIcon={<ChevronDown />}
-      />
+      /> */}
+
+      <CustomHeader
+      handleSidebar={handleSidebar}
+      handleFilter={handleFilter}
+      handleRowsPerPage={handleRowsPerPage}
+      rowsPerPage={rowsPerPage}
+      total={totalRecords}
+      index={sortIndex}
+    />
+   
       <Sidebar
         show={sidebar}
         data={currentData}
@@ -493,7 +581,124 @@ const DataListConfig = (props) => {
         })}
         onClick={() => handleSidebar(false, true)}
       />
+
+
     </div>
+    <React.Fragment>
+    <Card>
+      <CardBody>
+        <Row>
+          <Col sm="5">
+      <FormGroup className="form-label-group mt-2 mb-2">
+          <Select
+            isMulti
+            id="data-category"
+            name="label"
+            options={dailySpendsLabels}
+            // value={dailySpendsLabels?.filter(
+            //   (option) => option.value === label
+            // )}
+            value={label?.map((n) => {
+              const as = dailySpendsLabels.filter(
+                (e) => {
+                  return e.value === n.value
+                }
+              )
+              return {
+                value: as[0].value,
+                label: as[0].label
+              }
+            })}
+            isClearable={true}
+            placeholder={'Label Filter'}
+            onChange={(e) => changelabelFilter(e)}
+            //onBlur={handleValueBlur}
+          />
+          <Label
+            className={
+              Dark ? 'dark-label select-label' : 'light-label select-label'
+            }
+          >
+            Label Filter
+          </Label>
+        </FormGroup>
+        </Col>
+        <Col sm="5">
+        <FormGroup className="form-label-group mt-2 mb-2">
+          <Select
+          
+            id="data-category"
+            name="label"
+            options={yearData}
+            value={yearData?.filter(
+              (option) => option.value === year
+            )}
+            isClearable={true}
+            placeholder={'Date range filter'}
+            onChange={(e) => setyear(e?.value)}
+            //onBlur={handleValueBlur}
+          />
+          <Label
+            className={
+              Dark ? 'dark-label select-label' : 'light-label select-label'
+            }
+          >
+            Date range filter
+          </Label>
+        </FormGroup>
+        </Col>
+        <Col sm="2">
+                                        <FormGroup
+                                         
+                                        >
+                                         
+                                          <Button.Ripple
+                                          style={{marginTop:'20px'}}
+                                            color="warning"
+                                            //disabled={ label.length === 0}
+                                            type="reset"
+                                            className="button-label"
+                                            onClick={(e) => {
+                                              setfilters({labels: label.map(e=>e.value).join(','), year})
+                                              props.getSpendData(props.parsedFilter, {labels: label.map(e=>e.value).join(','),year});
+                                            }}
+                                          >
+                                            Apply
+                                          </Button.Ripple>
+                                        </FormGroup>
+                                      </Col>
+        </Row>
+      </CardBody>
+    </Card>
+      {Object.keys(splitdata).map(key => {
+        const sum= splitdata[key]?.map(item => Number(item.amount)).reduce((prev, next) => prev + next);
+       return (<Card>
+        <CardBody>
+        
+          <h4 style={{textAlign: 'center'}}>{key}</h4>
+          <hr style={{width:'40%'}}/>
+          <h5 style={{textAlign: 'center'}}>Total Spends :  <b style={{color: 'coral'}}>₹ {sum}</b></h5>
+          <hr />
+  <DataTable
+style={{marginTop: '-53px'}}
+  width="200"
+  columns={window.screen.width < 500 ? mobilecolumns : columns}
+  data={splitdata[key]}
+  noHeader
+  subHeader
+  selectableRows={window.screen.width < 500 ? false : false}
+  responsive
+  pointerOnHover
+  customStyles={selectedStyle}
+  sortIcon={<ChevronDown />}
+  />
+  
+  </CardBody>
+  </Card>)
+      })}
+    
+</React.Fragment>
+</>
   )
 }
 
@@ -515,7 +720,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteSpendData: (state) => dispatch(deleteSpendData(state)),
-    getSpendData: (state) => dispatch(getSpendData(state)),
+    getSpendData: (state,st) => dispatch(getSpendData(state,st)),
     addData: (state) => dispatch(addData(state)),
     updateData: (state) => dispatch(updateData(state)),
     filterSpendData: (data) => dispatch(filterSpendData(data))

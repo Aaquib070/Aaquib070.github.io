@@ -299,6 +299,7 @@ const SpendSidebar = (props) => {
             placeholder="Enter Date"
             // onChange={(e) => setdate(e.target.value)}
             id="data-name"
+            max={new Date()}
             onChange={handleValue}
             onBlur={handleValueBlur}
             style={{ borderColor: errordate ? 'red' : '' }}

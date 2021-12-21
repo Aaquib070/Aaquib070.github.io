@@ -68,15 +68,28 @@ export const getData = (params) => {
   }
 }
 
-export const getSpendData = (params) => {
+export const getSpendData = (params,filters) => {
+  console.log('filters',filters);
   return async (dispatch) => {
     let userData = sessionStorage.getItem('logInUserData')
       ? JSON.parse(sessionStorage.getItem('logInUserData'))
       : {}
     dispatch({ type: 'GET_SPEND_DATA_LOADING', data: true })
+    const today = new Date();
+    const end = formatDate(today);
+    const minusNo = Number(filters.year ? filters.year : 3);
+      today.setMonth(today.getMonth() - minusNo);
+    today.setDate(1);
+    const start = formatDate(today)
+    let filt=`?dateRangeStart=${start}&dateRangeEnd=${end}`;
+    if(filters.labels){
+      filt=`${filt}&labels=${filters.labels}`
+    }
+    
     await axios
-      .get(`/backendapi/spend/list/${userData._id}`, {
-        params,
+      .get(`/backendapi/spend/list/${userData._id}${filt}`, {
+        //.get(`/backendapi/spend/list/${userData._id}`, {
+          params,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }
@@ -85,7 +98,8 @@ export const getSpendData = (params) => {
         dispatch({ type: 'GET_SPEND_DATA_LOADING', data: false })
         dispatch({
           type: 'GET_DATA',
-          data: decryptDiary(response)?.data,
+          //data: decryptDiary(response)?.data,
+          data: response?.data,
           totalPages: response.length,
           params
         })
@@ -115,19 +129,31 @@ export const getInitialData = () => {
   }
 }
 
+const formatDate =(d) => {
+  let month = `${d.getMonth() + 1}`;
+  if(month.length === 1) {
+    month=`0${month}`
+  }
+  let day = `${d.getDate()}`;
+  if(day.length === 1) {
+    day=`0${day}`
+  }
+  return [d.getFullYear(), month, day].join('-');
+}
+
 export const getSpendInitialData = () => {
   let userData = sessionStorage.getItem('logInUserData')
     ? JSON.parse(sessionStorage.getItem('logInUserData'))
     : {}
   return async (dispatch) => {
-    await axios
+   await axios
       .get(`/backendapi/spend/list/${userData._id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }
       })
       .then((response) => {
-        dispatch({ type: 'GET_ALL_DATA', data: decryptDiary(response)?.data })
+        dispatch({ type: 'GET_ALL_DATA', data: response?.data })
       })
   }
 }
