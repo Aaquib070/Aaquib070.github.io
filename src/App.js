@@ -29,6 +29,12 @@ const App = () => {
     }
   )
 
+  const beforeInstallPromptHandler = event => {
+    console.log(event);
+  }
+
+  window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler)
+
   React.useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
    });
