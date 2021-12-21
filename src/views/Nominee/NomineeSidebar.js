@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Label, Input, FormGroup, Button } from 'reactstrap'
-import { X } from 'react-feather'
+import {
+  Label,
+  Input,
+  FormGroup,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody
+} from 'reactstrap'
+import { X, XCircle, Edit2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import classnames from 'classnames'
 import { Dark } from 'export'
@@ -27,10 +35,65 @@ const NomineeSidebar = (props) => {
   const [errorrelation1, seterrorrelation1] = useState('')
   const [errorrelation, seterrorrelation] = useState('')
   const [erroremail, seterroremail] = useState('')
-  const [erroraddress, seterroraddress] = useState('')
   const [errorcontact1, seterrorcontact1] = useState('')
   const [errorcontact2, seterrorcontact2] = useState('')
   const [errorname, seterrorname] = useState('')
+  const [fname, setfname] = useState('')
+  const [ftype, setftype] = useState('')
+  const [secrets, setSecrets] = useState([])
+
+  const [modal, setmodal] = useState(false)
+
+  const [editID, setEditID] = useState('')
+
+  const handleSecrets = () => {
+    if (!editID) {
+      const temp = [...secrets]
+      temp.push({ id: temp?.length + 1, question: fname, answer: ftype })
+      setSecrets([...temp])
+    } else {
+      const temp = [...secrets]
+      const index = temp.findIndex((data) => data.id === editID)
+      temp[index].question = fname
+      temp[index].answer = ftype
+      setSecrets([...temp])
+      setEditID('')
+    }
+    setmodal(false)
+    setfname('')
+    setftype('')
+  }
+  const handleCross = (id) => {
+    let temp = [...secrets]
+    temp = temp.filter((data) => data.id !== id)
+    if (temp?.length) {
+      temp.forEach((data, id) => {
+        data.id = id + 1
+      })
+    }
+    setSecrets([...temp])
+  }
+  const clearCustomField = () => {
+    setfname('')
+    setftype('')
+  }
+  const toggleModal = () => {
+    if (modal) {
+      clearCustomField()
+    }
+    setmodal(!modal)
+  }
+
+  const editQues = (id) => {
+    setEditID(id)
+    setmodal(true)
+    secrets.forEach((data) => {
+      if (data.id === id) {
+        setftype(data.answer)
+        setfname(data.question)
+      }
+    })
+  }
 
   useEffect(() => {
     if (props.data) {
@@ -74,7 +137,6 @@ const NomineeSidebar = (props) => {
   }, [props.data])
   const setnameFunc = () => seterrorname('Enter Valid Name')
   const setemailFunc = () => seterroremail('Enter Valid Email')
-  const setaddressFunc = () => seterroraddress('Enter Valid Address')
   const setcontact1Func = () => seterrorcontact1('Enter Valid Contact No.')
   const setcontact2Func = () => seterrorcontact2('Enter Valid whatsapp No.')
   const setrelationFunc = () => seterrorrelation('Enter Valid Relation')
@@ -105,7 +167,6 @@ const NomineeSidebar = (props) => {
         break
       case 'address':
         setaddress(value.replace(/[\n\r]/g, ', '))
-        !value || !value.trim() ? setaddressFunc() : seterroraddress('')
         break
       case 'phone':
         setcontact1(value)
@@ -140,7 +201,6 @@ const NomineeSidebar = (props) => {
   const validateValues = () => {
     !name?.length && setnameFunc()
     !email?.length && setemailFunc()
-    !address?.length && setaddressFunc()
     !contact1?.length && setcontact1Func()
     !contact2?.length && setcontact1Func()
     !relation?.length && setrelationFunc()
@@ -209,7 +269,6 @@ const NomineeSidebar = (props) => {
 
   const nullError = () => {
     seterrorname('')
-    seterroraddress('')
     seterrorcontact1('')
     seterrorcontact2('')
     seterroremail('')
@@ -373,6 +432,44 @@ const NomineeSidebar = (props) => {
           <Label className={Dark ? 'dark-label' : 'light-label'}>Address</Label>
           {/* <FormFeedback invalid={erroraddress}>{erroraddress}</FormFeedback> */}
         </FormGroup>
+        <div>
+          {secrets.map((data) => {
+            return (
+              <>
+                <FormGroup className="form-label-group mt-1 mb-0">
+                  <b>{data.id}.</b>
+                  <span>{data.question}</span>
+                  <b>
+                    <XCircle
+                      className="float-right"
+                      onClick={() => handleCross(data.id)}
+                    />
+                    <Edit2
+                      className="float-right"
+                      onClick={() => editQues(data.id)}
+                    />
+                  </b>
+                </FormGroup>
+              </>
+            )
+          })}
+        </div>
+        <div className="d-flex justify-content-center mt-1">
+          <Button
+            color="white"
+            outline
+            disabled={secrets?.length === 3}
+            onClick={toggleModal}
+            className="add-button"
+            id="addButton"
+            style={{
+              backgroundColor: 'var(--warning)'
+            }}
+          >
+            +
+          </Button>
+          <div style={{ padding: '10px' }}>Secret Question</div>
+        </div>
         {props.thumbView && img.length <= 0 ? (
           <label
             className="btn btn-primary"
@@ -389,6 +486,7 @@ const NomineeSidebar = (props) => {
           </label>
         ) : null}
       </PerfectScrollbar>
+
       <div className="data-list-sidebar-footer px-2 d-flex justify-content-start align-items-center mt-1">
         <Button.Ripple
           className="button-label"
@@ -416,6 +514,73 @@ const NomineeSidebar = (props) => {
             ? 'Adding'
             : 'Add'}
         </Button.Ripple>
+        <Modal isOpen={modal} toggle={toggleModal} centered={true}>
+          <ModalHeader
+            toggle={toggleModal}
+            tag="div"
+            style={{
+              color: 'var(--warning)',
+              fontSize: '1.45rem',
+              fontWeight: 'bold',
+              letterSpacing: '1px',
+              justifyContent: 'center'
+            }}
+          >
+            Add a secret question
+          </ModalHeader>
+          <ModalBody>
+            <FormGroup className="form-label-group">
+              <Input
+                type="text"
+                name="Secret Question"
+                value={fname}
+                placeholder="Secret Question"
+                onChange={(e) => {
+                  setfname(e.target.value)
+                }}
+              />
+              <Label>Question</Label>
+            </FormGroup>
+
+            <FormGroup className="form-label-group">
+              <Input
+                type="text"
+                name="Answer"
+                value={ftype}
+                placeholder="Answer"
+                onChange={(e) => {
+                  setftype(e.target.value)
+                }}
+              />
+              <Label>Question</Label>
+            </FormGroup>
+            <FormGroup
+              className="form-label-group mb-0"
+              style={{ textAlign: 'right' }}
+            >
+              <Button.Ripple
+                outline
+                color="secondary"
+                type="reset"
+                className="mb-1 button-label"
+                onClick={(e) => {
+                  clearCustomField()
+                }}
+              >
+                Reset
+              </Button.Ripple>
+              <Button.Ripple
+                color="warning"
+                disabled={fname === '' || ftype === ''}
+                type="submit"
+                className="button-label"
+                onClick={handleSecrets}
+              >
+                {editID ? 'Update' : 'Add'}
+              </Button.Ripple>
+            </FormGroup>
+          </ModalBody>
+        </Modal>
       </div>
     </div>
   )
