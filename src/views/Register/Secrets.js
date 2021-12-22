@@ -3,13 +3,19 @@ import axios from 'axios'
 import crypto from 'crypto'
 import { Check } from 'react-feather'
 import { encryptdata } from 'utility/context/SecurityTool'
+import Select from 'react-select'
 import Checkbox from 'common/CheckboxesVuexy'
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap'
 import './Register.css'
 import 'swiper/css/swiper.css'
 import 'assets/scss/pages/authentication.scss'
 import 'assets/scss/plugins/extensions/swiper.scss'
-
+const colourOptions2 = [
+  { value: 'Question 1', label: 'Question 1', id: '1' },
+  { value: 'Question 2', label: 'Question 2', id: '2' },
+  { value: 'Question 3', label: 'Question 3', id: '3' },
+  { value: 'Question 4', label: 'Question 4', id: '4' }
+]
 const Register = ({
   email,
   name,
@@ -36,7 +42,11 @@ const Register = ({
       .toString(`hex`)
     return hash
   }
-
+  const getOptions = (q1, q2) => {
+    return colourOptions2.filter(
+      (data) => data.value !== q1?.value && data.value !== q2?.value
+    )
+  }
   const handleRegister = (e) => {
     setdisbaleRegister(true)
     setisLoading(true)
@@ -85,6 +95,42 @@ const Register = ({
         />
         <Label>Secret Question 1</Label>
       </FormGroup>
+      {/* <FormGroup className="form-label-group">
+        <Select
+          id="optionSelect"
+          className="React"
+          classNamePrefix="select"
+          isClearable={true}
+          options={getOptions(secretQustion3, secretQustion2)}
+          placeholder="Secret Question 1"
+          onChange={(e) => setsecretQustion1(e ? e.value : '')}
+        />
+        <Label>Secret Question 1</Label>
+      </FormGroup>
+      <FormGroup className="form-label-group">
+        <Select
+          id="optionSelect"
+          className="React"
+          classNamePrefix="select"
+          isClearable={true}
+          options={getOptions(secretQustion1, secretQustion3)}
+          placeholder="Secret Question 2"
+          onChange={(e) => setsecretQustion2(e ? e.value : '')}
+        />
+        <Label>Secret Question 2</Label>
+      </FormGroup>
+      <FormGroup className="form-label-group">
+        <Select
+          id="optionSelect"
+          className="React"
+          classNamePrefix="select"
+          isClearable={true}
+          options={getOptions(secretQustion1, secretQustion2)}
+          placeholder="Secret Question 3"
+          onChange={(e) => setsecretQustion3(e ? e.value : '')}
+        />
+        <Label>Secret Question 3</Label>
+      </FormGroup> */}
       <FormGroup className="form-label-group">
         <Input
           type="password"
