@@ -121,6 +121,33 @@ const exportToExcel = (e,splitdata,key=null) => {
       });
     })
     const ws = XLSX.utils.json_to_sheet(data);
+    //ws['A1'].wpx=200;
+    // ws['B1'].width='40';
+    // ws['C1'].width='40';
+    // ws['D1'].width='40';
+    // ws['E1'].width='40';
+    // ws['F1'].width='40';
+    // ws['G1'].width='40';
+    var wscols = [
+      {wch:14},
+      {wch:10},
+      {wch:25},
+      {wch:20},
+      {wch:7},
+      {wch:25},
+      {wch:10}
+  ];
+  
+  ws['!cols'] = wscols;
+  ws["A1"].s =   {
+     font: {
+    //name: '宋体',
+    sz: 24,
+    bold: true,
+    color: { rgb: "FFAA00" }
+  },
+};
+    console.log(ws);
     XLSX.utils.book_append_sheet(wb, ws, key);
     fileName=`Spediture_Report-${key}.xlsx`
   } else {
@@ -140,6 +167,75 @@ const exportToExcel = (e,splitdata,key=null) => {
       });
     })
     const ws = XLSX.utils.json_to_sheet(data);
+    var wscols = [
+      {wch:14},
+      {wch:10},
+      {wch:25},
+      {wch:20},
+      {wch:7},
+      {wch:25},
+      {wch:10}
+  ];
+  
+  ws['!cols'] = wscols;
+
+ // console.log(ws)
+  // Object.keys(ws).forEach(i=>{
+  //   console.log('hereee',i)
+  //   if(i.startsWith("!")) {
+  //     console.log('bingo',i)
+  //   }
+  // })
+  
+//   Object.keys(ws).forEach(i=>{
+//     //if (typeof(ws[i]) != "object") continue;
+//     let cell = XLSX.utils.decode_cell(i);
+//     console.log('here',i)
+//     if(!i.startsWith("!")) {
+//     ws[i].s = { // styling for all cells
+//         font: {
+//             name: "arial"
+//         },
+//         alignment: {
+//             vertical: "center",
+//             horizontal: "center",
+//             wrapText: '1', // any truthy value here
+//         },
+//         border: {
+//             right: {
+//                 style: "thin",
+//                 color: "000000"
+//             },
+//             left: {
+//                 style: "thin",
+//                 color: "000000"
+//             },
+//         }
+//     };
+
+//     if (cell.c == 0) { // first column
+//         ws[i].s.numFmt = "DD/MM/YYYY HH:MM"; // for dates
+//         ws[i].z = "DD/MM/YYYY HH:MM";
+//     } else { 
+//         ws[i].s.numFmt = "00.00"; // other numbers
+//     }
+
+//     if (cell.r == 0 ) { // first row
+//         ws[i].s.border.bottom = { // bottom border
+//             style: "thin",
+//             color: "000000"
+//         };
+//     }
+
+//     if (cell.r % 2) { // every other row
+//         ws[i].s.fill = { // background color
+//             patternType: "solid",
+//             fgColor: { rgb: "b2b2b2" },
+//             bgColor: { rgb: "b2b2b2" } 
+//         };
+//     }
+//   }
+// })
     XLSX.utils.book_append_sheet(wb, ws, key);
   })
 }
@@ -445,7 +541,7 @@ const DataListConfig = (props) => {
       }
     })
     .then((res) => {
-      settotal(res.data)
+      settotal(res?.data)
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
