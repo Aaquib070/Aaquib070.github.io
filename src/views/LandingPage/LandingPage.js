@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import Google from './../../assets/img/icons/google.png'
 import Apple from './../../assets/img/icons/apple.png'
+import ToU from './../../assets/pdf/Last Arzi - Terms of use.pdf'
+import Coockies from './../../assets/pdf/Last Arzi - Cookies.pdf'
+import Copyright from './../../assets/pdf/Last Arzi - Copyright.pdf'
+import PPol from './../../assets/pdf/Last Arzi - Privacy policy.pdf'
 import {
   // Card,
   // CardTitle,
@@ -50,37 +54,58 @@ const LandingPage = (props) => {
   const logos = [
     {
       type: 'facebook',
-      icon: <Facebook />
+      icon: <Facebook />,
+      link: 'https://www.facebook.com'
     },
     {
       type: 'linkedin',
-      icon: <Linkedin />
+      icon: <Linkedin />,
+      link: ''
     },
     {
       type: 'instagram',
-      icon: <Instagram />
+      icon: <Instagram />,
+      link: ''
     },
     {
       type: 'twitter',
-      icon: <Twitter />
+      icon: <Twitter />,
+      link: ''
     },
     // {
     //   type: 'caller',
-    //   icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>
+    //   icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>,
+    //   link: ''
     // },
     {
       type: 'youtube',
-      icon: <Youtube />
+      icon: <Youtube />,
+      link: ''
     }
   ]
 
   const content = [
-    'About us',
+    {
+      pdf: Coockies,
+      label: 'About us'
+    },
     //contact us in about us and in contact 2 options - feedback or querry
-    'Privacy policy',
-    'Terms of use',
-    'Copyright',
-    'Advertise with us'
+    {
+      pdf: PPol,
+      label: 'Privacy policy'
+    },
+    {
+      pdf: ToU,
+      label: 'Terms of use'
+    },
+    {
+      pdf: Copyright,
+      label: 'Copyright'
+    },
+    {
+      pdf: Coockies,
+      label: 'Advertise with us'
+    }
   ]
 
   useEffect(() => {
@@ -270,7 +295,16 @@ const LandingPage = (props) => {
                 }}
               >
                 {logos.map((item) => {
-                  return item.icon
+                  return (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={item}
+                    >
+                      {item.icon}
+                    </a>
+                  )
                 })}
               </div>
             </div>
@@ -294,7 +328,13 @@ const LandingPage = (props) => {
                     }}
                     key={item}
                   >
-                    {item}
+                    <a
+                      href={item.pdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.label}
+                    </a>
                   </div>
                 )
               })}
