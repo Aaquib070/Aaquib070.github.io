@@ -75,19 +75,25 @@ export const getSpendData = (params,filters) => {
       ? JSON.parse(sessionStorage.getItem('logInUserData'))
       : {}
     dispatch({ type: 'GET_SPEND_DATA_LOADING', data: true })
-    const today = new Date();
+    if(filters.year) {
+      const today = new Date();
     const end = formatDate(today);
     const minusNo = Number(filters.year ? filters.year : 3);
       today.setMonth(today.getMonth() - minusNo);
     today.setDate(1);
     const start = formatDate(today)
-    let filt=`?dateRangeStart=${start}&dateRangeEnd=${end}`;
+    params.dateRangeStart=start;
+    params.dateRangeEnd=end;
+    }
+    
+    //let filt=`?dateRangeStart=${start}&dateRangeEnd=${end}`;
     if(filters.labels){
-      filt=`${filt}&labels=${filters.labels}`
+      //filt=`${filt}&labels=${filters.labels}`
+      params.labels=filters.labels;
     }
     
     await axios
-      .get(`/backendapi/spend/list/${userData._id}${filt}`, {
+      .get(`/backendapi/spend/list/${userData._id}`, {
         //.get(`/backendapi/spend/list/${userData._id}`, {
           params,
         headers: {
