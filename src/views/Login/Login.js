@@ -42,7 +42,19 @@ const Register = (props) => {
       .toString(`hex`)
     return hash
   }
-
+  const subscribe = (email) => {
+    console.log('###############################start')
+    try {
+      axios
+        .post('/backendapi/subscribe', {
+          token: localStorage.getItem('fcmtoken'),
+          topic: email
+        })
+        .then((res) => {})
+    } catch (e) {
+      console.log('###############################star4', e)
+    }
+  }
   const handleSubmit = (e) => {
     seterrorMsg('')
     setloginText('Signing In')
@@ -97,7 +109,7 @@ const Register = (props) => {
 
                 setloggedIn(true)
               })
-              // subscribe(resp.email)
+              subscribe(resp.email)
             } else if (res?.data[0]?.status === 'emailNotConfirmed') {
               const userkey =
                 props.routerProps && props.routerProps.match.params.userkey
@@ -107,7 +119,7 @@ const Register = (props) => {
                 setloggedIn(true)
                 sessionStorage.setItem('logInUserData', JSON.stringify(resp))
                 sessionStorage.setItem('logInGreeting', true)
-                // subscribe(resp.email)
+                subscribe(resp.email)
                 setloggedIn(true)
                 axios
                   .post('/backendapi/update/login', res.data[0], {
