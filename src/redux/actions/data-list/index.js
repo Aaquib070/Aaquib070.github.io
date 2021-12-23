@@ -2,26 +2,26 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { decryptdata, encryptdata } from 'utility/context/SecurityTool'
 
-const decryptDiary = (response) => {
-  for (const data of response?.data) {
-    if (data?.spendId) {
-      data.spendId = decryptdata(data?.spendId)
-    }
-    if (data?.item) {
-      data.item = decryptdata(data?.item)
-    }
-    if (data?.label) {
-      data.label = decryptdata(data?.label)
-    }
-    if (data?.amount) {
-      data.amount = decryptdata(data?.amount)
-    }
-    if (data?.desc) {
-      data.desc = decryptdata(data?.desc)
-    }
-  }
-  return response
-}
+// const decryptDiary = (response) => {
+//   for (const data of response?.data) {
+//     if (data?.spendId) {
+//       data.spendId = decryptdata(data?.spendId)
+//     }
+//     if (data?.item) {
+//       data.item = decryptdata(data?.item)
+//     }
+//     if (data?.label) {
+//       data.label = decryptdata(data?.label)
+//     }
+//     if (data?.amount) {
+//       data.amount = decryptdata(data?.amount)
+//     }
+//     if (data?.desc) {
+//       data.desc = decryptdata(data?.desc)
+//     }
+//   }
+//   return response
+// }
 
 export const getData = (params) => {
   return async (dispatch) => {
@@ -68,34 +68,34 @@ export const getData = (params) => {
   }
 }
 
-export const getSpendData = (params,filters) => {
-  console.log('filters',filters);
+export const getSpendData = (params, filters) => {
+  console.log('filters', filters)
   return async (dispatch) => {
     let userData = sessionStorage.getItem('logInUserData')
       ? JSON.parse(sessionStorage.getItem('logInUserData'))
       : {}
     dispatch({ type: 'GET_SPEND_DATA_LOADING', data: true })
-    if(filters.year) {
-      const today = new Date();
-    const end = formatDate(today);
-    const minusNo = Number(filters.year ? filters.year : 3);
-      today.setMonth(today.getMonth() - minusNo);
-    today.setDate(1);
-    const start = formatDate(today)
-    params.dateRangeStart=start;
-    params.dateRangeEnd=end;
+    if (filters.year) {
+      const today = new Date()
+      const end = formatDate(today)
+      const minusNo = Number(filters.year ? filters.year : 3)
+      today.setMonth(today.getMonth() - minusNo)
+      today.setDate(1)
+      const start = formatDate(today)
+      params.dateRangeStart = start
+      params.dateRangeEnd = end
     }
-    
+
     //let filt=`?dateRangeStart=${start}&dateRangeEnd=${end}`;
-    if(filters.labels){
+    if (filters.labels) {
       //filt=`${filt}&labels=${filters.labels}`
-      params.labels=filters.labels;
+      params.labels = filters.labels
     }
-    
+
     await axios
       .get(`/backendapi/spend/list/${userData._id}`, {
         //.get(`/backendapi/spend/list/${userData._id}`, {
-          params,
+        params,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }
@@ -135,16 +135,16 @@ export const getInitialData = () => {
   }
 }
 
-const formatDate =(d) => {
-  let month = `${d.getMonth() + 1}`;
-  if(month.length === 1) {
-    month=`0${month}`
+const formatDate = (d) => {
+  let month = `${d.getMonth() + 1}`
+  if (month.length === 1) {
+    month = `0${month}`
   }
-  let day = `${d.getDate()}`;
-  if(day.length === 1) {
-    day=`0${day}`
+  let day = `${d.getDate()}`
+  if (day.length === 1) {
+    day = `0${day}`
   }
-  return [d.getFullYear(), month, day].join('-');
+  return [d.getFullYear(), month, day].join('-')
 }
 
 export const getSpendInitialData = () => {
@@ -152,7 +152,7 @@ export const getSpendInitialData = () => {
     ? JSON.parse(sessionStorage.getItem('logInUserData'))
     : {}
   return async (dispatch) => {
-   await axios
+    await axios
       .get(`/backendapi/spend/list/${userData._id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`

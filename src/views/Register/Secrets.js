@@ -3,19 +3,19 @@ import axios from 'axios'
 import crypto from 'crypto'
 import { Check } from 'react-feather'
 import { encryptdata } from 'utility/context/SecurityTool'
-import Select from 'react-select'
+// import Select from 'react-select'
 import Checkbox from 'common/CheckboxesVuexy'
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap'
 import './Register.css'
 import 'swiper/css/swiper.css'
 import 'assets/scss/pages/authentication.scss'
 import 'assets/scss/plugins/extensions/swiper.scss'
-const colourOptions2 = [
-  { value: 'Question 1', label: 'Question 1', id: '1' },
-  { value: 'Question 2', label: 'Question 2', id: '2' },
-  { value: 'Question 3', label: 'Question 3', id: '3' },
-  { value: 'Question 4', label: 'Question 4', id: '4' }
-]
+// const colourOptions2 = [
+//   { value: 'Question 1', label: 'Question 1', id: '1' },
+//   { value: 'Question 2', label: 'Question 2', id: '2' },
+//   { value: 'Question 3', label: 'Question 3', id: '3' },
+//   { value: 'Question 4', label: 'Question 4', id: '4' }
+// ]
 const Register = ({
   email,
   name,
@@ -42,11 +42,11 @@ const Register = ({
       .toString(`hex`)
     return hash
   }
-  const getOptions = (q1, q2) => {
-    return colourOptions2.filter(
-      (data) => data.value !== q1?.value && data.value !== q2?.value
-    )
-  }
+  // const getOptions = (q1, q2) => {
+  //   return colourOptions2.filter(
+  //     (data) => data.value !== q1?.value && data.value !== q2?.value
+  //   )
+  // }
   const handleRegister = (e) => {
     setdisbaleRegister(true)
     setisLoading(true)
