@@ -114,7 +114,7 @@ const exportToExcel = (e, splitdata, key = null) => {
   e.preventDefault()
   //console.log(splitdata)
   const wb = XLSX.utils.book_new()
-  let fileName = 'Spediture_Report.xlsx'
+  let fileName = 'Spenditure_Report.xlsx'
 
   if (key) {
     const data = []
@@ -852,12 +852,12 @@ const DataListConfig = (props) => {
             </Row>
           </CardBody>
         </Card>
-        {Object.keys(splitdata).map((key) => {
+        {Object.keys(splitdata).map((key, id) => {
           const sum = splitdata[key]
             ?.map((item) => Number(item.amount))
             .reduce((prev, next) => prev + next)
           return (
-            <Card>
+            <Card key={id + 1}>
               <CardBody>
                 <Download
                   style={{ float: 'right' }}
