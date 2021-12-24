@@ -53,7 +53,7 @@ const AppRouter = (props) => {
          fullLayout
         />
         <PrivateRoute
-          path="//:userkey"
+         path="/emailconfirmation/:userkey"
           component={MailConfirm}
           fullLayout
         />
