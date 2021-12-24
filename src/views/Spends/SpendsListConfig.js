@@ -115,7 +115,7 @@ const exportToExcel = (e,splitdata,key=null) => {
         Date: d.date,
         Label:d.label,
         Item: d.item,
-        Amount: d.amount,
+        Amount: `₹${d.amount}`,
         Description: d.desc,
         "Created At": formatDate(d.updatedAt)
       });
@@ -161,7 +161,7 @@ const exportToExcel = (e,splitdata,key=null) => {
         Date: d.date,
         Label:d.label,
         Item: d.item,
-        Amount: d.amount,
+        Amount: `₹${d.amount}`,
         Description: d.desc,
         "Created At": formatDate(d.updatedAt)
       });

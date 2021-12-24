@@ -16,7 +16,8 @@ const PrivateRoute = ({ component: Component, fullLayout, ...rest }) => (
         pathname?.includes('privacy') ||
         pathname?.includes('license') ||
         pathname?.includes('emailconfirmation') ||
-        pathname?.includes('terms_conditions')
+        pathname?.includes('terms_conditions') ||
+        pathname?.includes('docview')
       if (user1 === null && !all) {
         return <Redirect to="/home" />
       }

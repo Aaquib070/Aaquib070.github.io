@@ -11,6 +11,7 @@ import {
   License,
   Diary,
   MailConfirm,
+  DocView,
   Portfolio,
   Postman,
   Privacy,
@@ -47,7 +48,12 @@ const AppRouter = (props) => {
         <PrivateRoute path="/caller" component={Caller} fullLayout/>
         <PrivateRoute path="/vault/password" component={PasswordVault} />
         <PrivateRoute
-          path="/emailconfirmation/:userkey"
+          path="/docview/:userkey"
+          component={DocView}
+         fullLayout
+        />
+        <PrivateRoute
+          path="//:userkey"
           component={MailConfirm}
           fullLayout
         />

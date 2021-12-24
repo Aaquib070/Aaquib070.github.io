@@ -28,7 +28,8 @@ import {
   Eye,
   ChevronLeft,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
+  Mail
 } from 'react-feather'
 import Select from 'react-select'
 import { useDropzone } from 'react-dropzone'
@@ -68,7 +69,214 @@ const colourOptions2 = [
   },
   { value: 'Postman', label: 'Postman' }
 ]
+
+const expiryOptions = [
+  { value: '1h', label: '1 Hour' },
+  { value: '1d', label: '1 Day' },
+  { value: '1w', label: '1 Week' },
+  { value: '1m', label: '1 Month' },
+]
+const downloadOptions = [
+  { value: true, label: 'Allow Download' },
+  { value: false, label: 'Allow View Only' },
+  
+]
 const token = sessionStorage.getItem('authtoken')
+
+const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+
+const MailModal = (props) => {
+  const [email,setemail]=useState('');
+  const [name,setname]= useState('');
+  const [expiry,setexpiry]= useState('');
+  const [allowdownload,setallowdownload]= useState(false);
+
+  const sendMail = (e) => {
+    e.preventDefault();
+    if(email === '') {
+      toast.warning("Enter reciver Mail Id");
+    } else if(name === '') {
+      toast.warning("Enter reciver Name");
+    } else if(expiry === '') {
+      toast.warning("Select Document Expiry");
+    } else {
+      const today = new Date();
+      console.log(today);
+      console.log(expiry);
+      if(expiry === '1m') {
+        today.setMonth(today.getMonth() + 1);
+      } else if(expiry === '1d') {
+        today.setDate(today.getDate() + 1);
+      } else if(expiry === '1w') {
+        today.setDate(today.getDate() + 7);
+      } else if(expiry === '1h') {
+        today.setHours(today.getHours() + 1);
+      } 
+       const reqBod = {
+        email,name,expiry:today,allowdownload,docs:props.mailAtt,status:0,
+        user:user?._id
+      }
+      axios
+      .post(`/backendapi/documentmail`,reqBod, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        
+        if(res?.data === "Success") {
+          setemail('');
+        setname('');
+        setexpiry('');
+        setallowdownload(false);
+        props.toggleModal();
+        toast.success('Mail sent successfully');
+        }
+        
+        else
+        toast.error('Mail sent failed. Please check email address');
+
+      })
+      
+      console.log(reqBod);
+    }
+   
+    
+  }
+  
+  return (
+    <>
+      <Modal
+          isOpen={props.modal}
+          toggle={() => {
+            props.toggleModal()
+          }}
+          centered={true}
+          size="lg"
+        >
+          <ModalHeader
+            toggle={() => {
+              props.toggleModal()
+             }}
+            cssModule={{ 'modal-title': 'w-100 text-center' }}
+          >
+            Send as mail
+          </ModalHeader>
+
+          <ModalBody className="justify-content-center">
+            
+            {props.loading && (
+              <Spinner
+                style={{ marginLeft: '48%' }}
+                color="warning"
+                size="lg"
+              />
+            )}
+            {!props.loading && (
+              <div>
+                <Form>
+                <Row>
+                  <Col sm="6">
+                  <FormGroup className="form-label-group">
+                      <Input
+                        type="text"
+                        name="name"
+                        id="nameMultiname"
+                        value={email}
+                        placeholder="Email *"
+                        onChange={(e) => setemail(e.target.value)}
+                      />
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
+                        Email
+                      </Label>
+                    </FormGroup>
+                  </Col>
+                  <Col sm="6">
+                  <FormGroup className="form-label-group">
+                      <Input
+                        type="text"
+                        name="name"
+                        id="nameMultiname"
+                        value={name}
+                        placeholder="Name *"
+                        onChange={(e) => setname(e.target.value)}
+                      />
+                      <Label className={Dark ? 'dark-label' : 'light-label'}>
+                        Name
+                      </Label>
+                    </FormGroup>
+                  </Col>
+                  <Col sm="6">
+                  <FormGroup className="form-label-group">
+                      <Select
+
+                        id="data-category"
+                        name="label"
+                        options={expiryOptions}
+                        value={expiryOptions?.filter(
+                          (option) => option.value === expiry
+                        )}
+                        isClearable={true}
+                        placeholder={'Expiry for Documents *'}
+                        onChange={(e) => setexpiry(e?.value)}
+                      //onBlur={handleValueBlur}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="6">
+                    <FormGroup className="form-label-group">
+                      <Select
+
+                        id="data-category"
+                        name="label"
+                        options={downloadOptions}
+                        value={downloadOptions?.filter(
+                          (option) => option.value === allowdownload
+                        )}
+                        isClearable={true}
+                        placeholder={'Allow Download'}
+                        onChange={(e) => setallowdownload(e?.value)}
+                      //onBlur={handleValueBlur}
+                      />
+                    </FormGroup>
+                  </Col>
+
+                </Row>
+                <Row>
+                  <Col sm="12">
+                    <FormGroup className="form-label-group">
+                      <Button.Ripple
+                        color="warning"
+                        type="submit"
+                        className="button-label"
+                        onClick={sendMail}
+                        //disable={isDisabled ? 'true' : 'false'}
+                      >
+                        Send
+                      </Button.Ripple>
+                  </FormGroup>
+                  </Col>
+                
+                </Row>
+                </Form>
+                 
+               
+                
+              </div>
+            )}
+          </ModalBody>
+        </Modal>
+    </>
+  )
+} 
+
+
+
+
+
+
+
+
 const ProgrammaticallyDropzone = (props) => {
   const [files, setFiles] = useState([])
   const { getRootProps, getInputProps, open } = useDropzone({
@@ -156,7 +364,7 @@ const ProgrammaticallyDropzone = (props) => {
     </section>
   )
 }
-const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+
 const DocumentVault = () => {
   const columns = [
     {
@@ -220,6 +428,14 @@ const DocumentVault = () => {
               onClick={() => {
                 setDeleteId(row._id)
                 setopen(true)
+              }}
+              
+            />
+            <Mail
+              size={20}
+              className="collapse-icon ml-1"
+              onClick={() => {
+                mailAll(row.attachment)
               }}
             />
           </>
@@ -372,6 +588,33 @@ const DocumentVault = () => {
           //setloading(false)
         })
     })
+  }
+
+
+  const mailAll = async (ids) => {
+    // setloading(true)
+    //const token = sessionStorage.getItem('authtoken')
+    setmailloading(true);
+    setmailmodal(true);
+    const mails = [];
+    for(let i=0; i<ids.length; i=i+1) {
+
+      await axios
+        .get(`/backendapi/sender/msg/${ids[i]}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((res) => {
+          const attm = decryptdata(res.data[0]?.media)
+          const filename = res.data[0]?.name;
+          mails.push({data:attm, filename });         
+        })
+
+    }
+    setmailAtt(mails);
+    setmailloading(false);
+    
   }
 
   const getDocuments = () => {
@@ -528,8 +771,14 @@ const DocumentVault = () => {
         toast.success('Document Deleted Successfully')
       })
   }
+
+  const [mailmodal, setmailmodal] = useState(false);
+  const [mailloading, setmailloading] = useState(true);
+  const [mailAtt, setmailAtt] = useState([]);
+
   return (
     <React.Fragment>
+      <MailModal modal={mailmodal} toggleModal={()=>{setmailmodal(!mailmodal)}} loading={mailloading} mailAtt={mailAtt} />
       <PopUp
         handleConfirm={() => {
           deletedoc()
@@ -814,4 +1063,11 @@ const DocumentVault = () => {
     </React.Fragment>
   )
 }
+
+
+
+
+
+
+
 export default DocumentVault
