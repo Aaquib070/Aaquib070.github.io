@@ -1,10 +1,19 @@
 /* eslint-disable radix */
 import React, { useState, useEffect } from 'react'
-import XLSX from 'xlsx';
+import XLSX from 'xlsx'
 import { Dark } from 'export'
 import Select from 'react-select'
 import { encryptdata } from 'utility/context/SecurityTool'
-import { DropdownToggle, Input, Card, Row, CardTitle, Col, CardHeader, CardBody, Button, Label, FormGroup } from 'reactstrap'
+import {
+  Input,
+  Card,
+  Row,
+  Col,
+  CardBody,
+  Button,
+  Label,
+  FormGroup
+} from 'reactstrap'
 import PopUp from 'utility/Popup'
 import { toast } from 'react-toastify'
 import DataTable from 'react-data-table-component'
@@ -32,10 +41,10 @@ const dailySpendsLabels = JSON.parse(
 ).dailySpendsLabels
 
 const yearData = [
-  { label: "Last 3 month", value: 3 },
-  { label: "Last 6 month", value: 6 },
-  { label: "Last 1 year", value: 12 },
-  { label: "Last 3 years", value: 36 },
+  { label: 'Last 3 month', value: 3 },
+  { label: 'Last 6 month', value: 6 },
+  { label: 'Last 1 year', value: 12 },
+  { label: 'Last 3 years', value: 36 }
 ]
 
 const selectedStyle = {
@@ -88,168 +97,158 @@ const DeleteComponent = (props) => {
   )
 }
 
-const formatDate =(dt) => {
-  const d = new Date(dt);
-  let month = `${d.getMonth() + 1}`;
-  if(month.length === 1) {
-    month=`0${month}`
+const formatDate = (dt) => {
+  const d = new Date(dt)
+  let month = `${d.getMonth() + 1}`
+  if (month.length === 1) {
+    month = `0${month}`
   }
-  let day = `${d.getDate()}`;
-  if(day.length === 1) {
-    day=`0${day}`
+  let day = `${d.getDate()}`
+  if (day.length === 1) {
+    day = `0${day}`
   }
-  return [d.getFullYear(), month, day].join('-');
+  return [d.getFullYear(), month, day].join('-')
 }
 
-const exportToExcel = (e,splitdata,key=null) => {
-  e.preventDefault();
+const exportToExcel = (e, splitdata, key = null) => {
+  e.preventDefault()
   //console.log(splitdata)
-  const wb = XLSX.utils.book_new();
-  let fileName = "Spediture_Report.xlsx";
+  const wb = XLSX.utils.book_new()
+  let fileName = 'Spenditure_Report.xlsx'
 
-  if(key) {
-    const data = [];
-    splitdata[key].forEach(d=>{
+  if (key) {
+    const data = []
+    splitdata[key].forEach((d) => {
       data.push({
         Month: d.seperator,
         Date: d.date,
-        Label:d.label,
+        Label: d.label,
         Item: d.item,
         Amount: `₹${d.amount}`,
         Description: d.desc,
-        "Created At": formatDate(d.updatedAt)
-      });
+        'Created At': formatDate(d.updatedAt)
+      })
     })
-    const ws = XLSX.utils.json_to_sheet(data);
-    //ws['A1'].wpx=200;
-    // ws['B1'].width='40';
-    // ws['C1'].width='40';
-    // ws['D1'].width='40';
-    // ws['E1'].width='40';
-    // ws['F1'].width='40';
-    // ws['G1'].width='40';
-    var wscols = [
-      {wch:14},
-      {wch:10},
-      {wch:25},
-      {wch:20},
-      {wch:7},
-      {wch:25},
-      {wch:10}
-  ];
-  
-  ws['!cols'] = wscols;
-  ws["A1"].s =   {
-     font: {
-    //name: '宋体',
-    sz: 24,
-    bold: true,
-    color: { rgb: "FFAA00" }
-  },
-};
-    console.log(ws);
-    XLSX.utils.book_append_sheet(wb, ws, key);
-    fileName=`Spediture_Report-${key}.xlsx`
+    const ws = XLSX.utils.json_to_sheet(data)
+    const wscols = [
+      { wch: 14 },
+      { wch: 10 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 7 },
+      { wch: 25 },
+      { wch: 10 }
+    ]
+
+    ws['!cols'] = wscols
+    ws['A1'].s = {
+      font: {
+        //name: '宋体',
+        sz: 24,
+        bold: true,
+        color: { rgb: 'FFAA00' }
+      }
+    }
+    console.log(ws)
+    XLSX.utils.book_append_sheet(wb, ws, key)
+    fileName = `Spediture_Report-${key}.xlsx`
   } else {
+    Object.keys(splitdata).forEach((key) => {
+      const data = []
+      splitdata[key].forEach((d) => {
+        data.push({
+          Month: d.seperator,
+          Date: d.date,
+          Label: d.label,
+          Item: d.item,
+          Amount: d.amount,
+          Description: d.desc,
+          'Created At': formatDate(d.updatedAt)
+        })
+      })
+      const ws = XLSX.utils.json_to_sheet(data)
+      const wscols = [
+        { wch: 14 },
+        { wch: 10 },
+        { wch: 25 },
+        { wch: 20 },
+        { wch: 7 },
+        { wch: 25 },
+        { wch: 10 }
+      ]
 
-  
-  Object.keys(splitdata).forEach(key => {
-    const data = [];
-    splitdata[key].forEach(d=>{
-      data.push({
-        Month: d.seperator,
-        Date: d.date,
-        Label:d.label,
-        Item: d.item,
-        Amount: `₹${d.amount}`,
-        Description: d.desc,
-        "Created At": formatDate(d.updatedAt)
-      });
+      ws['!cols'] = wscols
+
+      // console.log(ws)
+      // Object.keys(ws).forEach(i=>{
+      //   console.log('hereee',i)
+      //   if(i.startsWith("!")) {
+      //     console.log('bingo',i)
+      //   }
+      // })
+
+      //   Object.keys(ws).forEach(i=>{
+      //     //if (typeof(ws[i]) != "object") continue;
+      //     let cell = XLSX.utils.decode_cell(i);
+      //     console.log('here',i)
+      //     if(!i.startsWith("!")) {
+      //     ws[i].s = { // styling for all cells
+      //         font: {
+      //             name: "arial"
+      //         },
+      //         alignment: {
+      //             vertical: "center",
+      //             horizontal: "center",
+      //             wrapText: '1', // any truthy value here
+      //         },
+      //         border: {
+      //             right: {
+      //                 style: "thin",
+      //                 color: "000000"
+      //             },
+      //             left: {
+      //                 style: "thin",
+      //                 color: "000000"
+      //             },
+      //         }
+      //     };
+
+      //     if (cell.c == 0) { // first column
+      //         ws[i].s.numFmt = "DD/MM/YYYY HH:MM"; // for dates
+      //         ws[i].z = "DD/MM/YYYY HH:MM";
+      //     } else {
+      //         ws[i].s.numFmt = "00.00"; // other numbers
+      //     }
+
+      //     if (cell.r == 0 ) { // first row
+      //         ws[i].s.border.bottom = { // bottom border
+      //             style: "thin",
+      //             color: "000000"
+      //         };
+      //     }
+
+      //     if (cell.r % 2) { // every other row
+      //         ws[i].s.fill = { // background color
+      //             patternType: "solid",
+      //             fgColor: { rgb: "b2b2b2" },
+      //             bgColor: { rgb: "b2b2b2" }
+      //         };
+      //     }
+      //   }
+      // })
+      XLSX.utils.book_append_sheet(wb, ws, key)
     })
-    const ws = XLSX.utils.json_to_sheet(data);
-    var wscols = [
-      {wch:14},
-      {wch:10},
-      {wch:25},
-      {wch:20},
-      {wch:7},
-      {wch:25},
-      {wch:10}
-  ];
-  
-  ws['!cols'] = wscols;
+  }
 
- // console.log(ws)
-  // Object.keys(ws).forEach(i=>{
-  //   console.log('hereee',i)
-  //   if(i.startsWith("!")) {
-  //     console.log('bingo',i)
-  //   }
-  // })
-  
-//   Object.keys(ws).forEach(i=>{
-//     //if (typeof(ws[i]) != "object") continue;
-//     let cell = XLSX.utils.decode_cell(i);
-//     console.log('here',i)
-//     if(!i.startsWith("!")) {
-//     ws[i].s = { // styling for all cells
-//         font: {
-//             name: "arial"
-//         },
-//         alignment: {
-//             vertical: "center",
-//             horizontal: "center",
-//             wrapText: '1', // any truthy value here
-//         },
-//         border: {
-//             right: {
-//                 style: "thin",
-//                 color: "000000"
-//             },
-//             left: {
-//                 style: "thin",
-//                 color: "000000"
-//             },
-//         }
-//     };
-
-//     if (cell.c == 0) { // first column
-//         ws[i].s.numFmt = "DD/MM/YYYY HH:MM"; // for dates
-//         ws[i].z = "DD/MM/YYYY HH:MM";
-//     } else { 
-//         ws[i].s.numFmt = "00.00"; // other numbers
-//     }
-
-//     if (cell.r == 0 ) { // first row
-//         ws[i].s.border.bottom = { // bottom border
-//             style: "thin",
-//             color: "000000"
-//         };
-//     }
-
-//     if (cell.r % 2) { // every other row
-//         ws[i].s.fill = { // background color
-//             patternType: "solid",
-//             fgColor: { rgb: "b2b2b2" },
-//             bgColor: { rgb: "b2b2b2" } 
-//         };
-//     }
-//   }
-// })
-    XLSX.utils.book_append_sheet(wb, ws, key);
-  })
-}
-
-  
-  
-		
-		/* generate XLSX file and send to client */
-		XLSX.writeFile(wb, fileName)
+  /* generate XLSX file and send to client */
+  XLSX.writeFile(wb, fileName)
 }
 const CustomHeader = (props) => {
-
   return (
-    <div style={{ height: '150%', marginBottom: '30px' }} className="data-list-header d-flex justify-content-between ">
+    <div
+      style={{ height: '150%', marginBottom: '30px' }}
+      className="data-list-header d-flex justify-content-between "
+    >
       <div className="actions-left d-flex">
         <Button.Ripple
           color="warning"
@@ -266,9 +265,9 @@ const CustomHeader = (props) => {
           type="reset"
           className="button-label"
           outline
-          onClick={(e) => exportToExcel(e,props.splitdata)}
+          onClick={(e) => exportToExcel(e, props.splitdata)}
         >
-          <Download /> 
+          <Download />
         </Button.Ripple>
 
         {/* <DropdownToggle
@@ -315,114 +314,113 @@ const CustomHeader = (props) => {
     </div>
   )
 }
-const conditionalRowStyles = [
-  {
-    when: (row) => new Date(row.date) < new Date(),
-    style: {
-      backgroundColor: '#adadad',
-      color: ''
-      // '&:hover': {
-      //   cursor: 'pointer'
-      // }
-    }
-  }
-  // You can also pass a callback to style for additional customization
-  // {
-  //   when: (row) => row.calories < 300,
-  //   style: (row) => ({
-  //     backgroundColor: row.isSpecia ? 'pink' : 'inerit'
-  //   })
-  // }
-]
+// const conditionalRowStyles = [
+//   {
+//     when: (row) => new Date(row.date) < new Date(),
+//     style: {
+//       backgroundColor: '#adadad',
+//       color: ''
+//       // '&:hover': {
+//       //   cursor: 'pointer'
+//       // }
+//     }
+//   }
+// You can also pass a callback to style for additional customization
+// {
+//   when: (row) => row.calories < 300,
+//   style: (row) => ({
+//     backgroundColor: row.isSpecia ? 'pink' : 'inerit'
+//   })
+// }
+// ]
 const DataListConfig = (props) => {
-  const [label, setlabel] = useState([]);
-  const [year, setyear] = useState();
-  const [total, settotal] = useState(0);
-  const [filters, setfilters] = useState({});
-  const [data, setdata] = useState([])
+  const [label, setlabel] = useState([])
+  const [year, setyear] = useState()
+  const [total, settotal] = useState(0)
+  const [filters, setfilters] = useState({})
+  // const [data, setdata] = useState([])
   const [open, setopen] = useState(false)
   const [deleteThisRow, setDeleteRow] = useState('')
   // const [currentPage, setcurrentPage] = useState(0)
-  const [allData, setallData] = useState([])
-  const [value, setvalue] = useState('')
+  // const [allData, setallData] = useState([])
+  // const [value, setvalue] = useState('')
   const [rowsPerPage, setrowsPerPage] = useState(4)
   const [sidebar, setsidebar] = useState(false)
   const [currentData, setcurrentData] = useState(null)
   const [totalRecords, settotalRecords] = useState(0)
   const [sortIndex, setsortIndex] = useState([])
   const [addNew, setaddNew] = useState('')
-  const [splitdata, setsplitdata] = useState({});
+  const [splitdata, setsplitdata] = useState({})
   const [isLoading, setisLoading] = useState(false)
   const columns = [
-    {
-      name: 'Edit',
-      cell: function temp(row) {
-        return (
-          <EditComponent
-            row={row}
-            getSpendData={props.getSpendData}
-            parsedFilter={props.parsedFilter}
-            currentData={handleCurrentData}
-          />
-        )
+      {
+        name: 'Edit',
+        cell: function temp(row) {
+          return (
+            <EditComponent
+              row={row}
+              getSpendData={props.getSpendData}
+              parsedFilter={props.parsedFilter}
+              currentData={handleCurrentData}
+            />
+          )
+        }
+      },
+      {
+        name: 'Item',
+        selector: 'item',
+        sortable: true,
+        minWidth: '200px',
+        cell: function temp(row) {
+          return (
+            <p title={row.item} className="text-truncate text-bold-500 mb-0">
+              {row.item}
+            </p>
+          )
+        }
+      },
+      {
+        name: 'Description',
+        selector: 'desc',
+        minWidth: '200px',
+        sortable: true
+        //cell: row => `$${row.price}`
+      },
+      {
+        name: 'Label',
+        selector: 'label',
+        sortable: true
+      },
+      {
+        name: 'Date',
+        selector: 'date',
+        minWidth: '50px',
+        sortable: true
+      },
+      {
+        name: 'Amount',
+        selector: 'amount',
+        minWidth: '50px',
+        sortable: true
+        //cell: row => `$${row.price}`
+      },
+      {
+        name: 'Delete',
+        cell: function temp(row) {
+          return (
+            <DeleteComponent
+              row={row}
+              setRow={() => {
+                setDeleteRow(row)
+                setopen(true)
+              }}
+              getSpendData={props.getSpendData}
+              parsedFilter={props.parsedFilter}
+            />
+          )
+        }
       }
-    },
-    {
-      name: 'Item',
-      selector: 'item',
-      sortable: true,
-      minWidth: '200px',
-      cell: function temp(row) {
-        return (
-          <p title={row.item} className="text-truncate text-bold-500 mb-0">
-            {row.item}
-          </p>
-        )
-      }
-    },
-    {
-      name: 'Description',
-      selector: 'desc',
-      minWidth: '200px',
-      sortable: true
-      //cell: row => `$${row.price}`
-    },
-    {
-      name: 'Label',
-      selector: 'label',
-      sortable: true
-    },
-    {
-      name: 'Date',
-      minWidth: '200px',
-      selector: 'date',
-      minWidth: '50px',
-      sortable: true
-    },
-    {
-      name: 'Amount',
-      selector: 'amount',
-      minWidth: '50px',
-      sortable: true
-      //cell: row => `$${row.price}`
-    },
-    {
-      name: 'Delete',
-      cell: function temp(row) {
-        return (
-          <DeleteComponent
-            row={row}
-            setRow={() => {
-              setDeleteRow(row)
-              setopen(true)
-            }}
-            getSpendData={props.getSpendData}
-            parsedFilter={props.parsedFilter}
-          />
-        )
-      }
-    }
-  ],
+    ],
     mobilecolumns = [
       {
         name: 'Info',
@@ -493,25 +491,30 @@ const DataListConfig = (props) => {
 
   const groupBy = (arr, property) => {
     return arr.reduce((memo, x) => {
-      if (!memo[x[property]]) { memo[x[property]] = []; }
-      memo[x[property]].push(x);
-      return memo;
-    }, {});
-  };
+      if (!memo[x[property]]) {
+        memo[x[property]] = []
+      }
+      memo[x[property]].push(x)
+      return memo
+    }, {})
+  }
   useEffect(() => {
     if (props?.data) {
-      setdata(props?.data)
-      setallData(props.dataList.allData)
-      const tempData = props.dataList.allData;
-      tempData && tempData.forEach((element, i) => {
-        if (element.date) {
-          const d = new Date(element.date);
-          let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-          let mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
-          tempData[i].seperator = `${mo}, ${ye}`
-        }
-
-      });
+      // setdata(props?.data)
+      const tempData = props.dataList.allData
+      tempData &&
+        tempData.forEach((element, i) => {
+          if (element.date) {
+            const d = new Date(element.date)
+            const ye = new Intl.DateTimeFormat('en', {
+              year: 'numeric'
+            }).format(d)
+            const mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(
+              d
+            )
+            tempData[i].seperator = `${mo}, ${ye}`
+          }
+        })
       const newTemp = groupBy(tempData, 'seperator')
 
       //   const vm = {};
@@ -530,24 +533,23 @@ const DataListConfig = (props) => {
   }, [props.data])
 
   useEffect(() => {
-    props.getSpendData(props.parsedFilter, filters);
+    props.getSpendData(props.parsedFilter, filters)
     let userData = sessionStorage.getItem('logInUserData')
-    ? JSON.parse(sessionStorage.getItem('logInUserData'))
-    : {}
+      ? JSON.parse(sessionStorage.getItem('logInUserData'))
+      : {}
     axios
-    .get('/backendapi/spend/count/'+userData._id, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
-      }
-    })
-    .then((res) => {
-      settotal(res?.data)
-    });
+      .get('/backendapi/spend/count/' + userData._id, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
+        }
+      })
+      .then((res) => {
+        settotal(res?.data)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFilter = (e) => {
-    setvalue(e.target.value)
     props.filterSpendData(e.target.value)
   }
 
@@ -677,7 +679,6 @@ const DataListConfig = (props) => {
     setlabel(labels)
   }
 
-
   const handleCurrentData = (obj) => {
     obj.name = obj.item
     obj.relation1 = obj.label
@@ -700,9 +701,6 @@ const DataListConfig = (props) => {
       <div
         className={`data-list ${props.thumbView ? 'thumb-view' : 'list-view'}`}
       >
-
-
-
         <PopUp
           handleConfirm={() => {
             handleDelete()
@@ -765,8 +763,6 @@ const DataListConfig = (props) => {
           })}
           onClick={() => handleSidebar(false, true)}
         />
-
-
       </div>
       <React.Fragment>
         <Card>
@@ -783,11 +779,9 @@ const DataListConfig = (props) => {
                     //   (option) => option.value === label
                     // )}
                     value={label?.map((n) => {
-                      const as = dailySpendsLabels.filter(
-                        (e) => {
-                          return e.value === n.value
-                        }
-                      )
+                      const as = dailySpendsLabels.filter((e) => {
+                        return e.value === n.value
+                      })
                       return {
                         value: as[0].value,
                         label: as[0].label
@@ -796,11 +790,13 @@ const DataListConfig = (props) => {
                     isClearable={true}
                     placeholder={'Label Filter'}
                     onChange={(e) => changelabelFilter(e)}
-                  //onBlur={handleValueBlur}
+                    //onBlur={handleValueBlur}
                   />
                   <Label
                     className={
-                      Dark ? 'dark-label select-label' : 'light-label select-label'
+                      Dark
+                        ? 'dark-label select-label'
+                        : 'light-label select-label'
                     }
                   >
                     Label Filter
@@ -810,21 +806,20 @@ const DataListConfig = (props) => {
               <Col sm="5">
                 <FormGroup className="form-label-group mt-2 mb-2">
                   <Select
-
                     id="data-category"
                     name="label"
                     options={yearData}
-                    value={yearData?.filter(
-                      (option) => option.value === year
-                    )}
+                    value={yearData?.filter((option) => option.value === year)}
                     isClearable={true}
                     placeholder={'Date range filter'}
                     onChange={(e) => setyear(e?.value)}
-                  //onBlur={handleValueBlur}
+                    //onBlur={handleValueBlur}
                   />
                   <Label
                     className={
-                      Dark ? 'dark-label select-label' : 'light-label select-label'
+                      Dark
+                        ? 'dark-label select-label'
+                        : 'light-label select-label'
                     }
                   >
                     Date range filter
@@ -832,10 +827,7 @@ const DataListConfig = (props) => {
                 </FormGroup>
               </Col>
               <Col sm="2">
-                <FormGroup
-
-                >
-
+                <FormGroup>
                   <Button.Ripple
                     style={{ marginTop: '20px' }}
                     color="warning"
@@ -843,8 +835,14 @@ const DataListConfig = (props) => {
                     type="reset"
                     className="button-label"
                     onClick={(e) => {
-                      setfilters({ labels: label.map(e => e.value).join(','), year })
-                      props.getSpendData(props.parsedFilter, { labels: label.map(e => e.value).join(','), year });
+                      setfilters({
+                        labels: label.map((e) => e.value).join(','),
+                        year
+                      })
+                      props.getSpendData(props.parsedFilter, {
+                        labels: label.map((e) => e.value).join(','),
+                        year
+                      })
                     }}
                   >
                     Apply
@@ -854,35 +852,46 @@ const DataListConfig = (props) => {
             </Row>
           </CardBody>
         </Card>
-        {Object.keys(splitdata).map(key => {
-          const sum = splitdata[key]?.map(item => Number(item.amount)).reduce((prev, next) => prev + next);
-          return (<Card>
-            <CardBody>
-            <Download style={{float: 'right'}} onClick={(e)=> {exportToExcel(e,splitdata,key)}}/>
-              <h4 style={{ textAlign: 'center' }}>{key}</h4>
-              <hr style={{ width: '40%' }} /> 
-              <h5 style={{ textAlign: 'center' }}>Total Spends :  <b style={{ color: 'coral' }}>₹ {sum}</b></h5>
-              <hr />
-              <DataTable
-                style={{ marginTop: '-53px' }}
-                width="200"
-                columns={window.screen.width < 500 ? mobilecolumns : columns}
-                data={splitdata[key]}
-                noHeader
-                subHeader
-                selectableRows={window.screen.width < 500 ? false : false}
-                responsive
-                pointerOnHover
-                selectableRowsHighlight
-                customStyles={selectedStyle}
-                sortIcon={<ChevronDown />}
-              />
-
-            </CardBody>
-          </Card>)
+        {Object.keys(splitdata).map((key, id) => {
+          const sum = splitdata[key]
+            ?.map((item) => Number(item.amount))
+            .reduce((prev, next) => prev + next)
+          return (
+            <Card key={id + 1}>
+              <CardBody>
+                <Download
+                  style={{ float: 'right' }}
+                  onClick={(e) => {
+                    exportToExcel(e, splitdata, key)
+                  }}
+                />
+                <h4 style={{ textAlign: 'center' }}>{key}</h4>
+                <hr style={{ width: '40%' }} />
+                <h5 style={{ textAlign: 'center' }}>
+                  Total Spends : <b style={{ color: 'coral' }}>₹ {sum}</b>
+                </h5>
+                <hr />
+                <DataTable
+                  style={{ marginTop: '-53px' }}
+                  width="200"
+                  columns={window.screen.width < 500 ? mobilecolumns : columns}
+                  data={splitdata[key]}
+                  noHeader
+                  subHeader
+                  selectableRows={window.screen.width < 500 ? false : false}
+                  responsive
+                  pointerOnHover
+                  selectableRowsHighlight
+                  customStyles={selectedStyle}
+                  sortIcon={<ChevronDown />}
+                />
+              </CardBody>
+            </Card>
+          )
         })}
-        <Row>Showing {total} of {total}</Row>
-
+        <Row>
+          Showing {total} of {total}
+        </Row>
       </React.Fragment>
     </>
   )

@@ -461,7 +461,7 @@ const NomineeSidebar = (props) => {
                       onClick={() => handleCross(data.id)}
                     />
                     <Edit2
-                      color="#49b412"
+                      color="coral"
                       size="20"
                       className="float-right"
                       onClick={() => editQues(data.id)}
