@@ -55,7 +55,7 @@ const LandingPage = (props) => {
     {
       type: 'facebook',
       icon: <Facebook />,
-      link: 'https://www.facebook.com'
+      link: 'https://www.facebook.com/lastarzi'
     },
     {
       type: 'linkedin',
@@ -65,7 +65,7 @@ const LandingPage = (props) => {
     {
       type: 'instagram',
       icon: <Instagram />,
-      link: ''
+      link: 'https://www.instagram.com/last_arzi/'
     },
     {
       type: 'twitter',
