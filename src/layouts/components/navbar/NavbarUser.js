@@ -152,35 +152,39 @@ const UserDropdown = (props) => {
 }
 const user1 = sessionStorage.getItem('logInUserData')
 const NavbarUser = (props) => {
-  const beforeInstallPromptHandler = e => {
-    console.log('pppppppppppppppppppp',e)
-    var button = document.getElementById('download-app');
+  const beforeInstallPromptHandler = (e) => {
+    console.log('pppppppppppppppppppp', e)
+    var button = document.getElementById('download-app')
     console.log(button)
-    let deferredPrompt;
-    e.preventDefault();
-	  deferredPrompt = e;
-    button.addEventListener('click', (e) => {
-      console.log('hey');
-      deferredPrompt && deferredPrompt.prompt();
-      deferredPrompt &&  deferredPrompt.userChoice
-        .then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-          } else {
-            console.log('User dismissed the A2HS prompt');
-          }
-          deferredPrompt = null;
-        });
-    }, false);
+    let deferredPrompt
+    e.preventDefault()
+    deferredPrompt = e
+    button.addEventListener(
+      'click',
+      (e) => {
+        console.log('hey')
+        deferredPrompt && deferredPrompt.prompt()
+        deferredPrompt &&
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the A2HS prompt')
+            } else {
+              console.log('User dismissed the A2HS prompt')
+            }
+            deferredPrompt = null
+          })
+      },
+      false
+    )
   }
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler)
-  //   return () => {
-  //     window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
-  // };
-  },[beforeInstallPromptHandler])
-  
+    //   return () => {
+    //     window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
+    // };
+  }, [beforeInstallPromptHandler])
+
   const [themeCheck, setthemeCheck] = useState(
     sessionStorage.getItem('theme') === 'light' ? false : true
   )
@@ -274,10 +278,19 @@ const NavbarUser = (props) => {
   }
   return (
     <div className="d-flex">
-      <div style={{marginTop:'8px', marginRight: '10px'}}>
-      <input style={{width: '105px',fontSize: '10px', marginRight: '-24px'}}
-       type='button' id='download-app' value='Download App'/>
-       <Download style={{paddingRight: '5px'}} size="18" className="ml-50" stroke={colortext} />
+      <div style={{ marginTop: '8px', marginRight: '10px' }}>
+        <input
+          style={{ width: '105px', fontSize: '10px', marginRight: '-24px' }}
+          type="button"
+          id="download-app"
+          value="Download App"
+        />
+        <Download
+          style={{ paddingRight: '5px' }}
+          size="18"
+          className="ml-50"
+          stroke={colortext}
+        />
       </div>
       {window.screen.width > 500 && <DropdownLang />}
 
@@ -404,7 +417,7 @@ const NavbarUser = (props) => {
       {!user1 ? (
         window.screen.width <= 500 ? (
           <div className="button__div">
-            <Ripples color="#49b412" className="different-ripple">
+            <Ripples color="var(--warning)" className="different-ripple">
               <Button
                 className="button-label register-button"
                 onClick={() => {

@@ -37,7 +37,7 @@
   width: 210px;
   border-width: 2px;
   border: none;
-  box-shadow: inset 0px 0px 10px 0px #49b412;
+  box-shadow: inset 0px 0px 10px 0px coral;
 }
 
 .plan-table td:first-child {
@@ -674,21 +674,21 @@ input {
 }
 
 .register-button {
-  color: #49b412 !important;
+  color: coral !important;
   background-color: transparent !important;
-  border: 1px solid #49b412 !important;
+  border: 1px solid coral !important;
   margin: 7px 0px 5px 10px;
 }
 
 .register-button:hover {
-  box-shadow: 0 8px 25px -8px #49b412 !important;
-  color: #49b412 !important;
+  box-shadow: 0 8px 25px -8px coral !important;
+  color: coral !important;
   background-color: transparent !important;
-  border: 1px solid #49b412 !important;
+  border: 1px solid coral !important;
 }
 
 .register-button:focus {
-  color: #49b412 !important;
+  color: coral !important;
 }
 
 .login-button {
@@ -733,7 +733,7 @@ input {
   }
   .register-button:hover {
     box-shadow: none !important;
-    color: #49b412 !important;
+    color: coral !important;
     background-color: white !important;
     border: none !important;
   }
