@@ -737,7 +737,7 @@ const DocumentVault = () => {
     //const attachment =  await getBase64(files[0])
     //console.log('attachment123',attachment);
     //.then((attachment) => {
-    axios.defaults.baseURL = 'http://localhost:5000'
+    //axios.defaults.baseURL = 'http://localhost:5000'
 
     const resolveAfter3Sec = axios.post('/backendapi/documents/add', data, {
       headers: {
