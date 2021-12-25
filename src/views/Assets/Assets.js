@@ -302,6 +302,10 @@ const AddAssets = (props) => {
   const callAddAsset = (e) => {
     e.preventDefault()
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+    if(user.assets.length > 10) {
+      toast.error("Asset Limit of 10 Exceeded ! Please upgrade your plan");
+      return ;
+    } 
     const as = {
       assetType,
       assetDetails: selectedTemplate,

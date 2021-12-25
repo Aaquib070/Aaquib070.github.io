@@ -342,6 +342,10 @@ const AddLiability = (props) => {
   const callAddLiability = (e) => {
     e.preventDefault()
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+    if(user.liabilities.length > 10) {
+      toast.error("Liabilities Limit of 10 Exceeded ! Please upgrade your plan");
+      return ;
+    } 
     const as = {
       liabilityType,
       liabilityDetails: selectedTemplate,

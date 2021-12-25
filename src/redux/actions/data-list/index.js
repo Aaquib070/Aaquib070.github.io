@@ -221,7 +221,9 @@ export const addData = (obj) => {
         }
       })
       .then((res) => {
-        toast.success('Nominee Added Successfully')
+        if (res.data === 'Success') { toast.success('Nominee Added Successfully') }
+        else { toast.error(res.data) }
+
         dispatch(getData())
       })
   }

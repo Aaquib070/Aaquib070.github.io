@@ -720,7 +720,8 @@ const DocumentVault = () => {
       attList.push({
         media: encryptdata(encf),
         name: files[i].name,
-        type: files[i].type
+        type: files[i].type,
+        user: user._id
       })
     }
     data.attachment = attList
@@ -737,7 +738,10 @@ const DocumentVault = () => {
     resolveAfter3Sec
       .then((res) => {
         resetDropzone()
-        //toast.success('File uploaded successfully')
+        if(res.data !== 'Success') {
+          toast.error(res.data )
+        }
+        //
         getDocuments()
       })
       .catch((err) => {
@@ -746,7 +750,7 @@ const DocumentVault = () => {
         setexpiry()
         setreset(true)
         console.log('err docs', err)
-        toast.error('Something went wrong please try again')
+        err?.response?.data && toast.error(err?.response?.data)
       })
     toast.promise(resolveAfter3Sec, {
       pending: 'Uploading ...',
