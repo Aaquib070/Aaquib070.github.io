@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import LZString from 'lz-string';
 import {
   Row,
   Col,
@@ -524,9 +525,9 @@ const DocumentVault = () => {
       })
       .then((res) => {
         setselectedforpreview(res.data[0])
-
-        const attm = decryptdata(res.data[0]?.media)
-
+        const med1 =res.data[0]?.media;
+        const dec3=  LZString.decompressFromUTF16(med1);
+        const attm = decryptdata(dec3)
         if (attm) {
           const byteCharacters = atob(attm?.split('base64,')[1])
           const byteNumbers = new Array(byteCharacters.length)
@@ -561,7 +562,8 @@ const DocumentVault = () => {
         .then((res) => {
           //setselectedforpreview(res.data[0])
 
-          const attm = decryptdata(res.data[0]?.media)
+          const medstr = decryptdata(res.data[0]?.media);
+          const attm = LZString.decompress(medstr)
           const byteCharacters = atob(attm.split('base64,')[1])
           const byteNumbers = new Array(byteCharacters.length)
           for (let i = 0; i < byteCharacters.length; i++) {
@@ -606,7 +608,8 @@ const DocumentVault = () => {
           }
         })
         .then((res) => {
-          const attm = decryptdata(res.data[0]?.media)
+          const medstr = decryptdata(res.data[0]?.media);
+          const attm = LZString.decompress(medstr)
           const filename = res.data[0]?.name;
           mails.push({data:attm, filename });         
         })
@@ -716,9 +719,15 @@ const DocumentVault = () => {
 
     for (let i = 0; i < files.length; i++) {
       const encf = await getBase64(files[i])
-
+      
+      const tobecom = encryptdata(encf);
+      const compressed = LZString.compressToUTF16(tobecom);
+      console.log('length 0', files[i].size);
+      console.log('length 1', encf.length);
+      console.log('length 2', tobecom.length);
+      console.log('length 3', compressed.length);
       attList.push({
-        media: encryptdata(encf),
+        media: compressed,
         name: files[i].name,
         type: files[i].type,
         user: user._id
@@ -728,7 +737,7 @@ const DocumentVault = () => {
     //const attachment =  await getBase64(files[0])
     //console.log('attachment123',attachment);
     //.then((attachment) => {
-    //axios.defaults.baseURL = 'http://localhost:5000'
+    axios.defaults.baseURL = 'http://localhost:5000'
 
     const resolveAfter3Sec = axios.post('/backendapi/documents/add', data, {
       headers: {
