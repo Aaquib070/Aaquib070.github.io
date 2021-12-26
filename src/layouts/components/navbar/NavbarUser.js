@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import ReactCountryFlag from 'react-country-flag'
 import { connect } from 'react-redux'
-import { Dark } from 'export'
+import { Dark, colortext } from 'export'
 import { setSection } from 'redux/actions/auth/loginActions'
 import { changeLanguage } from 'redux/actions/customizer'
 import { IntlContext } from 'utility/context/Internationalization'
-import Ripples from 'react-ripples'
+import { Submit, Reset, SubmitMob, ResetMob } from 'common/LAButtons'
 import {
   UncontrolledDropdown,
   Dropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  Button,
   Modal,
   ModalHeader,
   ModalBody
@@ -108,7 +107,6 @@ const customOptions = ({ value, flag }) => {
   )
 }
 
-const colortext = Dark ? '#ebeefd' : 'rgb(66 66 66)'
 const UserDropdown = (props) => {
   return (
     <DropdownMenu right>
@@ -154,7 +152,7 @@ const user1 = sessionStorage.getItem('logInUserData')
 const NavbarUser = (props) => {
   const beforeInstallPromptHandler = (e) => {
     console.log('pppppppppppppppppppp', e)
-    var button = document.getElementById('download-app')
+    const button = document.getElementById('download-app')
     console.log(button)
     let deferredPrompt
     e.preventDefault()
@@ -417,49 +415,33 @@ const NavbarUser = (props) => {
       {!user1 ? (
         window.screen.width <= 500 ? (
           <div className="button__div">
-            <Ripples color="var(--warning)" className="different-ripple">
-              <Button
-                className="button-label register-button"
-                onClick={() => {
-                  props.toggleLoginModal('SignUp')
-                }}
-              >
-                SIGNUP
-              </Button>
-            </Ripples>
-            <Ripples color="var(--warning)" className="different-ripple">
-              <Button
-                className="button-label login-button"
-                onClick={() => {
-                  props.toggleLoginModal('SignIn')
-                }}
-              >
-                LOGIN
-              </Button>
-            </Ripples>
+            <ResetMob
+              label={'SIGNUP'}
+              handleClick={() => {
+                props.toggleLoginModal('SignUp')
+              }}
+            />
+            <SubmitMob
+              label={'LOGIN'}
+              handleClick={() => {
+                props.toggleLoginModal('SignIn')
+              }}
+            />
           </div>
         ) : (
           <>
-            <Button
-              className="button-label register-button"
-              onClick={() => {
+            <Reset
+              label={'SIGNUP'}
+              handleClick={() => {
                 props.toggleLoginModal('SignUp')
               }}
-            >
-              SIGNUP
-            </Button>
-            <Button
-              color="warning"
-              className="button-label login-button"
-              onClick={() => {
+            />
+            <Submit
+              label={'LOGIN'}
+              handleClick={() => {
                 props.toggleLoginModal('SignIn')
               }}
-              style={{
-                color: { colortext }
-              }}
-            >
-              LOGIN
-            </Button>
+            />
           </>
         )
       ) : (

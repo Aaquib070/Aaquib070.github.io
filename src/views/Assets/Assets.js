@@ -169,7 +169,8 @@ const AddAssets = (props) => {
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
                             <FormText>
-                              <b>{x.key} :</b> {x.val}
+                              <span>{x.key && x.key.split('*')?.[0]} :</span>{' '}
+                              <span>{x.val}</span>
                             </FormText>
                           </Col>
                         )
@@ -302,10 +303,10 @@ const AddAssets = (props) => {
   const callAddAsset = (e) => {
     e.preventDefault()
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
-    if(user.assets.length > 10) {
-      toast.error("Asset Limit of 10 Exceeded ! Please upgrade your plan");
-      return ;
-    } 
+    if (user.assets.length > 10) {
+      toast.error('Asset Limit of 10 Exceeded ! Please upgrade your plan')
+      return
+    }
     const as = {
       assetType,
       assetDetails: selectedTemplate,
@@ -584,16 +585,17 @@ const AddAssets = (props) => {
                                         </FormGroup>
                                       </Col>
                                       <Col md="6" sm="12">
-                                        <FormGroup
-                                          className="form-label-group"
-                                          style={{
-                                            border:
-                                              assetType && !nominees?.length
-                                                ? '1px solid red'
-                                                : 'none'
-                                          }}
-                                        >
+                                        <FormGroup className="form-label-group">
                                           <Select
+                                            styles={{
+                                              control: (base) => ({
+                                                ...base,
+                                                borderColor:
+                                                  assetType && !nominees?.length
+                                                    ? 'red'
+                                                    : 'hsl(0,0%,80%)'
+                                              })
+                                            }}
                                             isMulti
                                             name="nominee"
                                             options={nomineeOption}

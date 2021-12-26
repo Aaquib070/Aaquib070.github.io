@@ -562,6 +562,16 @@ const AddLiability = (props) => {
                                       <Col md="6" sm="12">
                                         <FormGroup className="form-label-group">
                                           <Select
+                                            styles={{
+                                              control: (base) => ({
+                                                ...base,
+                                                borderColor:
+                                                  liabilityType &&
+                                                  !nominees?.length
+                                                    ? 'red'
+                                                    : 'hsl(0,0%,80%)'
+                                              })
+                                            }}
                                             isMulti
                                             name="nominee"
                                             options={nomineeOption}

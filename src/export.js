@@ -53,6 +53,8 @@ import Banner2 from 'assets/img/slider/banner-2.jpg'
 import Banner3 from 'assets/img/slider/banner-3.jpg'
 import Banner4 from 'assets/img/slider/banner-4.jpg'
 import Banner5 from 'assets/img/slider/banner-5.jpg'
+export const Dark = themeConfig.theme === 'dark'
+export const colortext = Dark ? '#ebeefd' : 'rgb(66 66 66)'
 
 export const imgBanner1 = Banner1
 export const imgBanner2 = Banner2
@@ -64,7 +66,6 @@ export const Logo = LA
 export const Art = art
 export const avatar1 = female
 export const avatar2 = male
-export const Dark = themeConfig.theme === 'dark'
 
 export const Assets = Dark ? AssetsDark : AssetsLight
 export const Diary = Dark ? DiaryDark : DiaryLight
