@@ -705,7 +705,7 @@ const DocumentVault = () => {
   const submitDropzone = async (e) => {
     e.preventDefault()
     if (!files?.length) {
-      toast.error('No File Selected')
+      toast.error('No File Selected !')
       return
     }
     const attList = []
@@ -736,7 +736,7 @@ const DocumentVault = () => {
     data.attachment = attList
     //const attachment =  await getBase64(files[0])
     //console.log('attachment123',attachment);
-    //.then((attachment) => {
+    //.then((attachment) => { 
     //axios.defaults.baseURL = 'http://localhost:5000'
 
     const resolveAfter3Sec = axios.post('/backendapi/documents/add', data, {
