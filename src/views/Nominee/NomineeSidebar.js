@@ -10,6 +10,7 @@ import {
   ModalBody
 } from 'reactstrap'
 import { X, XCircle, Edit2 } from 'react-feather'
+import { mobileRegex } from 'utility/context/InputTypeNum'
 import { Submit, Reset } from 'common/LAButtons'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import classnames from 'classnames'
@@ -173,7 +174,10 @@ const NomineeSidebar = (props) => {
       case 'phone':
         setcontact1(value)
         setcontact2(value)
-        !value?.length || value.length !== 10 || !value.trim()
+        !value?.length ||
+        value.length !== 10 ||
+        !value.trim() ||
+        !mobileRegex.test(value) //temp for india
           ? setcontact1Func()
           : seterrorcontact1('')
 
@@ -578,7 +582,7 @@ const NomineeSidebar = (props) => {
                   setftype(e.target.value)
                 }}
               />
-              <Label>Question</Label>
+              <Label>Answer</Label>
             </FormGroup>
             <FormGroup
               className="form-label-group mb-0"
@@ -592,7 +596,7 @@ const NomineeSidebar = (props) => {
               />
               <Submit
                 label={editID ? 'Update' : 'Add'}
-                disabled={fname === '' || ftype === ''}
+                disabled={fname.trim() === '' || ftype.trim() === ''}
                 handleClick={handleSecrets}
               />
             </FormGroup>
