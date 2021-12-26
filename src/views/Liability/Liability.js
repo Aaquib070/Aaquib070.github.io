@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef, Fragment } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { encryptdata } from 'utility/context/SecurityTool'
 import {
@@ -29,8 +29,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-//import 'assets/scss/plugins/extensions/toastr.scss'
+import { Submit, Reset } from 'common/LAButtons'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'
@@ -67,9 +66,9 @@ const AddLiability = (props) => {
       isFixed: true
     }
   })
-  const selectAssetRef = React.createRef()
-  const selectNomineeRef = React.createRef()
-  const selectCustomRef = React.createRef()
+  const selectAssetRef = createRef()
+  const selectNomineeRef = createRef()
+  const selectCustomRef = createRef()
   const [open, setopen] = useState(false)
   const [test, settest] = useState(false)
   const [deleteID, setdeleteID] = useState(null)
@@ -155,9 +154,9 @@ const AddLiability = (props) => {
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 
     axios
-      .get('/backendapi/user/liabilities/' + user._id, {
+      .get(`/backendapi/user/liabilities/${user._id}`, {
         headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('authtoken')
+          Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }
       })
       .then((res) => {
@@ -175,7 +174,7 @@ const AddLiability = (props) => {
                     if (idx === e.nominees.length - 1) {
                       nomin = nomin + sel[0].name
                     } else {
-                      nomin = nomin + sel[0].name + ', '
+                      nomin = `${nomin + sel[0].name}, `
                     }
                   }
                 })
@@ -342,10 +341,10 @@ const AddLiability = (props) => {
   const callAddLiability = (e) => {
     e.preventDefault()
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
-    if(user.liabilities.length > 10) {
-      toast.error("Liabilities Limit of 10 Exceeded ! Please upgrade your plan");
-      return ;
-    } 
+    if (user.liabilities.length > 10) {
+      toast.error('Liabilities Limit of 10 Exceeded ! Please upgrade your plan')
+      return
+    }
     const as = {
       liabilityType,
       liabilityDetails: selectedTemplate,
@@ -471,7 +470,7 @@ const AddLiability = (props) => {
   }
   const { messages, thumbView, getData, parsedFilter } = props
   return (
-    <React.Fragment>
+    <Fragment>
       <h2 className="warning spacing nodisplay">
         {messages?.heading ? messages.heading : 'Liabilties'}
       </h2>
@@ -572,6 +571,15 @@ const AddLiability = (props) => {
                                                     : 'hsl(0,0%,80%)'
                                               })
                                             }}
+                                            theme={(theme) => ({
+                                              ...theme,
+                                              colors: {
+                                                ...theme.colors,
+                                                text: 'orangered',
+                                                primary25: 'coral',
+                                                primary: 'black'
+                                              }
+                                            })}
                                             isMulti
                                             name="nominee"
                                             options={nomineeOption}
@@ -707,43 +715,38 @@ const AddLiability = (props) => {
                                             marginBottom: '0px'
                                           }}
                                         >
-                                          <Button.Ripple
-                                            outline
-                                            color="secondary"
-                                            type="reset"
-                                            className="button-label"
-                                            onClick={(e) => {
+                                          <Reset
+                                            label={
+                                              editItem
+                                                ? 'Cancel'
+                                                : messages?.resetButton
+                                                ? messages?.resetButton
+                                                : 'Reset'
+                                            }
+                                            handleClick={(e) => {
                                               seteditItem(false)
                                               clearLiability()
                                             }}
-                                          >
-                                            {editItem
-                                              ? 'Cancel'
-                                              : messages?.resetButton
-                                              ? messages?.resetButton
-                                              : 'Reset'}
-                                          </Button.Ripple>
-                                          <Button.Ripple
-                                            color="warning"
-                                            type="submit"
-                                            className="button-label"
+                                          />
+                                          <Submit
+                                            label={
+                                              editItem
+                                                ? 'Update'
+                                                : messages?.submitButton
+                                                ? messages?.submitButton
+                                                : 'Add'
+                                            }
                                             disabled={
                                               nominees.length === 0 ||
                                               !liabilityType ||
                                               isAddDisabled
                                             }
-                                            onClick={(e) => {
+                                            handleClick={(e) => {
                                               editItem
                                                 ? savechanges(e)
                                                 : callAddLiability(e)
                                             }}
-                                          >
-                                            {editItem
-                                              ? 'Update'
-                                              : messages?.submitButton
-                                              ? messages?.submitButton
-                                              : 'Add'}
-                                          </Button.Ripple>
+                                          />
                                         </FormGroup>
                                       </Col>
                                     </Row>
@@ -836,31 +839,26 @@ const AddLiability = (props) => {
                       className="form-label-group mb-0"
                       style={{ textAlign: 'right' }}
                     >
-                      <Button.Ripple
-                        outline
-                        color="secondary"
-                        type="reset"
-                        className="mb-1 button-label"
+                      <Reset
+                        label={
+                          messages?.resetButton
+                            ? messages?.resetButton
+                            : 'Reset'
+                        }
                         disabled={liabilityType === undefined}
-                        onClick={(e) => {
+                        handleClick={(e) => {
                           clearCustomField()
                         }}
-                      >
-                        {messages?.resetButton
-                          ? messages?.resetButton
-                          : 'Reset'}
-                      </Button.Ripple>{' '}
-                      <Button.Ripple
-                        color="warning"
+                      />
+                      <Submit
+                        label={
+                          messages?.submitButton
+                            ? messages?.submitButton
+                            : 'Add'
+                        }
                         disabled={fname === '' || ftype === ''}
-                        type="submit"
-                        className="button-label"
-                        onClick={(e) => addfield()}
-                      >
-                        {messages?.submitButton
-                          ? messages?.submitButton
-                          : 'Add'}
-                      </Button.Ripple>
+                        handleClick={(e) => addfield()}
+                      />
                     </FormGroup>
                   </ModalBody>
                 </Modal>
@@ -869,7 +867,7 @@ const AddLiability = (props) => {
           </div>
         </Col>
       </Row>
-    </React.Fragment>
+    </Fragment>
   )
 }
 const mapStateToProps = (state) => {

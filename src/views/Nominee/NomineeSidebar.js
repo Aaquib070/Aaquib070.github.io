@@ -9,6 +9,7 @@ import {
   ModalBody
 } from 'reactstrap'
 import { X, XCircle, Edit2 } from 'react-feather'
+import { Submit, Reset } from 'common/LAButtons'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import classnames from 'classnames'
 import { Dark } from 'export'
@@ -327,6 +328,15 @@ const NomineeSidebar = (props) => {
             value={relationDropDown?.filter(
               (option) => option.value === relation
             )}
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                text: 'orangered',
+                primary25: 'coral',
+                primary: 'black'
+              }
+            })}
             isClearable={true}
             placeholder={'Relation*'}
             onChange={(e) => relationValue(e)}
@@ -506,32 +516,25 @@ const NomineeSidebar = (props) => {
       </PerfectScrollbar>
 
       <div className="data-list-sidebar-footer px-2 d-flex justify-content-start align-items-center mt-1">
-        <Button.Ripple
-          className="button-label"
-          color="secondary"
-          outline
-          onClick={() => {
+        <Reset
+          label={'Reset'}
+          handleClick={() => {
             nullData()
             nullError()
           }}
-        >
-          Reset
-        </Button.Ripple>
-        <Button.Ripple
-          //disabled
-          color="warning"
-          type="reset"
-          className="button-label"
-          onClick={() => handleSubmit()}
-        >
-          {data !== null
-            ? props.isLoading
-              ? 'Updating'
-              : 'Update'
-            : props.isLoading
-            ? 'Adding'
-            : 'Add'}
-        </Button.Ripple>
+        />
+        <Submit
+          label={
+            data !== null
+              ? props.isLoading
+                ? 'Updating'
+                : 'Update'
+              : props.isLoading
+              ? 'Adding'
+              : 'Add'
+          }
+          handleClick={handleSubmit}
+        />
         <Modal isOpen={modal} toggle={toggleModal} centered={true}>
           <ModalHeader
             toggle={toggleModal}
@@ -576,26 +579,17 @@ const NomineeSidebar = (props) => {
               className="form-label-group mb-0"
               style={{ textAlign: 'right' }}
             >
-              <Button.Ripple
-                outline
-                color="secondary"
-                type="reset"
-                className="mb-1 button-label"
-                onClick={(e) => {
+              <Reset
+                label={'Reset'}
+                handleClick={(e) => {
                   clearCustomField()
                 }}
-              >
-                Reset
-              </Button.Ripple>
-              <Button.Ripple
-                color="warning"
+              />
+              <Submit
+                label={editID ? 'Update' : 'Add'}
                 disabled={fname === '' || ftype === ''}
-                type="submit"
-                className="button-label"
-                onClick={handleSecrets}
-              >
-                {editID ? 'Update' : 'Add'}
-              </Button.Ripple>
+                handleClick={handleSecrets}
+              />
             </FormGroup>
           </ModalBody>
         </Modal>

@@ -9,7 +9,6 @@ export const Submit = ({
   disabled = false
 }) => {
   return (
-    // <Ripples color="var(--warning)" className="different-ripple">
     <Button
       disabled={disabled}
       color="warning"
@@ -21,7 +20,23 @@ export const Submit = ({
     >
       {label}
     </Button>
-    // </Ripples>
+  )
+}
+export const Reset = ({
+  label = 'Reset',
+  handleClick = () => {},
+  disabled = false
+}) => {
+  return (
+    <Button
+      color={disabled ? 'secondary' : ''}
+      type={disabled ? 'reset' : ''}
+      disabled={disabled}
+      className="button-label register-button"
+      onClick={handleClick}
+    >
+      {label}
+    </Button>
   )
 }
 
@@ -45,23 +60,5 @@ export const ResetMob = ({
     <Ripples color="var(--warning)" className="different-ripple">
       <Reset label={label} handleClick={handleClick} />
     </Ripples>
-  )
-}
-
-export const Reset = ({
-  label = 'Reset',
-  handleClick = () => {},
-  disabled = false
-}) => {
-  return (
-    // <Ripples color="var(--warning)" className="different-ripple">
-    <Button
-      disabled={disabled}
-      className="button-label register-button"
-      onClick={handleClick}
-    >
-      {label}
-    </Button>
-    // </Ripples>
   )
 }

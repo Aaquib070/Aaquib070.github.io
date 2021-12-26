@@ -704,6 +704,12 @@ input {
     overflow: hidden;
     margin-right: 0.15rem;
   }
+  .login-button {
+    padding: 0.9rem 0.9rem !important;
+    width: max-content !important;
+    border-radius: 0px;
+    border: 1px solid coral !important;
+  }
   .login-button,
   .login-button:focus {
     margin: 0px;
@@ -712,11 +718,6 @@ input {
     border: none !important;
   }
   .register-button,
-  .login-button {
-    padding: 0.9rem 0.9rem !important;
-    width: max-content !important;
-    border-radius: 0px;
-  }
   .different-ripple {
     margin: 0px;
   }

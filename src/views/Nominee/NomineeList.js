@@ -14,6 +14,7 @@ import {
   addData,
   filterData
 } from 'redux/actions/data-list/'
+import { Submit, Reset } from 'common/LAButtons'
 import 'react-toastify/dist/ReactToastify.css'
 //import 'assets/scss/plugins/extensions/toastr.scss'
 import Sidebar from './NomineeSidebar'
@@ -75,27 +76,17 @@ const EditComponent = (props) => {
 
 const CustomHeader = (props) => {
   return (
-    <div className="data-list-header d-flex justify-content-between">
+    <div className="d-flex justify-content-between">
       <div className="actions-left d-flex">
-        <DropdownToggle
-          color="white"
-          className="sort-dropdown mx-50"
-          style={{
-            height: '75%',
-            backgroundColor: 'var(--warning)',
-            fontWeight: 'bold'
-          }}
-          outline
-          onClick={() => props.handleSidebar(true, true)}
-        >
-          <span className="align-middle">Add</span>
-        </DropdownToggle>
+        <Submit
+          label={'Add'}
+          handleClick={() => props.handleSidebar(true, true)}
+        />
       </div>
       <div className="actions-right d-flex">
         <div className="filter-section">
           <Input
             type="text"
-            style={{ height: '75%', borderRadius: '5rem', fontSize: '1rem' }}
             onChange={(e) => props.handleFilter(e)}
             placeholder="Search"
             className="placeholder"

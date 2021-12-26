@@ -28,6 +28,7 @@ import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Dark } from 'export'
 import 'react-toastify/dist/ReactToastify.css'
+import { Submit, Reset } from 'common/LAButtons'
 
 //import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/dropzone.scss'
@@ -599,9 +600,15 @@ const AddAssets = (props) => {
                                             isMulti
                                             name="nominee"
                                             options={nomineeOption}
-                                            // invalid={
-                                            //   assetType && !nominees?.length
-                                            // }
+                                            theme={(theme) => ({
+                                              ...theme,
+                                              colors: {
+                                                ...theme.colors,
+                                                text: 'orangered',
+                                                primary25: 'coral',
+                                                primary: 'black'
+                                              }
+                                            })}
                                             value={nominees.map((n) => {
                                               const as = nomineeOption.filter(
                                                 (e) => {
@@ -736,47 +743,38 @@ const AddAssets = (props) => {
                                             marginBottom: '0px'
                                           }}
                                         >
-                                          <Button.Ripple
-                                            outline
-                                            color="secondary"
-                                            type="reset"
-                                            className="button-label"
-                                            onClick={(e) => {
+                                          <Reset
+                                            label={
+                                              editItem
+                                                ? 'Cancel'
+                                                : messages?.resetButton
+                                                ? messages?.resetButton
+                                                : 'Reset'
+                                            }
+                                            handleClick={(e) => {
                                               seteditItem(false)
                                               clearAsset()
                                             }}
-                                          >
-                                            {editItem
-                                              ? 'Cancel'
-                                              : messages?.resetButton
-                                              ? messages?.resetButton
-                                              : 'Reset'}
-                                          </Button.Ripple>
-                                          <Button.Ripple
-                                            color="warning"
+                                          />
+                                          <Submit
+                                            label={
+                                              editItem
+                                                ? 'Update'
+                                                : messages?.submitButton
+                                                ? messages?.submitButton
+                                                : 'Add'
+                                            }
                                             disabled={
-                                              // editItem
-                                              //   ? nominees.length === 0 ||
-                                              //     !assetType
-                                              //   :
                                               nominees.length === 0 ||
                                               !assetType ||
                                               isAddDisabled
                                             }
-                                            type="reset"
-                                            className="button-label"
-                                            onClick={(e) => {
+                                            handleClick={(e) => {
                                               editItem
                                                 ? savechanges(e)
                                                 : callAddAsset(e)
                                             }}
-                                          >
-                                            {editItem
-                                              ? 'Update'
-                                              : messages?.submitButton
-                                              ? messages?.submitButton
-                                              : 'Add'}
-                                          </Button.Ripple>
+                                          />
                                         </FormGroup>
                                       </Col>
                                     </Row>
