@@ -558,6 +558,15 @@ const AddAssets = (props) => {
                                               (option) =>
                                                 option.value === assetType
                                             )}
+                                            theme={(theme) => ({
+                                              ...theme,
+                                              colors: {
+                                                ...theme.colors,
+                                                text: 'orangered',
+                                                primary25: 'coral',
+                                                primary: 'black'
+                                              }
+                                            })}
                                             name="color"
                                             options={assetTypes}
                                             isClearable={true}
@@ -597,9 +606,6 @@ const AddAssets = (props) => {
                                                     : 'hsl(0,0%,80%)'
                                               })
                                             }}
-                                            isMulti
-                                            name="nominee"
-                                            options={nomineeOption}
                                             theme={(theme) => ({
                                               ...theme,
                                               colors: {
@@ -609,6 +615,9 @@ const AddAssets = (props) => {
                                                 primary: 'black'
                                               }
                                             })}
+                                            isMulti
+                                            name="nominee"
+                                            options={nomineeOption}
                                             value={nominees.map((n) => {
                                               const as = nomineeOption.filter(
                                                 (e) => {
@@ -636,7 +645,7 @@ const AddAssets = (props) => {
                                           <Label>
                                             {messages?.nomineeOption
                                               ? messages.nomineeOption
-                                              : 'Nominees'}
+                                              : 'Nominee(s)'}
                                           </Label>
                                         </FormGroup>
                                       </Col>
@@ -847,7 +856,6 @@ const AddAssets = (props) => {
                       disabled={assetType === undefined}
                     >
                       <Select
-                        id="optionSelect"
                         className="React"
                         ref={selectCustomRef}
                         disabled={assetType === undefined}

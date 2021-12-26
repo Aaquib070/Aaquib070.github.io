@@ -6,6 +6,7 @@ import {
   Button,
   Modal,
   ModalHeader,
+  Spinner,
   ModalBody
 } from 'reactstrap'
 import { X, XCircle, Edit2 } from 'react-feather'
@@ -525,13 +526,17 @@ const NomineeSidebar = (props) => {
         />
         <Submit
           label={
-            data !== null
-              ? props.isLoading
-                ? 'Updating'
-                : 'Update'
-              : props.isLoading
-              ? 'Adding'
-              : 'Add'
+            data !== null ? (
+              props.isLoading ? (
+                <Spinner color="white" size="sm" />
+              ) : (
+                'Update'
+              )
+            ) : props.isLoading ? (
+              <Spinner color="white" size="sm" />
+            ) : (
+              'Add'
+            )
           }
           handleClick={handleSubmit}
         />

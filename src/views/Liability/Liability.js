@@ -536,11 +536,19 @@ const AddLiability = (props) => {
                                         <FormGroup className="form-label-group">
                                           <Select
                                             className="React"
-                                            classNamePrefix="select"
                                             ref={selectAssetRef}
                                             name="color"
                                             options={liabiltyTypes}
                                             isClearable={true}
+                                            theme={(theme) => ({
+                                              ...theme,
+                                              colors: {
+                                                ...theme.colors,
+                                                text: 'orangered',
+                                                primary25: 'coral',
+                                                primary: 'black'
+                                              }
+                                            })}
                                             isDisabled={editItem}
                                             value={liabiltyTypes.filter(
                                               (option) =>
@@ -600,14 +608,19 @@ const AddLiability = (props) => {
                                             placeholder={
                                               messages?.nomineeOption
                                                 ? messages?.nomineeOption
-                                                : 'Nominees'
+                                                : 'Nominee(s)'
                                             }
                                             id="nominee"
                                             onChange={(e) => {
                                               changeNominee(e)
                                             }}
                                           />
-                                          <Label>Nominee</Label>
+                                          <Label>
+                                            {' '}
+                                            {messages?.nomineeOption
+                                              ? messages.nomineeOption
+                                              : 'Nominee(s)'}
+                                          </Label>
                                         </FormGroup>
                                       </Col>
                                     </Row>
