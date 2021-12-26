@@ -705,7 +705,7 @@ const DocumentVault = () => {
   const submitDropzone = async (e) => {
     e.preventDefault()
     if (!files?.length) {
-      toast.error('No File Selected !')
+      toast.error('No File Selected')
       return
     }
     const attList = []
