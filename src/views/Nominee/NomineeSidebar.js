@@ -208,7 +208,6 @@ const NomineeSidebar = (props) => {
     !name?.length && setnameFunc()
     !email?.length && setemailFunc()
     !contact1?.length && setcontact1Func()
-    !contact2?.length && setcontact1Func()
     !relation?.length && setrelationFunc()
     relation === 'Others' && !relation1?.length && setrelation1Func()
     relation !== 'Others' && seterrorrelation1('')
@@ -221,8 +220,6 @@ const NomineeSidebar = (props) => {
       (relation === 'Others' && !relation1?.length) ||
       erroremail ||
       !email?.length ||
-      // erroraddress ||
-      // !address?.length ||
       errorcontact1 ||
       !contact1?.length ||
       errorcontact2
