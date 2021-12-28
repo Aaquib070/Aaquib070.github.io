@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import LZString from 'lz-string';
 import {
   Card,
   FormText,
@@ -87,6 +88,7 @@ const AddAssets = (props) => {
   const [isLoading, setisLoading] = useState(false)
   const [nominees, setnominees] = useState([])
   const [modal, setmodal] = useState(false)
+  const [fileatt, setfileatt] = useState()
   const [selectedTemplate, setselectedTemplate] = useState([])
   const [isAddDisabled, setisAddDisabled] = useState(true)
   const [nomineeOption, setnomineeOption] = useState([
@@ -97,6 +99,8 @@ const AddAssets = (props) => {
       isFixed: false
     }
   ])
+
+  const user = JSON.parse(sessionStorage.getItem('logInUserData'))
   useEffect(() => {
     !props.listLoading && props.getData()
     getAssets()
@@ -250,7 +254,11 @@ const AddAssets = (props) => {
     }
     setmodal(!modal)
   }
-  const changeValue = (e, k) => {
+  const changeValue = (e, k,ev) => {
+    if(k.type==='File') {
+      setfileatt(ev.target?.files[0]);
+    }
+    
     const selectedTemplateTemp = selectedTemplate
     const idx = selectedTemplate.findIndex((x) => x.key === k.key)
     if (e.length < 50) {
@@ -272,7 +280,7 @@ const AddAssets = (props) => {
   const savechanges = (e) => {
     e.preventDefault()
     seteditItem(false)
-    const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+    
     const as = {
       assetType,
       assetDetails: selectedTemplate,
@@ -326,13 +334,83 @@ const AddAssets = (props) => {
     clearCustomField()
     setisAddDisabled(true)
   }
-  const callAddAsset = (e) => {
-    e.preventDefault()
-    const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+  const getBase64 = (file) => {
+    const prom = new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = (error) => reject(error)
+    })
+    return prom
+  }
+
+  const fileUpload = async(f) => {
+    const attList = []
+    const data = {}
+    data.user = user._id
+    data.type = 'Asset'
+    data.alias = encryptdata(f.name)
+    //data.attachment = encryptdata(attachment)
+    //data.desc = encryptdata(desc)
+    //data.expiry = encryptdata(expiry)
+    const encf = await getBase64(f)      
+      const tobecom = encryptdata(encf);
+      const compressed = LZString.compressToUTF16(tobecom);
+      attList.push({
+        media: compressed,
+        name: f.name,
+        type: f.type,
+        user: user._id
+      })
+      data.attachment = attList
+      const ans = await axios.post('/backendapi/documents/add', data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
+        }});
+      return ans;
+  }
+  const checkasset =(e)=> {
+    e.preventDefault();
     if (user.assets.length > 10) {
       toast.error('Asset Limit of 10 Exceeded ! Please upgrade your plan')
       return
     }
+    //const selectedTemplate = selectedTemplate;
+    const fileIdx = selectedTemplate.findIndex(e=>e.type === 'File');
+    if(fileIdx >= 0) {
+      console.log('selectedTemplate',fileIdx)
+      const fileToup = selectedTemplate[fileIdx];
+      if(fileToup.val !== '') {
+        const ans = fileUpload(fileatt);
+        ans.then(res => {
+          console.log(res.data);
+          console.log("here");
+          selectedTemplate[fileIdx].val = res.data
+          setselectedTemplate(selectedTemplate);
+          callAddAsset(e);
+        })
+        
+      } else {
+        callAddAsset(e);
+      }
+    } else {
+      callAddAsset(e);
+    }
+    
+  }
+
+  const callAddAsset = (e) => {
+    e.preventDefault()
+    console.log('selectedTemplate',selectedTemplate)
+    
+    
+    
+    // const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+    // if (user.assets.length > 10) {
+    //   toast.error('Asset Limit of 10 Exceeded ! Please upgrade your plan')
+    //   return
+    // }
+    
     const as = {
       assetType,
       assetDetails: selectedTemplate,
@@ -714,7 +792,7 @@ const AddAssets = (props) => {
                                                       ev.target
                                                         ? ev.target.value
                                                         : ev.value,
-                                                      e
+                                                      e,ev
                                                     )
                                                   }}
                                                 />
@@ -806,7 +884,7 @@ const AddAssets = (props) => {
                                             handleClick={(e) => {
                                               editItem
                                                 ? savechanges(e)
-                                                : callAddAsset(e)
+                                                : checkasset(e)
                                             }}
                                           />
                                         </FormGroup>
