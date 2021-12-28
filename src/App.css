@@ -8,6 +8,26 @@
   border-spacing: 1rem;
 }
 
+.upper-text {
+  font-size: 1rem;
+  color: #21212a;
+}
+
+.upper-text-dark {
+  font-size: 1rem;
+  color: #e4e4e4;
+}
+
+.lower-text {
+  font-size: 0.9rem;
+  color: #21212a;
+}
+
+.lower-text-dark {
+  color: #e4e4e4;
+  font-size: 0.9rem;
+}
+
 .shadow-dark {
   box-shadow: 0 0 10px -5px white;
   color: white;

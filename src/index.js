@@ -11,8 +11,8 @@ import 'index.scss'
 // import configureAxios from 'config/AxiosConfig.js'
 
 import reportWebVitals from 'reportWebVitals'
-import ReactGA from 'react-ga';
-ReactGA.initialize('G-41BKL5ZTN4');
+import ReactGA from 'react-ga'
+ReactGA.initialize('G-41BKL5ZTN4')
 const LazyApp = lazy(() => import('App'))
 
 // configureDatabase()

@@ -170,8 +170,20 @@ const AddAssets = (props) => {
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
                             <FormText>
-                              <span>{x.key && x.key.split('*')?.[0]} :</span>{' '}
-                              <span>{x.val}</span>
+                              <span
+                                className={`font-weight-bold upper-text ${
+                                  Dark ? 'upper-text-dark' : 'upper-text'
+                                }`}
+                              >
+                                {x.key && x.key.split('*')?.[0]} :
+                              </span>{' '}
+                              <span
+                                className={`${
+                                  Dark ? 'lower-text-dark' : 'lower-text'
+                                }`}
+                              >
+                                {x.val}
+                              </span>
                             </FormText>
                           </Col>
                         )
@@ -179,7 +191,20 @@ const AddAssets = (props) => {
                     })}
                     <Col md="5" sm="12">
                       <FormText>
-                        <b>Nominees :</b> {nomin}
+                        <span
+                          className={`font-weight-bold upper-text ${
+                            Dark ? 'upper-text-dark' : 'upper-text'
+                          }`}
+                        >
+                          Nominees :
+                        </span>{' '}
+                        <span
+                          className={`${
+                            Dark ? 'lower-text-dark' : 'lower-text'
+                          }`}
+                        >
+                          {nomin}
+                        </span>
                       </FormText>
                     </Col>
                     <Col md="2" sm="12">

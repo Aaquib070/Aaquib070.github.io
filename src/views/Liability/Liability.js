@@ -186,8 +186,20 @@ const AddLiability = (props) => {
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
                             <FormText>
-                              <b>{x.key} :</b>{' '}
-                              {liabilityShow ? x.val : '***********'}
+                              <span
+                                className={`font-weight-bold upper-text ${
+                                  Dark ? 'upper-text-dark' : 'upper-text'
+                                }`}
+                              >
+                                {x.key && x.key.split('*')?.[0]} :
+                              </span>{' '}
+                              <span
+                                className={`${
+                                  Dark ? 'lower-text-dark' : 'lower-text'
+                                }`}
+                              >
+                                {liabilityShow ? x.val : '***********'}
+                              </span>
                             </FormText>
                           </Col>
                         )
@@ -195,8 +207,20 @@ const AddLiability = (props) => {
                     })}
                     <Col md="5" sm="12">
                       <FormText>
-                        <b>Nominees :</b>{' '}
-                        {liabilityShow ? nomin : '*******************'}
+                        <span
+                          className={`font-weight-bold upper-text ${
+                            Dark ? 'upper-text-dark' : 'upper-text'
+                          }`}
+                        >
+                          Nominees :
+                        </span>{' '}
+                        <span
+                          className={`${
+                            Dark ? 'lower-text-dark' : 'lower-text'
+                          }`}
+                        >
+                          {liabilityShow ? nomin : '*******************'}
+                        </span>
                       </FormText>
                     </Col>
                     <Col md="2" sm="12">
