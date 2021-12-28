@@ -10,6 +10,7 @@ import axios from 'axios'
 import * as serviceWorker from './serviceWorker'
 import PopUp from 'utility/Popup'
 import ReactGA from 'react-ga';
+import SessionWatcher from './SessionWatcher';
 // import Tour from 'views/Tour/AppTour';
 
 const App = () => {
@@ -102,6 +103,7 @@ const App = () => {
     <>
       {/* <Tour /> */}
 
+    <SessionWatcher />
       {newVersionAvailable && <UpdateAvailable />}
       {manageFailure && sessionStorage.getItem('logInUserData') && (
         <PopUp
