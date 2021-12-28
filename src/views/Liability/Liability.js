@@ -546,7 +546,7 @@ const AddLiability = (props) => {
                                                 ...theme.colors,
                                                 text: 'orangered',
                                                 primary25: 'coral',
-                                                primary: 'black'
+                                                primary: '#757488'
                                               }
                                             })}
                                             isDisabled={editItem}
@@ -585,7 +585,7 @@ const AddLiability = (props) => {
                                                 ...theme.colors,
                                                 text: 'orangered',
                                                 primary25: 'coral',
-                                                primary: 'black'
+                                                primary: '#757488'
                                               }
                                             })}
                                             isMulti

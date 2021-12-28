@@ -336,7 +336,7 @@ const NomineeSidebar = (props) => {
                 ...theme.colors,
                 text: 'orangered',
                 primary25: 'coral',
-                primary: 'black'
+                primary: '#757488'
               }
             })}
             isClearable={true}

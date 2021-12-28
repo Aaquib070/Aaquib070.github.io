@@ -564,7 +564,7 @@ const AddAssets = (props) => {
                                                 ...theme.colors,
                                                 text: 'orangered',
                                                 primary25: 'coral',
-                                                primary: 'black'
+                                                primary: '#757488'
                                               }
                                             })}
                                             name="color"
@@ -612,7 +612,7 @@ const AddAssets = (props) => {
                                                 ...theme.colors,
                                                 text: 'orangered',
                                                 primary25: 'coral',
-                                                primary: 'black'
+                                                primary: '#757488'
                                               }
                                             })}
                                             isMulti
