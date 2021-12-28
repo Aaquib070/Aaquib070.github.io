@@ -412,7 +412,7 @@ const NomineeSidebar = (props) => {
             value={contact2}
             name="phoneC"
             invalid={errorcontact2}
-            disabled={sameAsAbove}
+            disabled={data !== null ? (contact2 === contact1 ? true : false) : sameAsAbove}
             onChange={handleValue}
             onKeyPress={(e) => handleKeyMobileNumber(e)}
             id="data-price"
@@ -427,7 +427,7 @@ const NomineeSidebar = (props) => {
           <Input
             type="checkbox"
             className="w-max"
-            checked={sameAsAbove}
+            checked={data !== null ? (contact2 === contact1 ? true : false) : sameAsAbove}
             onChange={() => handleCheck()}
           />
           <Label check>Whatsapp same as contact no.</Label>

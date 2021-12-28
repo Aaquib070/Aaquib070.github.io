@@ -249,7 +249,7 @@ const Nominee = (props) => {
   const [isLoading, setisLoading] = useState(false)
 
   useEffect(() => {
-    if (props.dataList.data.length !== data.length) {
+    //if (props.dataList.data.length !== data.length) {
       setdata(props.dataList.data)
       setallData(props.dataList.filteredData)
       //settotalPages(props.dataList.totalPages)
@@ -257,7 +257,7 @@ const Nominee = (props) => {
       settotalRecords(props.dataList.totalRecords)
       setsortIndex(props.dataList.sortIndex)
       // setdataLoading(false)
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    //} // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataList])
 
   useEffect(() => {
