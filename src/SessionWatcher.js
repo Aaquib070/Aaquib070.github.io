@@ -26,7 +26,7 @@ const SessionWatcher = () => {
         timeOuts.forEach(e => {
             clearTimeout(e);
         })
-        const timeout = setTimeout(logOut, 20000);
+        const timeout = setTimeout(logOut, 120000);
         timeOuts.push(timeout);
     }
 

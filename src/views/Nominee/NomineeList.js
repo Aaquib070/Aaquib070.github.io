@@ -315,8 +315,7 @@ const Nominee = (props) => {
       obj.name === '' ||
       obj.relation === '' ||
       obj.email === '' ||
-      obj.contact1 === '' ||
-      obj.address === ''
+      obj.contact1 === ''
     ) {
       toast.error('Please Fill All Mandatory Details')
     } else {
