@@ -369,11 +369,12 @@ const ProgrammaticallyDropzone = (props) => {
 const DocumentVault = () => {
   const columns = [
     {
-      name: 'View',
+      name: 'View / Send',
       sortable: false,
       minWidth: '110px',
       cell: function EditComp(row) {
         return (
+          <>
           <Eye
             style={{ cursor: 'pointer' }}
             size={20}
@@ -384,6 +385,14 @@ const DocumentVault = () => {
               preview(row.attachment[0])
             }}
           />
+          <Mail
+              size={20}
+              className="collapse-icon ml-1"
+              onClick={() => {
+                mailAll(row.attachment)
+              }}
+            />
+            </>
         )
       }
     },
@@ -422,7 +431,7 @@ const DocumentVault = () => {
                 downloadAll(row.attachment)
               }}
             />
-            <Trash2
+            {row.type === 'Document Vault' && <Trash2
               //style={{ cursor: 'pointer' }}
               size={20}
               className="collapse-icon csp"
@@ -431,14 +440,8 @@ const DocumentVault = () => {
                 setopen(true)
               }}
               
-            />
-            <Mail
-              size={20}
-              className="collapse-icon ml-1"
-              onClick={() => {
-                mailAll(row.attachment)
-              }}
-            />
+            />}
+            
           </>
           // <a
           //   href={row.attachment}

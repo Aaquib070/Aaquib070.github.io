@@ -454,11 +454,9 @@ const AddAssets = (props) => {
         })
         
       } else {
-        alert('hi')
         callAddAsset();
       }
     } else {
-      alert('hi2')
       callAddAsset();
     }
     
