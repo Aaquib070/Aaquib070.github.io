@@ -205,6 +205,7 @@ const NomineeSidebar = (props) => {
     }
   }
   const validateValues = () => {
+    
     !name?.length && setnameFunc()
     !email?.length && setemailFunc()
     !contact1?.length && setcontact1Func()

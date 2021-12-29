@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import LZString from 'lz-string';
+import Draggable from 'react-draggable'
 import {
   Card,
   FormText,
@@ -18,7 +19,8 @@ import {
   ModalBody,
   TabContent,
   TabPane,
-  Label
+  Label,
+  Spinner
 } from 'reactstrap'
 import PopUp from 'utility/Popup'
 import Ccube from 'utility/Ccube'
@@ -37,7 +39,7 @@ import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'
 import { Edit, Trash, Delete } from 'react-feather'
 
-import { encryptdata } from 'utility/context/SecurityTool'
+import { decryptdata, encryptdata } from 'utility/context/SecurityTool'
 import 'assets/scss/pages/data-list.scss'
 import 'assets/scss/components/app-loader.scss'
 import Sidebar from '../Nominee/NomineeSidebar'
@@ -86,11 +88,16 @@ const AddAssets = (props) => {
   const [sidebar, setsidebar] = useState(false)
   const [currentData, setcurrentData] = useState(null)
   const [isLoading, setisLoading] = useState(false)
+  const [loading, setloading] = useState(false)
+  const [prviewmodal, setprviewmodal] = useState(false)
   const [nominees, setnominees] = useState([])
   const [modal, setmodal] = useState(false)
   const [fileatt, setfileatt] = useState()
   const [selectedTemplate, setselectedTemplate] = useState([])
   const [isAddDisabled, setisAddDisabled] = useState(true)
+  const [spinload, setspinload] = useState(false);
+  const [bloburl, setbloburl] = useState()
+  const [selectedforpreview, setselectedforpreview] = useState()
   const [nomineeOption, setnomineeOption] = useState([
     {
       value: 'Add Nominee',
@@ -101,6 +108,7 @@ const AddAssets = (props) => {
   ])
 
   const user = JSON.parse(sessionStorage.getItem('logInUserData'))
+
   useEffect(() => {
     !props.listLoading && props.getData()
     getAssets()
@@ -131,6 +139,45 @@ const AddAssets = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataList])
 
+
+
+  const preview = (id) => {
+    setprviewmodal(true);
+    setloading(true)
+
+    const token = sessionStorage.getItem('authtoken')
+    axios
+      .get(`/backendapi/sender/msg/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        setselectedforpreview(res.data[0])
+        const med1 =res.data[0]?.media;
+        const dec3=  LZString.decompressFromUTF16(med1);
+        const attm = decryptdata(dec3)
+        if (attm) {
+          const byteCharacters = atob(attm?.split('base64,')[1])
+          const byteNumbers = new Array(byteCharacters.length)
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          const blob = new Blob([byteArray], {
+            type: res.data[0]?.type
+          })
+          const blobUrl = URL.createObjectURL(blob)
+          setbloburl(blobUrl)
+          setloading(false)
+        } else {
+          setprviewmodal(!prviewmodal)
+          toast.warning('Something went wrong')
+        }
+      })
+  }
+
+
   const deletecus = (e) => {
     editItem && setisAddDisabled(false)
     const temp3 = selectedTemplate.filter((x) => {
@@ -138,7 +185,7 @@ const AddAssets = (props) => {
     })
     setselectedTemplate(temp3)
   }
-  const getAssets = () => {
+  const getAssets = async () => {
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
 
     axios
@@ -153,6 +200,7 @@ const AddAssets = (props) => {
         assetList.splice(0, assetList.length)
         user?.assets?.length &&
           user.assets.forEach((e, i) => {
+            
             if (e.id) {
               let nomin = ''
               e?.nominees?.length &&
@@ -166,11 +214,19 @@ const AddAssets = (props) => {
                     }
                   }
                 })
+              
+                
+              
               const cont = (
                 <div>
                   <Row>
                     {e?.assetDetails?.map((x, i) => {
                       if (x.val !== '') {
+                        let val = x.val;
+                        if(x.type === 'File') {
+                          const splitted = x.val.split('#~#');
+                          val = <span onClick={()=>{preview(splitted[2])}}>{splitted[0]}</span>
+                        }  
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
                             <FormText>
@@ -186,12 +242,12 @@ const AddAssets = (props) => {
                                   Dark ? 'lower-text-dark' : 'lower-text'
                                 }`}
                               >
-                                {x.val}
+                                {val}
                               </span>
                             </FormText>
                           </Col>
                         )
-                      } else return ''
+                    } else return ''
                     })}
                     <Col md="5" sm="12">
                       <FormText>
@@ -278,6 +334,7 @@ const AddAssets = (props) => {
     setisAddDisabled(isAddDisabled)
   }
   const savechanges = (e) => {
+    setspinload(true);
     e.preventDefault()
     seteditItem(false)
     
@@ -327,8 +384,11 @@ const AddAssets = (props) => {
         toast.success('Edited successfully!')
         props.getData(props.parsedFilter)
         getAssets()
+        setspinload(false);
       })
-      .catch()
+      .catch(()=>{
+        setspinload(false);
+      })
 
     clearAsset()
     clearCustomField()
@@ -363,54 +423,49 @@ const AddAssets = (props) => {
         user: user._id
       })
       data.attachment = attList
+     // axios.defaults.baseURL = 'http://localhost:5000'
       const ans = await axios.post('/backendapi/documents/add', data, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
         }});
       return ans;
   }
-  const checkasset =(e)=> {
-    e.preventDefault();
+  const checkasset =()=> {
+    setspinload(true);
+    //e.preventDefault();
     if (user.assets.length > 10) {
       toast.error('Asset Limit of 10 Exceeded ! Please upgrade your plan')
+      setspinload(false);
       return
     }
     //const selectedTemplate = selectedTemplate;
     const fileIdx = selectedTemplate.findIndex(e=>e.type === 'File');
     if(fileIdx >= 0) {
-      console.log('selectedTemplate',fileIdx)
       const fileToup = selectedTemplate[fileIdx];
       if(fileToup.val !== '') {
         const ans = fileUpload(fileatt);
         ans.then(res => {
-          console.log(res.data);
-          console.log("here");
-          selectedTemplate[fileIdx].val = res.data
+          selectedTemplate[fileIdx].val = `${decryptdata(res.data.alias)}#~#${res.data._id}#~#${res.data.attachment[0]}`
           setselectedTemplate(selectedTemplate);
-          callAddAsset(e);
+          callAddAsset();
+        }).catch((err) => {
+          setspinload(false);
+          err?.response?.data && toast.error(err?.response?.data)
         })
         
       } else {
-        callAddAsset(e);
+        alert('hi')
+        callAddAsset();
       }
     } else {
-      callAddAsset(e);
+      alert('hi2')
+      callAddAsset();
     }
     
   }
 
-  const callAddAsset = (e) => {
-    e.preventDefault()
-    console.log('selectedTemplate',selectedTemplate)
-    
-    
-    
-    // const user = JSON.parse(sessionStorage.getItem('logInUserData'))
-    // if (user.assets.length > 10) {
-    //   toast.error('Asset Limit of 10 Exceeded ! Please upgrade your plan')
-    //   return
-    // }
-    
+  const callAddAsset = () => {
+ 
     const as = {
       assetType,
       assetDetails: selectedTemplate,
@@ -442,16 +497,31 @@ const AddAssets = (props) => {
         clearAsset()
         props.getData(props.parsedFilter)
         getAssets()
+        clearCustomField()
+       setisAddDisabled(true)
+       setspinload(false);
       })
-      .catch()
-    clearCustomField()
-    setisAddDisabled(true)
+      .catch(
+        ()=>{setspinload(false);}
+      )
+    
   }
   const deleteAsset = (id) => {
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
     const idx = user.assets.findIndex((el) => el.id === id)
     const deletednominee = []
     if (idx >= 0) {
+    
+      const fil = user.assets[idx].assetDetails.filter(m=>m.type === 'File');
+      fil.forEach(filat=> {
+        const sf = filat.val.split('#~#');
+        axios
+        .delete(`/backendapi/document/deletebyid/${sf[1]}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authtoken')}`
+          }
+        })
+      })
       user.assets[idx].nominees.forEach((n) => {
         n.objectid = user.assets[idx].id
         deletednominee.push(n)
@@ -590,6 +660,64 @@ const AddAssets = (props) => {
 
   return (
     <React.Fragment>
+       <Draggable>
+        <Modal
+          isOpen={prviewmodal}
+          toggle={() => {
+            setprviewmodal(!prviewmodal);
+          }}
+          centered={true}
+          size="lg"
+        >
+          <ModalHeader
+            toggle={() => {
+              setprviewmodal(!prviewmodal);
+            }}
+            cssModule={{ 'modal-title': 'w-100 text-center' }}
+          >
+            <Row>
+
+              <Col
+                style={{
+                  color: 'var(--warning)',
+                  fontSize: '1.45rem',
+                  fontWeight: 'bold',
+                  letterSpacing: '1px'
+                }}
+              >
+                Preview Asset Attachment
+              </Col>
+
+              
+            </Row>
+          </ModalHeader>
+
+          <ModalBody className="justify-content-center">
+            
+            {loading && (
+              <Spinner
+                style={{ marginLeft: '48%' }}
+                color="warning"
+                size="lg"
+              />
+            )}
+            {!loading && (
+              <div>
+                <iframe
+                  style={{ height: '400px', width: '100%' }}
+                  className="myiframe"
+                  title="Aaq"
+                  src={`${bloburl}#zoom=200`}
+                  //src={`${bloburl}#toolbar=0`}
+                />
+              </div>
+            )}
+          </ModalBody>
+        </Modal>
+      </Draggable>
+
+
+
       <h2 className="warning spacing nodisplay">
         {messages?.heading ? messages.heading : 'Assets'}
       </h2>
@@ -786,7 +914,7 @@ const AddAssets = (props) => {
                                                   id="cityMulti"
                                                   className="input-label"
                                                   placeholder={e.key}
-                                                  value={e.val}
+                                                  value={e.type !== 'File' ? e.val: null}
                                                   onChange={(ev) => {
                                                     changeValue(
                                                       ev.target
@@ -869,24 +997,26 @@ const AddAssets = (props) => {
                                             }}
                                           />
                                           <Submit
-                                            label={
+                                            label={spinload ? <Spinner /> : (
                                               editItem
-                                                ? 'Update'
-                                                : messages?.submitButton
-                                                ? messages?.submitButton
-                                                : 'Add'
-                                            }
+                                              ? 'Update'
+                                              : messages?.submitButton
+                                              ? messages?.submitButton
+                                              : 'Add'
+                                           )}
                                             disabled={
                                               nominees.length === 0 ||
                                               !assetType ||
                                               isAddDisabled
                                             }
+                                           
                                             handleClick={(e) => {
                                               editItem
                                                 ? savechanges(e)
-                                                : checkasset(e)
+                                                : checkasset()
                                             }}
                                           />
+                                           
                                         </FormGroup>
                                       </Col>
                                     </Row>

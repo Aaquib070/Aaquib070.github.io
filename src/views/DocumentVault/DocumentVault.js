@@ -718,14 +718,9 @@ const DocumentVault = () => {
     data.expiry = encryptdata(expiry)
 
     for (let i = 0; i < files.length; i++) {
-      const encf = await getBase64(files[i])
-      
+      const encf = await getBase64(files[i])      
       const tobecom = encryptdata(encf);
       const compressed = LZString.compressToUTF16(tobecom);
-      console.log('length 0', files[i].size);
-      console.log('length 1', encf.length);
-      console.log('length 2', tobecom.length);
-      console.log('length 3', compressed.length);
       attList.push({
         media: compressed,
         name: files[i].name,
