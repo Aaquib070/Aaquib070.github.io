@@ -484,8 +484,7 @@ const Postman = (props) => {
                         !type.trim().length ||
                         !title.trim().length ||
                         !date.trim().length ||
-                        !signature.trim().length ||
-                        !nominees.length
+                        !signature.trim().length
                       }
                     >
                       {edititem ? 'Update' : 'Add'}
