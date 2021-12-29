@@ -234,7 +234,7 @@ const AddLiability = (props) => {
                         let val = x.val;
                         if(x.type === 'File') {
                           const splitted = x.val.split('#~#');
-                          val = <u><span style={{color:'blue'}} onClick={()=>{previewliab(splitted[2])}}>{splitted[0]}</span></u>
+                          val = <span onClick={()=>{previewliab(splitted[2])}}>{splitted[0]}</span>
                         }  
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
@@ -423,7 +423,6 @@ const AddLiability = (props) => {
   }
   
   const savechanges = (e) => {
-    setspinload(true);
     e.preventDefault()
     seteditItem(false)
     const user = JSON.parse(sessionStorage.getItem('logInUserData'))
@@ -459,9 +458,8 @@ const AddLiability = (props) => {
         toast.success('Edited successfully!')
         props.getData(props.parsedFilter)
         getAssets()
-        setspinload(false);
       })
-      .catch(()=>{setspinload(false);})
+      .catch()
 
     clearLiability()
     clearCustomField()
@@ -496,10 +494,9 @@ const AddLiability = (props) => {
       )
       .then((res) => {
         props.getData(props.parsedFilter)
-        setspinload(false);
         getAssets()
       })
-      .catch(()=>{setspinload(false);})
+      .catch()
     sessionStorage.setItem('logInUserData', JSON.stringify(user))
     toast.success('Liability addedd successfully!')
     clearLiability()
@@ -512,7 +509,6 @@ const AddLiability = (props) => {
     //e.preventDefault();
     if (user.liabilities.length > 10) {
       toast.error('Liabilities Limit of 10 Exceeded ! Please upgrade your plan')
-      setspinload(false);
       return
     }
     //const selectedTemplate = selectedTemplate;
@@ -957,7 +953,7 @@ const AddLiability = (props) => {
                                             }}
                                           />
                                           <Submit
-                                            label={spinload ? <Spinner size="sm" color="white"/> : (
+                                            label={spinload ? <Spinner /> : (
                                               editItem
                                               ? 'Update'
                                               : messages?.submitButton
@@ -1067,31 +1063,26 @@ const AddLiability = (props) => {
                       className="form-label-group mb-0"
                       style={{ textAlign: 'right' }}
                     >
-                      <Button.Ripple
-                        outline
-                        color="secondary"
-                        type="reset"
-                        className="mb-1 button-label"
+                      <Reset
+                        label={
+                          messages?.resetButton
+                            ? messages?.resetButton
+                            : 'Reset'
+                        }
                         disabled={liabilityType === undefined}
-                        onClick={(e) => {
+                        handleClick={(e) => {
                           clearCustomField()
                         }}
-                      >
-                        {messages?.resetButton
-                          ? messages?.resetButton
-                          : 'Reset'}
-                      </Button.Ripple>
-                      <Button.Ripple
-                        color="warning"
+                      />
+                      <Submit
+                        label={
+                          messages?.submitButton
+                            ? messages?.submitButton
+                            : 'Add'
+                        }
                         disabled={fname === '' || ftype === ''}
-                        type="submit"
-                        className="button-label"
-                        onClick={(e) => addfield()}
-                      >
-                        {messages?.submitButton
-                          ? messages?.submitButton
-                          : 'Add'}
-                      </Button.Ripple>
+                        handleClick={(e) => addfield()}
+                      />
                     </FormGroup>
                   </ModalBody>
                 </Modal>

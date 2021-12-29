@@ -32,8 +32,6 @@ import { toast } from 'react-toastify'
 import { Dark } from 'export'
 import 'react-toastify/dist/ReactToastify.css'
 import { Submit, Reset } from 'common/LAButtons'
-
-//import 'assets/scss/plugins/extensions/toastr.scss'
 import 'assets/scss/plugins/extensions/dropzone.scss'
 import { getData, addData } from 'redux/actions/data-list/'
 import Select from 'react-select'
@@ -225,7 +223,7 @@ const AddAssets = (props) => {
                         let val = x.val;
                         if(x.type === 'File') {
                           const splitted = x.val.split('#~#');
-                          val = <span onClick={()=>{preview(splitted[2])}}>{splitted[0]}</span>
+                          val = <u><span style={{color:'blue'}} onClick={()=>{preview(splitted[2])}}>{splitted[0]}</span></u>
                         }  
                         return (
                           <Col md="5" sm="12" key={i + x.key}>
@@ -995,7 +993,7 @@ const AddAssets = (props) => {
                                             }}
                                           />
                                           <Submit
-                                            label={spinload ? <Spinner /> : (
+                                            label={spinload ? <Spinner size="sm" color="white"/> : (
                                               editItem
                                               ? 'Update'
                                               : messages?.submitButton
