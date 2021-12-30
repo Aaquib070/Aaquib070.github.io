@@ -14,6 +14,9 @@ const PostmanView = (props) => {
     if (userkey !== '') {
       axios.get(`/backendapi/sender/msg/getbyid/${userkey}`)
       .then((msg) => {
+        if(msg.data.length > 0) {
+
+        
         setmsg(msg.data[0])
       axios.get(`/backendapi/sender/msg/${msg.data[0].msg}`)
       .then((res) => {
@@ -36,6 +39,9 @@ const PostmanView = (props) => {
          setsuccess(false)
          // seterr(true)
         })
+      } else {
+        alert('Invalid Or Expired link');
+      }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,9 +104,9 @@ const PostmanView = (props) => {
 
             <FormGroup className="form-label-group">
             
-                      <h1 style={{marginTop:'-70px'}}>{msg.title}</h1>
-                      <h3>{msg.desc}</h3>
-                      <h3>{msg.signature ? 'From : '+msg.signature : ''}</h3>
+                      <h1 style={{marginTop:'-70px'}}>{msg?.title}</h1>
+                      <h3>{msg?.desc}</h3>
+                      <h3>{msg?.signature ? 'From : '+msg.signature : ''}</h3>
                   </FormGroup>
 
     </Col>
