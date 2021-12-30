@@ -20,6 +20,7 @@ import {
   UpdateProfile,
   Subscription,
   home,
+  PostmanView,
   AddAssets,
   AdminDashboard,
   Caller
@@ -50,6 +51,11 @@ const AppRouter = (props) => {
         <PrivateRoute
           path="/docview/:userkey"
           component={DocView}
+         fullLayout
+        />
+        <PrivateRoute
+          path="/postmanview/:userkey"
+          component={PostmanView}
          fullLayout
         />
         <PrivateRoute

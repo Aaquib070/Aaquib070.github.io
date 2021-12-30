@@ -74,15 +74,16 @@ const MsgHistory = (props) => {
         }
       })
       .then((res) => {
-        console.log(res.data[0]?.media)
-        const byteCharacters = atob(res.data[0]?.media?.split('base64,')[1])
+        const splits = res.data[0]?.media?.split('base64,');
+            const type=splits[0].substring(5, splits[0].length -1);
+        const byteCharacters = atob(splits[1])
         const byteNumbers = new Array(byteCharacters.length)
         for (let i = 0; i < byteCharacters.length; i++) {
           byteNumbers[i] = byteCharacters.charCodeAt(i)
         }
         const byteArray = new Uint8Array(byteNumbers)
         const blob = new Blob([byteArray], {
-          type: type === 'Video' ? 'audio/wav' : ''
+          type: type
         })
         const blobUrl = URL.createObjectURL(blob)
         setbloburl(blobUrl)
@@ -162,11 +163,16 @@ const MsgHistory = (props) => {
               <b>Status :</b>{' '}
               {e.status === 0 ? (
                 <span style={{ color: 'var(--warning)' }}>Pending</span>
-              ) : (
-                <span style={{ color: 'green' }}>Delivered</span>
-              )}{' '}
+              ) : (e.status === 1 ?  (
+                <span style={{ color: 'lightgreen' }}>Delivered</span>
+              ) : (<span style={{ color: 'var(--warning)' }}>Failed : {e.failReason}</span>) )}{' '}
               <br />
-              <b>Nominees :</b> {nomin}
+              <b>Reciver Name :</b> {e.rname}
+              <br />
+              <b>Reciver Email :</b> {e.remail}
+              <br />
+              <b>Reciver Phone :</b> {e.rphone}
+
             </FormText>
           </Col>
           <Col md="2" sm="12">

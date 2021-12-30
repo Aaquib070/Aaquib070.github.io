@@ -15,6 +15,8 @@ export const MailConfirm = lazy(() => import('views/Login/MailConfirm'))
 export const DocView = lazy(() => import('views/Login/DocView'))
 export const Portfolio = lazy(() => import('views/Portfolio/Portfolio'))
 export const Postman = lazy(() => import('views/Postman/Postman'))
+export const PostmanView = lazy(() => import('views/Postman/PostmanView'))
+
 export const AddLiability = lazy(() => import('views/Liability/Liability'))
 export const UpdateProfile = lazy(() => import('views/user/Edit'))
 export const Subscription = lazy(() => import('views/user/PaymentsIntegrated'))
