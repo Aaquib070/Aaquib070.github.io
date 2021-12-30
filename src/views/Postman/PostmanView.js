@@ -104,7 +104,7 @@ const PostmanView = (props) => {
 
             <FormGroup className="form-label-group">
             
-                      <h1 style={{marginTop:'-70px'}}>{msg?.title}</h1>
+                      <h1 style={{marginTop:'-80px'}}>{msg?.title}</h1>
                       <h3>{msg?.desc}</h3>
                       <h3>{msg?.signature ? 'From : '+msg.signature : ''}</h3>
                   </FormGroup>
