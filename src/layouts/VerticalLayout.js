@@ -134,7 +134,7 @@ const VerticalLayout = (props) => {
   const sidebarProps = {
     toggleSidebarMenu: props.collapseSidebar,
     toggle: toggleSidebarMenu,
-    sidebarState: sidebarState,
+    sidebarState,
     sidebarHover: sidebarMenuHover,
     sidebarVisibility: handleSidebarVisibility,
     visibilityState: sidebarHidden,
