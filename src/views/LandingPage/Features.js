@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react'
-import { Row, Col, Card } from 'reactstrap'
+import React from 'react'
 
 import {
   Assets,
@@ -11,8 +10,8 @@ import {
   Portfolio,
   Sender,
   Spend,
-  Vault,
-  Dark
+  Vault
+  // Dark
 } from 'export'
 
 import './typewriter.css'
@@ -36,7 +35,8 @@ export const Features = (props) => {
     portfolio,
     portfolioText
   } = props
-  const [dashboard, setDashboard] = useState([
+
+  const managePort = [
     {
       id: 0,
       label: asset ? asset : 'Assets',
@@ -58,26 +58,6 @@ export const Features = (props) => {
       path: '/liability/add'
     },
     {
-      id: 2,
-      label: vault ? vault : 'Password Vault',
-      description: vaultText
-        ? vaultText
-        : 'Save your passwords like cards, credentials in vault.',
-      background: Vault,
-      selected: false,
-      path: '/vault/password'
-    },
-    {
-      id: 3,
-      label: spends ? spends : 'Daily Spends',
-      description: spendsText
-        ? spendsText
-        : 'Log your thoughts and analyze your daily spends.',
-      background: Spend,
-      selected: false,
-      path: '/spends'
-    },
-    {
       id: 4,
       label: nominees ? nominees : 'Nominees',
       description: nomineesText
@@ -88,6 +68,29 @@ export const Features = (props) => {
       path: '/nominee/list'
     },
     {
+      id: 7,
+      label: portfolio ? portfolio : 'Portfolio',
+      description: portfolioText
+        ? portfolioText
+        : 'View & analyze portfolio of saved assets and liabilties',
+      background: Portfolio,
+      selected: false,
+      path: '/portfolio'
+    }
+  ]
+
+  const manageStorage = [
+    {
+      id: 2,
+      label: vault ? vault : 'Password Vault',
+      description: vaultText
+        ? vaultText
+        : 'Save your passwords like cards, credentials in vault.',
+      background: Vault,
+      selected: false,
+      path: '/vault/password'
+    },
+    {
       id: 5,
       label: documents ? documents : 'Documents',
       description: documentsText
@@ -96,7 +99,10 @@ export const Features = (props) => {
       background: Documents,
       selected: false,
       path: '/vault/document'
-    },
+    }
+  ]
+
+  const manageExp = [
     {
       id: 6,
       label: diary ? diary : 'Secret Diary',
@@ -108,15 +114,18 @@ export const Features = (props) => {
       path: '/diary'
     },
     {
-      id: 7,
-      label: portfolio ? portfolio : 'Portfolio',
-      description: portfolioText
-        ? portfolioText
-        : 'View & analyze portfolio of saved assets and liabilties',
-      background: Portfolio,
+      id: 3,
+      label: spends ? spends : 'Daily Spends',
+      description: spendsText
+        ? spendsText
+        : 'Log your thoughts and analyze your daily spends.',
+      background: Spend,
       selected: false,
-      path: '/portfolio'
-    },
+      path: '/spends'
+    }
+  ]
+
+  const manageAfterLife = [
     {
       id: 8,
       label: props?.sender?.heading ? props?.sender?.heading : 'Postman',
@@ -127,169 +136,163 @@ export const Features = (props) => {
       selected: false,
       path: '/postman'
     }
-  ])
+  ]
 
-  const calcWidth = () => {
-    if (window.innerWidth > 1100) {
-      return '4'
-    } else if (window.innerWidth > 900 && window.innerWidth <= 1100) {
-      return '6'
-    } else {
-      return '12'
+  const downshift = (id, type) => {
+    const element = document.getElementById(`card ${id}`)
+    if (element) {
+      if (type === 'down') {
+        element.classList.add('downshift', 'upshadow')
+        element.classList.remove('common-shadow')
+      } else {
+        element.classList.remove('downshift', 'upshadow')
+        element.classList.add('common-shadow')
+      }
     }
   }
 
-  const setFlip = (index) => {
-    setDashboard(
-      dashboard.map((item) => {
-        return item.id === index ? { ...item, selected: !item.selected } : item
-      })
-    )
-  }
-
   return (
-    <div
-      id="feature"
-      className="feature-menu-option"
-      style={{ backgroundColor: Dark ? '#21212a' : 'white' }}
-    >
-      {/* <h3
-        style={{
-          textAlign: 'center',
-          color: 'var(--warning)',
-          paddingTop: '5px'
-        }}
-      >
-        Features
-      </h3> */}
-      <div style={{ overflowX: window.innerWidth <= 500 ? 'overlay' : 'none' }}>
-        <Row
-          className="px-2"
-          style={{
-            flexWrap: window.innerWidth <= 500 ? 'nowrap' : 'wrap',
-            width: window.innerWidth <= 500 ? '3100px' : ''
-          }}
-        >
-          {dashboard?.map((item, index) => {
-            return (
-              <Col
-                md={calcWidth()}
-                sm="12"
-                key={index}
-                className={window.innerWidth <= 500 ? 'mr-1 px-0' : 'px-0'}
-                style={{
-                  width: window.innerWidth <= 500 ? '340px' : ''
-                }}
-              >
-                <div className="pointerCursor" onClick={() => setFlip(index)}>
-                  <Card
-                    id={`card-${index}`}
-                    className={
-                      item.selected ? 'whole-card card-rotate' : 'whole-card'
-                    }
-                    style={{
-                      maxWidth: window.innerWidth <= 500 ? '340px' : '380px',
-                      margin: window.innerWidth <= 500 ? '17px 0px' : ''
-                    }}
+    <div id="feature" className="feature-menu-option">
+      <div className="feature-main-title common-shadow">
+        <div>Explore Our Features...</div>
+      </div>
+      <div className="first-feature mt-5">
+        <div className="w-100 text-center feature-title">
+          Portfolio Management and Nominee Care
+        </div>
+        <div className="d-flex justify-content-between">
+          <div className="left-arrow"></div>
+          <div className="scroll-content">
+            <div className="first-content mt-3">
+              {managePort?.map((item) => {
+                return (
+                  <div
+                    key={item.id}
+                    id={`first ${item.id}`}
+                    className="feature-container overflow-hide common-shadow"
                   >
+                    <div className="pseudo-card">something</div>
                     <div
-                      id={`back-image-${index}`}
-                      className={
-                        Dark
-                          ? 'back-image-dark back-image-dark-normal'
-                          : 'back-image back-image-normal'
-                      }
-                      style={{
-                        backgroundImage: `url(${item.background})`,
-                        backgroundSize: (() => {
-                          if (item.label === 'Assets') {
-                            return '220px'
-                          } else if (item.label === 'Password Vault') {
-                            return '220px'
-                          } else if (item.label === 'Nominees') {
-                            return '185px'
-                          } else if (item.label === 'Daily Spends') {
-                            return window.innerWidth <= 500 ? '155px' : '185px'
-                          } else if (item.label === 'Documents') {
-                            return window.innerWidth <= 500 ? '170px' : '210px'
-                          } else if (item.label === 'Postman') {
-                            return window.innerWidth <= 500 ? '225px' : '250px'
-                          } else if (item.label === 'Secret Diary') {
-                            return window.innerWidth <= 500 ? '175px' : ''
-                          }
-                        })(),
-                        backgroundPosition: (() => {
-                          if (item.label === 'Password Vault') {
-                            return window.innerWidth <= 500 ? '95px' : '125px'
-                          } else if (item.label === 'Nominees') {
-                            return window.innerWidth <= 500 ? '135px' : '165px'
-                          } else if (item.label === 'Daily Spends') {
-                            return window.innerWidth <= 500 ? '165px' : '175px'
-                          } else if (item.label === 'Secret Diary') {
-                            return window.innerWidth <= 500 ? '155px' : '165px'
-                          } else if (item.label === 'Postman') {
-                            return window.innerWidth <= 500 ? '95px' : '110px'
-                          } else if (item.label === 'Assets') {
-                            return window.innerWidth <= 500 ? '105px' : '125px'
-                          } else if (item.label === 'Liabilties') {
-                            return window.innerWidth <= 500 ? '125px' : '150px'
-                          } else if (item.label === 'Portfolio') {
-                            return window.innerWidth <= 500 ? '120px' : ''
-                          }
-                        })()
-                      }}
-                    />
-                    <div className="card-title-div" id={`card-title-${index}`}>
-                      <span
-                        id={`card-title-no-${index}`}
-                        style={{ color: Dark ? 'white' : 'black' }}
-                        className="card_title"
-                      >
-                        {item.label}
-                      </span>
-                    </div>
-                  </Card>
-                  <Card
-                    id={`card-back-${index}`}
-                    className={
-                      item.selected
-                        ? 'card-back-rotate whole-card-back'
-                        : 'whole-card-back'
-                    }
-                    style={{
-                      maxWidth: window.innerWidth <= 500 ? '340px' : '380px',
-                      margin: window.innerWidth <= 500 ? '17px 0px' : ''
-                    }}
-                  >
-                    <div
-                      id={`back-image-${index}`}
-                      className={
-                        Dark ? 'back-image-dark-revert' : 'back-image-revert'
-                      }
-                      style={{
-                        backgroundImage: `url(${item.background})`,
-                        backgroundPosition: 'center'
-                      }}
-                    />
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '0',
-                        width: '100%',
-                        height: '100%',
-                        color: 'white',
-                        fontSize: '2rem',
-                        textAlign: 'center'
-                      }}
+                      className="feature-cross"
+                      onClick={() => downshift(item.id, 'up')}
                     >
-                      {item.label}
+                      Cross
                     </div>
-                  </Card>
-                </div>
-              </Col>
-            )
-          })}
-        </Row>
+                    <div
+                      className="feature-card"
+                      id={`card ${item.id}`}
+                      onClick={() => downshift(item.id, 'down')}
+                    >
+                      <div
+                        className="card-image"
+                        style={{ backgroundImage: `url(${item.background})` }}
+                      ></div>
+                      <div className="feature-card-title">{item.label}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+          <div className="right-arrow"></div>
+        </div>
+      </div>
+      <div className="second-feature d-flex align-items-center">
+        <div className="feature-title">For your Credentials and Documents</div>
+        {manageStorage?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              id={`first ${item.id}`}
+              className="feature-container overflow-hide common-shadow"
+            >
+              <div className="pseudo-card">something</div>
+              <div
+                className="feature-cross"
+                onClick={() => downshift(item.id, 'up')}
+              >
+                Cross
+              </div>
+              <div
+                className="feature-card"
+                id={`card ${item.id}`}
+                onClick={() => downshift(item.id, 'down')}
+              >
+                <div
+                  className="card-image"
+                  style={{ backgroundImage: `url(${item.background})` }}
+                ></div>
+                <div className="feature-card-title">{item.label}</div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="third-feature d-flex">
+        {manageExp?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              id={`first ${item.id}`}
+              className="feature-container overflow-hide common-shadow"
+            >
+              <div className="pseudo-card">something</div>
+              <div
+                className="feature-cross"
+                onClick={() => downshift(item.id, 'up')}
+              >
+                Cross
+              </div>
+              <div
+                className="feature-card"
+                id={`card ${item.id}`}
+                onClick={() => downshift(item.id, 'down')}
+              >
+                <div
+                  className="card-image"
+                  style={{ backgroundImage: `url(${item.background})` }}
+                ></div>
+                <div className="feature-card-title">{item.label}</div>
+              </div>
+            </div>
+          )
+        })}
+        <div className="feature-title d-flex align-items-center">
+          Personalized Diary and Expense Tracker
+        </div>
+      </div>
+      <div className="fourth-feature d-flex">
+        <div className="feature-title mr-5 d-flex align-items-center">
+          Our After Life Services
+        </div>
+        {manageAfterLife?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              id={`first ${item.id}`}
+              className="feature-container overflow-hide common-shadow"
+            >
+              <div className="pseudo-card">something</div>
+              <div
+                className="feature-cross"
+                onClick={() => downshift(item.id, 'up')}
+              >
+                Cross
+              </div>
+              <div
+                className="feature-card"
+                id={`card ${item.id}`}
+                onClick={() => downshift(item.id, 'down')}
+              >
+                <div
+                  className="card-image"
+                  style={{ backgroundImage: `url(${item.background})` }}
+                ></div>
+                <div className="feature-card-title">{item.label}</div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

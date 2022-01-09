@@ -110,24 +110,6 @@ const LADashboard = (props) => {
       path: '/liability/add'
     },
     {
-      label: messages?.vault ? messages?.vault : 'Password Vault',
-      description: messages?.vaultText
-        ? messages?.vaultText
-        : 'Save your passwords like cards, credentials in vault.',
-      background: Vault,
-      icon: <Lock color={desktopColor} className="warning" size="auto" />,
-      path: '/vault/password'
-    },
-    {
-      label: messages?.spends ? messages?.spends : 'Daily Spends',
-      description: messages?.spendsText
-        ? messages?.spendsText
-        : 'Log your thoughts and analyze your daily spends.',
-      background: Spend,
-      icon: <FileMinus color={desktopColor} className="danger" size="auto" />,
-      path: '/spends'
-    },
-    {
       label: messages?.nominees ? messages?.nominees : 'Nominees',
       description: messages?.nomineesText
         ? messages?.nomineesText
@@ -146,15 +128,6 @@ const LADashboard = (props) => {
       path: '/vault/document'
     },
     {
-      label: messages?.diary ? messages?.diary : 'Secret Diary',
-      description: messages?.diaryText
-        ? messages?.diaryText
-        : 'Log your thoughts and secrets in a personal space',
-      background: Diary,
-      icon: <FileText color={desktopColor} className="success" size="auto" />,
-      path: '/diary'
-    },
-    {
       label: messages?.portfolio ? messages?.portfolio : 'Portfolio',
       description: messages?.portfolioText
         ? messages?.portfolioText
@@ -164,6 +137,24 @@ const LADashboard = (props) => {
       path: '/portfolio'
     },
     {
+      label: messages?.spends ? messages?.spends : 'Daily Spends',
+      description: messages?.spendsText
+        ? messages?.spendsText
+        : 'Log your thoughts and analyze your daily spends.',
+      background: Spend,
+      icon: <FileMinus color={desktopColor} className="danger" size="auto" />,
+      path: '/spends'
+    },
+    {
+      label: messages?.diary ? messages?.diary : 'Secret Diary',
+      description: messages?.diaryText
+        ? messages?.diaryText
+        : 'Log your thoughts and secrets in a personal space',
+      background: Diary,
+      icon: <FileText color={desktopColor} className="success" size="auto" />,
+      path: '/diary'
+    },
+    {
       label: props?.sender?.heading ? props?.sender?.heading : 'Postman',
       description: props?.sender?.subHeading
         ? props?.sender?.subHeading
@@ -171,6 +162,15 @@ const LADashboard = (props) => {
       background: Sender,
       icon: <Share color={desktopColor} className="success" size="auto" />,
       path: '/postman'
+    },
+    {
+      label: messages?.vault ? messages?.vault : 'Password Vault',
+      description: messages?.vaultText
+        ? messages?.vaultText
+        : 'Save your passwords like cards, credentials in vault.',
+      background: Vault,
+      icon: <Lock color={desktopColor} className="warning" size="auto" />,
+      path: '/vault/password'
     }
   ]
   useEffect(() => {

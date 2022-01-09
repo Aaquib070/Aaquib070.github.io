@@ -124,7 +124,7 @@ const LandingPage = (props) => {
             style={{
               minHeight: '0px',
               marginTop: '0px',
-              overflow: 'hidden'
+              overflow: 'visible'
             }}
           >
             <AlwaysOn

@@ -5,7 +5,7 @@ import { ArrowUp } from 'react-feather'
 import classnames from 'classnames'
 import './footer.css'
 const Footer = (props) => {
-  let footerTypeArr = ['sticky', 'static', 'hidden']
+  const footerTypeArr = ['sticky', 'static', 'hidden']
   window.onscroll = function () {
     scrollFunction()
   }
