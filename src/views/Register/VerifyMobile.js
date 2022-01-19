@@ -49,6 +49,7 @@ const MobileInputLogin = (props) => {
           mobileData={mobileData}
           setMessage={setMessage}
           message={message}
+          loginClick={props.loginClick}
         />
       )}
     </div>

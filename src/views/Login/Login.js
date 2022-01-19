@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  CardBody,
-  FormGroup,
-  Input,
-  Col,
-  Row,
-  Button,
-  Label,
-  Form
-} from 'reactstrap'
+import { Input, Form } from 'reactstrap'
 import './Login.css'
 import 'swiper/css/swiper.css'
 import 'assets/scss/plugins/extensions/swiper.scss'
@@ -154,57 +145,88 @@ const Register = (props) => {
   }
 
   return (
-    <CardBody className="pt-1">
+    <>
+      <h2>Welcome !</h2>
+
       <Form onSubmit={(e) => handleSubmit(e)}>
-        <div
-          className={
-            window.screen.width <= 500 ? 'formOTP p-0 mt-1' : 'formOTP pb-0'
-          }
-        >
-          {errorMsg && <h5 style={{ color: 'red' }}>{errorMsg}</h5>}
-          <Row>
-            <Col lg="12" md="12" sm="12">
-              <FormGroup className="form-label-group">
-                <Input
-                  type="text"
-                  className="input-label"
-                  name="user"
-                  placeholder="Username"
-                  onChange={handleChangeUsername}
-                />
-                <Label className={Dark ? 'dark-label' : 'light-label'}>
-                  Username
-                </Label>
-              </FormGroup>
-              <FormGroup className="form-label-group">
-                <Input
-                  className="input-label"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleChangePassword}
-                />
-                <Label className={Dark ? 'dark-label' : 'light-label'}>
-                  Password
-                </Label>
-              </FormGroup>
-            </Col>
-          </Row>
-          <div className="loginModalDiv_head">
-            <Button.Ripple
-              type="submit"
-              color="warning"
-              disabled={
-                password === '' || mobileNo === '' || loginText === 'Signing In'
-              }
-              onClick={(e) => handleSubmit(e)}
-            >
-              {loginText}
-            </Button.Ripple>
+        {errorMsg && <h5 style={{ color: 'red' }}>{errorMsg}</h5>}
+        <div className="form-group">
+          <Input
+            type="text"
+            className="form-control form-control-lg"
+            name="user"
+            placeholder="Phone or Email"
+            onChange={handleChangeUsername}
+          />
+          {/* <Label className={Dark ? 'dark-label' : 'light-label'}>
+              Username
+            </Label> */}
+        </div>
+        <div className="form-group">
+          <Input
+            className="form-control form-control-lg"
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChangePassword}
+          />
+          {/* <Label className={Dark ? 'dark-label' : 'light-label'}>
+              Password
+            </Label> */}
+        </div>
+        <div className="form-group">
+          <Input
+            className="form-control form-control-lg"
+            type="text"
+            name="scanner"
+            placeholder="Scan the QR code to login"
+            // onChange={handleChangePassword}
+          />
+          {/* <Label className={Dark ? 'dark-label' : 'light-label'}>
+              Password
+            </Label> */}
+        </div>
+        <div className="row mt-3">
+          <div className="col-6">
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="exampleCheck1"
+              />
+              <label className="form-check-label" htmlFor="exampleCheck1">
+                Keep me logged in
+              </label>
+            </div>
+          </div>
+          <div className="col-6 text-right">
+            <span id="anchor" onClick={props.forgotClick}>
+              {' '}
+              Forgot password
+            </span>
           </div>
         </div>
+        <div className="form-group mt-4">
+          <button
+            disabled={
+              password === '' || mobileNo === '' || loginText === 'Signing In'
+            }
+            onClick={(e) => handleSubmit(e)}
+            className="btn btn-lg btn-block btn-warning gradient-btn"
+          >
+            Log In
+          </button>
+        </div>
+        <div className="from-group">
+          <p className="text-center text-light">
+            Don&apos;t have account yet?{' '}
+            <span id="anchor" onClick={props.createClick}>
+              Create Account
+            </span>
+          </p>
+        </div>
       </Form>
-    </CardBody>
+    </>
   )
 }
 export default Register

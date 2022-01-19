@@ -212,28 +212,20 @@ const ThemeNavbar = (props) => {
             toggle={toggleLoginModal}
             centered={true}
           >
-            <ModalHeader
-              toggle={toggleLoginModal}
-              tag="div"
-              style={{
-                color: 'var(--warning)',
-                fontSize: '1.45rem',
-                fontWeight: 'bold',
-                letterSpacing: '1px',
-                justifyContent: 'center'
-              }}
-            >
-              {isSignInSelected
-                ? 'Sign In'
-                : forgotPassword
-                ? 'Recover Password'
-                : isLoading
-                ? 'Registering'
-                : 'SignUp'}
+            <ModalHeader toggle={toggleLoginModal} tag="div">
+              <h5 className="modal-title" id="exampleModalLongTitle">
+                {isSignInSelected
+                  ? 'Log In to your account'
+                  : forgotPassword
+                  ? 'Recover Password'
+                  : isLoading
+                  ? 'Registering'
+                  : 'Create your account'}
+              </h5>
             </ModalHeader>
 
             <ModalBody>
-              <div className="loginModalDiv_container">
+              <div className="login-section-form w-100 p-2">
                 {forgotPassword ? (
                   <>
                     {pwdChanged === 'success' && (
@@ -270,29 +262,16 @@ const ThemeNavbar = (props) => {
                     <LoginNew
                       loggedIn={loggedIn}
                       setloggedIn={setloggedIn}
-                      {...props}
-                    />
-                    <div
-                      className="loginModalDiv_head"
-                      onClick={() => {
+                      forgotClick={() => {
                         dispatch({ type: 'RESET_OTP' })
                         setforgotPassword(true)
                       }}
-                    >
-                      <h5 style={{ color: 'var(--warning)' }}>
-                        Forgot Password !!
-                      </h5>
-                    </div>
-                    <div
-                      className="loginModalDiv_head"
-                      onClick={() => {
+                      createClick={() => {
                         setIsSignInSelected(false)
                         dispatch({ type: 'RESET_OTP' })
                       }}
-                    >
-                      Haven`t registered ...
-                      <span style={{ color: 'var(--warning)' }}>SignUp!!</span>
-                    </div>
+                      {...props}
+                    />
                   </>
                 ) : (
                   <>
@@ -301,18 +280,9 @@ const ThemeNavbar = (props) => {
                       setloggedIn={setloggedIn}
                       isLoading={isLoading}
                       setisLoading={setisLoading}
+                      loginClick={() => setIsSignInSelected(true)}
                       {...props}
                     />
-                    <div
-                      className="loginModalDiv_head"
-                      onClick={() => setIsSignInSelected(true)}
-                    >
-                      Already registered ...
-                      <span style={{ color: 'var(--warning)' }}>
-                        {' '}
-                        SignIn !!
-                      </span>
-                    </div>
                   </>
                 )}
               </div>

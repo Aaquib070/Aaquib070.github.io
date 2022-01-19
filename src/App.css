@@ -1310,9 +1310,3 @@ input {
   box-shadow: 0 0 10px -2px #a3a3a3;
   padding: 5px;
 }
-
-[dir] .modal .modal-header .close {
-  right: 20px;
-  position: absolute !important;
-  top: 11px;
-}

@@ -4,7 +4,7 @@ import ReactCountryFlag from 'react-country-flag'
 import { validatePhoneNumber } from 'redux/actions/auth/phoneValidate'
 import { connect } from 'react-redux'
 import { Dark } from 'export'
-import { FormGroup, Input, Col, Row, Button, Label } from 'reactstrap'
+import { Input, Form } from 'reactstrap'
 import handleKeyMobileNumber from 'utility/context/InputTypeNum'
 import Select from 'react-select'
 const MobileEntry = (props) => {
@@ -54,7 +54,8 @@ const MobileEntry = (props) => {
       numberError && setNumberError('')
     }
   }
-  function onHandleSubmit() {
+  function onHandleSubmit(e) {
+    e.preventDefault()
     validateMobileNumberByRegex()
   }
   const customOptions = ({ label, id, countryCode }) => {
@@ -84,70 +85,62 @@ const MobileEntry = (props) => {
   }
   return (
     <>
-      <Row>
-        <Col lg="12" md="12" sm="12">
-          {message && (
-            <div
-              style={{
-                color: 'red',
-                textAlign: 'center',
-                paddingBottom: '10px'
-              }}
-            >
-              This Mobile number is already registered
-            </div>
-          )}
-          <FormGroup>
-            <Select
-              className="React"
-              classNamePrefix="select"
-              isClearable={true}
-              options={countryCodes}
-              name="countryCodes"
-              value={selectedItem}
-              placeholder="Country"
-              formatOptionLabel={customOptions}
-              onChange={(e) => {
-                setSelectedItem(e)
-              }}
-              // menuIsOpen={false}
-            />
-          </FormGroup>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg="12" md="12" sm="12">
-          <FormGroup className="form-label-group">
-            <Input
-              className="input-label"
-              type="tel"
-              value={mobileData.phone}
-              name="phone"
-              onChange={changeHandler}
-              onKeyPress={(e) => handleKeyMobileNumber(e)}
-              id="data-price1"
-              placeholder="Enter Mobile No*"
-            />
-            <Label className={Dark ? 'dark-label' : 'light-label'}>
-              Mobile No
-            </Label>
-            {numberError && (
-              <span style={{ color: 'red', fontSize: '0.8rem' }}>
-                {numberError}
-              </span>
-            )}
-          </FormGroup>
-        </Col>
-      </Row>
-      <div className="loginModalDiv_head">
-        <Button.Ripple
-          color="warning"
-          disabled={!mobileData.phone || validatingmobile}
-          onClick={onHandleSubmit}
-        >
-          Send OTP
-        </Button.Ripple>{' '}
-      </div>
+      <h2>Welcome !</h2>
+      <Form onSubmit={(e) => onHandleSubmit(e)}>
+        {message && (
+          <h5 style={{ color: 'red' }}>
+            This Mobile number is already registered
+          </h5>
+        )}
+        {numberError && <h5 style={{ color: 'red' }}>{numberError}</h5>}
+        <div className="form-group">
+          <Select
+            className="React"
+            classNamePrefix="select"
+            isClearable={true}
+            options={countryCodes}
+            name="countryCodes"
+            // value={selectedItem}s
+            placeholder="Country"
+            formatOptionLabel={customOptions}
+            onChange={(e) => {
+              setSelectedItem(e)
+            }}
+            // menuIsOpen={false}
+          />
+        </div>
+        <div className="form-group">
+          <Input
+            className="form-control form-control-lg"
+            type="tel"
+            value={mobileData.phone}
+            name="phone"
+            onChange={changeHandler}
+            onKeyPress={(e) => handleKeyMobileNumber(e)}
+            id="data-price1"
+            placeholder="Enter Mobile No."
+          />
+          {/* <Label className={Dark ? 'dark-label' : 'light-label'}>Mobile No</Label> */}
+        </div>
+
+        <div className="form-group mt-4">
+          <button
+            disabled={!mobileData.phone || validatingmobile}
+            onClick={(e) => onHandleSubmit(e)}
+            className="btn btn-lg btn-block btn-warning gradient-btn"
+          >
+            Send OTP
+          </button>
+        </div>
+        <div className="from-group">
+          <p className="text-center text-light">
+            Already Registered...{' '}
+            <span id="anchor" onClick={props.loginClick}>
+              Log In
+            </span>{' '}
+          </p>
+        </div>
+      </Form>
     </>
   )
 }
