@@ -47,6 +47,10 @@ import male from 'assets/img/avatar/male.png'
 import art from 'assets/img/logo/art.gif'
 
 import LA from 'assets/img/logo/LA.svg'
+import Contact from 'assets/img/logo/contact2.svg'
+import SliderA from 'assets/img/logo/slider6.svg'
+import SliderB from 'assets/img/logo/slider1.svg'
+import BannerImg from 'assets/img/logo/banner-img.png'
 
 import Banner1 from 'assets/img/slider/banner-1.jpg'
 import Banner2 from 'assets/img/slider/banner-2.jpg'
@@ -63,6 +67,10 @@ export const imgBanner4 = Banner4
 export const imgBanner5 = Banner5
 
 export const Logo = LA
+export const ContactLogo = Contact
+export const Slider1 = SliderA
+export const Slider2 = SliderB
+export const ImgBanner = BannerImg
 export const Art = art
 export const avatar1 = female
 export const avatar2 = male

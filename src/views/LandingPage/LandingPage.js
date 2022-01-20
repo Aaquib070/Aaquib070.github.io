@@ -1,40 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
-import Google from './../../assets/img/icons/google.png'
-import Apple from './../../assets/img/icons/apple.png'
-import ToU from './../../assets/pdf/Last Arzi - Terms of use.pdf'
-import Coockies from './../../assets/pdf/Last Arzi - Cookies.pdf'
-import Copyright from './../../assets/pdf/Last Arzi - Copyright.pdf'
-import PPol from './../../assets/pdf/Last Arzi - Privacy policy.pdf'
-import {
-  // Card,
-  // CardTitle,
-  // CardBody,
-  Row
-  // Col,
-  // Form,
-  // Input,
-  // FormGroup,
-  // Label,
-  // Button
-} from 'reactstrap'
+import React, { useEffect } from 'react'
+import { LandingFooter } from './LandingFooter'
+import { ContactForm } from './ContactForm'
+import { Plans } from './Plans'
+import { WhyUs } from './WhyUs'
+import { Features } from './Features'
+import { LandingHeader } from './LandingHeader'
+import { IntroBanner } from './IntroBanner'
+
+// import Google from './../../assets/img/icons/google.png'
+// import Apple from './../../assets/img/icons/apple.png'
+
 import { connect } from 'react-redux'
-import {
-  Facebook,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Youtube
-  // PhoneCall
-} from 'react-feather'
 import 'assets/scss/pages/authentication.scss'
-import AlwaysOn from './AlwaysOn'
+// import AlwaysOn from './AlwaysOn'
 // import useWindowSize from 'utility/context/useWindowSize'
 const LandingPage = (props) => {
   const { download } = props
-  const [plan, setplan] = useState(false)
-  const [why, setwhy] = useState(true)
-  const [feature, setfeature] = useState(false)
   // const deviceWidth = window.screen.width
   // const deviceWidth = useWindowSize().width
   // const [email, setEmail] = useState('')
@@ -51,63 +33,6 @@ const LandingPage = (props) => {
   // 	setQ(e.target.value)
   // }
 
-  const logos = [
-    {
-      type: 'facebook',
-      icon: <Facebook />,
-      link: 'https://www.facebook.com/lastarzi'
-    },
-    {
-      type: 'linkedin',
-      icon: <Linkedin />,
-      link: ''
-    },
-    {
-      type: 'instagram',
-      icon: <Instagram />,
-      link: 'https://www.instagram.com/last_arzi/'
-    },
-    {
-      type: 'twitter',
-      icon: <Twitter />,
-      link: ''
-    },
-    // {
-    //   type: 'caller',
-    //   icon: <PhoneCall onClick={()=>{window.location.href = '/#/caller'}}/>,
-    //   link: ''
-    // },
-    {
-      type: 'youtube',
-      icon: <Youtube />,
-      link: ''
-    }
-  ]
-
-  const content = [
-    {
-      pdf: Coockies,
-      label: 'About us'
-    },
-    //contact us in about us and in contact 2 options - feedback or querry
-    {
-      pdf: PPol,
-      label: 'Privacy policy'
-    },
-    {
-      pdf: ToU,
-      label: 'Terms of use'
-    },
-    {
-      pdf: Copyright,
-      label: 'Copyright'
-    },
-    {
-      pdf: Coockies,
-      label: 'Advertise with us'
-    }
-  ]
-
   useEffect(() => {
     download &&
       document
@@ -116,8 +41,18 @@ const LandingPage = (props) => {
   }, [download])
 
   return (
-    <div>
-      <Row className="d-flex align-items-center justify-content-center m-0">
+    <div className="app-landing-wrap landing_wrap">
+      <div id="landing_wrap" className="landing-gradient-meridian">
+        <LandingHeader />
+        <IntroBanner />
+        <Features />
+        <WhyUs />
+        <Plans />
+        <ContactForm />
+        <LandingFooter />
+      </div>
+
+      {/* <Row className="d-flex align-items-center justify-content-center m-0">
         <div className="w-100">
           <div
             className="w-100 d-block"
@@ -137,67 +72,6 @@ const LandingPage = (props) => {
               download={download}
             />
           </div>
-          {/* <Row className="w-100 m-0">
-            <Col className={plan || why || feature ? 'mt-0' : 'mt-2'}>
-              <Card className="mb-0">
-                <CardTitle style={{ textAlign: 'center', paddingTop: '10px' }}>
-                  <h3>You can access your account from any platform</h3>
-                </CardTitle>
-                <CardBody className="text-center">
-                  <div className="divider"></div>
-                  <Row className="mt-3">
-                    <Col className="text-center justify-content-center">
-                      <Smartphone size="35" />
-                      <h5>Android</h5>
-                    </Col>
-                    <Col className="text-center justify-content-center">
-                      <Tablet size="35" />
-                      <h5>iOS</h5>
-                    </Col>
-                    <Col className="text-center justify-content-center">
-                      <Monitor size="35" />
-                      <h5>Web</h5>
-                    </Col>
-                  </Row>
-                  <div className="divider">
-                    <span className="divider-text">
-                      <h5>Query/Feedback</h5>
-                    </span>
-                  </div>
-                  <Form>
-                    <FormGroup className="form-label-group mt-2">
-                      <Input
-                        placeholder="Email"
-                        className="text-center mb-1"
-                        onChange={handlingemail}
-                      />
-                      <Label>Email</Label>
-                      <Input
-                        placeholder="ContactNo."
-                        className="text-center mb-1"
-                        onChange={handlingContact}
-                      />
-                      <Label>Contact Number</Label>
-
-                      <Input
-                        placeholder="Query/Suggestion"
-                        className="text-center"
-                        onChange={handlingq}
-                      />
-                      <Label>Query/Suggestion</Label>
-                    </FormGroup>
-                  </Form>
-                  <Button.Ripple
-                    block
-                    color={email && q ? 'warning' : 'primary'}
-                    className="btn-block"
-                  >
-                    Submit
-                  </Button.Ripple>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row> */}
         </div>
       </Row>
       {window.screen.width <= 1024 ? (
@@ -341,7 +215,7 @@ const LandingPage = (props) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

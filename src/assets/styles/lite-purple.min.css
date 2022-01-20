@@ -46,8 +46,8 @@
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-#anchor{
-  cursor:pointer;
+#anchor {
+  cursor: pointer;
   color: var(--blue);
 }
 
@@ -488,6 +488,10 @@ mark {
 
 .list-inline-item:not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.list-inline li {
+  line-height: 23px;
 }
 
 .initialism {
@@ -23711,7 +23715,7 @@ button.ul-accordion__link {
 .intro-three-Wrap:after {
   content: '';
   display: block;
-  /* background: url(../../../images/Bg_03.png) bottom no-repeat; */
+  background: url(../img/logo/Bg_03.png) bottom no-repeat;
   background-size: cover;
   bottom: -8px;
 }

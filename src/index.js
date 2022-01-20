@@ -22,11 +22,11 @@ const renderReactDom = () => {
   ReactDOM.render(
     <Provider store={store}>
       <Suspense fallback={<Spinner />}>
-        <Layout>
-          <IntlProviderWrapper>
-            <LazyApp />
-          </IntlProviderWrapper>
-        </Layout>
+        {/* <Layout> */}
+        <IntlProviderWrapper>
+          <LazyApp />
+        </IntlProviderWrapper>
+        {/* </Layout> */}
       </Suspense>
     </Provider>,
     document.getElementById('root')

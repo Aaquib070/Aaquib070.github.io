@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, fullLayout, ...rest }) => (
         pathname?.includes('emailconfirmation') ||
         pathname?.includes('terms_conditions') ||
         pathname?.includes('docview') ||
-        pathname?.includes('postmanview') 
+        pathname?.includes('postmanview')
       if (user1 === null && !all) {
         return <Redirect to="/home" />
       }
@@ -26,31 +26,31 @@ const PrivateRoute = ({ component: Component, fullLayout, ...rest }) => (
       return (
         <ContextLayout.Consumer>
           {(context) => {
-            const LayoutTag =
-              fullLayout === true ? context.fullLayout : context.VerticalLayout
+            // const LayoutTag =
+            //   fullLayout === true ? context.fullLayout : context.VerticalLayout
             return (
-              <LayoutTag {...props} permission={props.user}>
-                <Suspense
-                  fallback={
-                    <div
-                      style={{
-                        height: '100vh',
-                        width: '100%',
-                        alignItems: 'center',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        display: 'flex',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <Spinner />
-                    </div>
-                  }
-                >
-                  <Component {...props} />
-                </Suspense>
-              </LayoutTag>
+              // <LayoutTag {...props} permission={props.user}>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      height: '100vh',
+                      width: '100%',
+                      alignItems: 'center',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Spinner />
+                  </div>
+                }
+              >
+                <Component {...props} />
+              </Suspense>
+              // </LayoutTag>
             )
           }}
         </ContextLayout.Consumer>
